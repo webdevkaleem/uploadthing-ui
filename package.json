@@ -12,7 +12,9 @@
   "dependencies": {
     "@radix-ui/react-label": "^2.1.1",
     "@radix-ui/react-slot": "^1.1.1",
+    "@t3-oss/env-nextjs": "^0.12.0",
     "@tanstack/react-query": "^5.64.1",
+    "@uploadthing/react": "^7.3.0",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "lucide-react": "^0.471.1",
@@ -23,7 +25,9 @@
     "shadcn": "2.4.0-canary.12",
     "tailwind-merge": "^2.6.0",
     "tailwindcss-animate": "^1.0.7",
-    "zod": "^3.24.1"
+    "uploadthing": "^7.5.2",
+    "zod": "^3.24.1",
+    "zustand": "^5.0.3"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
