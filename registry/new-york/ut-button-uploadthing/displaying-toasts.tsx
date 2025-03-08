@@ -120,7 +120,7 @@ function ToastComponentCompleted({ uploadFile }: { uploadFile: UploadFile }) {
       <CircleCheck className="stroke-1 stroke-background fill-foreground" />
       <div className="flex flex-col">
         <p className="truncate line-clamp-1">File uploaded successfully</p>
-        <div className="flex items-center justify-between gap-">
+        <div className="flex items-center justify-between gap-1">
           <p className="truncate max-w-52">{uploadFile.file.name}</p>
           <p>uploaded!</p>
         </div>
