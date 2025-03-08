@@ -5,11 +5,11 @@
   "title": "Uploadthing Button",
   "description": "A button taken inspiration from the uploadthing UI",
   "dependencies": [
-    "paralleldrive/cuid2@2.2.2",
-    "zustand@5.0.3",
-    "uploadthing@7.5.2",
-    "uploadthing/react@7.3.0",
-    "lucide-react@0.471.1"
+    "@paralleldrive/cuid2^2.2.2",
+    "zustand@^5.0.3",
+    "uploadthing@^7.5.2",
+    "@uploadthing/react@^7.3.0",
+    "lucide-react@^0.471.1"
   ],
   "registryDependencies": [
     "button",
