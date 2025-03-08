@@ -4,7 +4,7 @@
   "homepage": "https://uploadthing-ui.vercel.app",
   "items": [
     {
-      "name": "ut-ui-button-proton",
+      "name": "button-proton",
       "type": "registry:component",
       "title": "Proton Drive Button",
       "description": "A button taken inspiration from the proton drive UI",
@@ -12,13 +12,13 @@
       "dependencies": ["zustand@latest", "uploadthing@latest", "uploadthing/react@latest", "paralleldrive/cuid2@latest", "lucide-react"],
       "files": [
         {
-          "path": "registry/new-york/ut-ui-button-proton/ut-ui-button-proton.tsx",
+          "path": "registry/new-york/button-proton/button-proton.tsx",
           "type": "registry:component"
         },
         {
-          "path": "store/ut-ui-button-proton-store.ts",
+          "path": "store/button-proton-store.ts",
           "type": "registry:file",
-          "target": "store/ut-ui-button-proton-store.ts"
+          "target": "store/button-proton-store.ts"
         }
       ]
     },

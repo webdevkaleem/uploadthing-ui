@@ -1,4 +1,4 @@
-import UTButtonProton from "@/registry/new-york/ut-ui-button-proton/ut-ui-button-proton";
+import UTUIButtonProton from "@/registry/new-york/button-proton/button-proton";
 import UTButtonUploadthing from "@/registry/new-york/ut-button-uploadthing/ut-button-uploadthing";
 
 // This page displays items from the custom registry.
@@ -23,7 +23,7 @@ export default function Home() {
             </h2>
           </div>
           <div className="flex items-center justify-center min-h-[400px] relative">
-            <UTButtonProton />
+            <UTUIButtonProton />
           </div>
         </div>
         <div className="flex flex-col gap-4 border rounded-lg p-4 min-h-[450px] relative">

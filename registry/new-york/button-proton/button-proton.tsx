@@ -10,7 +10,7 @@ import { generatePermittedFileTypes } from "uploadthing/client";
 import { X } from "lucide-react";
 
 // Local Imports
-import { useFilesStore } from "@/store/ut-ui-button-proton-store";
+import { useFilesStore } from "@/store/button-proton-store";
 import { useUploadThing } from "@/lib/uploadthing";
 import { UTUIFileStatus } from "@/lib/uploadthing-ui-types";
 import {
@@ -38,7 +38,7 @@ import {
 } from "@/components/ui/alert-dialog";
 
 // Body
-export default function UTButtonProton() {
+export default function UTUIButtonProton() {
   // [1] Refs & States
   const fileInputRef = useRef<HTMLInputElement>(null);
   const { addFiles, openModel } = useFilesStore();
