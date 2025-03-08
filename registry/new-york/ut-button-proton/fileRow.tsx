@@ -24,7 +24,7 @@ export const FileRow = ({
   // Inside your FileRow component
   const hasStartedUpload = useRef(false);
 
-  const { startUpload } = useUploadThing("imageUploader", {
+  const { startUpload, isUploading } = useUploadThing("imageUploader", {
     uploadProgressGranularity: "fine",
     onUploadProgress: (progress) => {
       // Only update state if component is still mounted
@@ -49,9 +49,9 @@ export const FileRow = ({
 
   useEffect(() => {
     // Only start upload if we haven't already
-    if (!hasStartedUpload.current) {
+    if (!hasStartedUpload.current || isUploading) {
       hasStartedUpload.current = true;
-      // startUpload([file]);
+      startUpload([file]);
       onStatusChange(fileId, "uploading");
     }
 

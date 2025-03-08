@@ -22,7 +22,6 @@ export default function Home() {
             <h2 className="text-sm text-muted-foreground sm:pl-3">
               A button taken inspiration from the proton drive UI
             </h2>
-            <OpenInV0Button name="hello-world" className="w-fit" />
           </div>
           <div className="flex items-center justify-center min-h-[400px] relative">
             <UTButtonProton />

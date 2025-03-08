@@ -3,8 +3,9 @@
 // Global Imports
 import { Button } from "@/components/ui/button";
 import { useRef } from "react";
+import FileModel from "./fileModel";
+import Indicator from "./indicator";
 import { useFilesStore } from "./store";
-import FileTable from "./fileTable";
 
 // Local Imports
 
@@ -47,7 +48,8 @@ export default function UTButtonProton() {
         />
         <Button onClick={handleButtonClick}>Select Files to Upload</Button>
       </div>
-      <FileTable />
+      <FileModel />
+      {/* <Indicator /> */}
     </div>
   );
 }

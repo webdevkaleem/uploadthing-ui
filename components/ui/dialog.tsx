@@ -55,7 +55,7 @@ const DialogContent = React.forwardRef<
         className={cn(
           "fixed  z-50 grid w-full max-w-lg gap-4 border bg-background p-6 shadow-lg duration-200 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 sm:rounded-lg",
           {
-            "right-[5%] bottom-[5%] -translate-x-[-5%] -translate-y-[-5%] data-[state=closed]:slide-out-to-right-1/2 data-[state=closed]:slide-out-to-bottom-[48%] data-[state=open]:slide-in-from-right-1/2 data-[state=open]:slide-in-from-bottom-[48%]":
+            "right-[5%] bottom-[5%] translate-x-[5%] translate-y-[5%] data-[state=closed]:slide-out-to-right-1/2 data-[state=closed]:slide-out-to-bottom-[48%] data-[state=open]:slide-in-from-right-1/2 data-[state=open]:slide-in-from-bottom-[48%]":
               location === "bottom-right",
           },
           {
