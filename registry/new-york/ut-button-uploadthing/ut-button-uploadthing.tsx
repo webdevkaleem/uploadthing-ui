@@ -1,18 +1,14 @@
 "use client";
 
-// Global Imports
 import { Button } from "@/components/ui/button";
+import { createId } from "@paralleldrive/cuid2";
 import { useRef } from "react";
-import FileModel from "./fileModel";
-import Indicator from "./indicator";
-import { useFilesStore } from "./store";
+import DisplayingToasts from "./displaying-toasts";
+import { FileStatus, useFilesStore } from "./store";
 
-// Local Imports
-
-// Body
-export default function UTButtonProton() {
+export default function UTButtonUploadthing() {
   const fileInputRef = useRef<HTMLInputElement>(null);
-  const { addFiles, openModel } = useFilesStore();
+  const { openModel, historicFiles, files, setFiles } = useFilesStore();
 
   const handleButtonClick = () => {
     fileInputRef.current?.click();
@@ -25,7 +21,15 @@ export default function UTButtonProton() {
     const selectedFiles = e.target.files;
     if (selectedFiles && selectedFiles.length > 0) {
       // Convert FileList to Array and add to store
-      addFiles(Array.from(selectedFiles));
+      setFiles(
+        Array.from(selectedFiles).map((fileObj) => ({
+          file: fileObj,
+          id: createId(),
+          fileObj,
+          status: "pending" as FileStatus, // Use type assertion here
+          createdAt: new Date(),
+        }))
+      );
 
       // Reset the input to allow selecting the same files again
       if (fileInputRef.current) {
@@ -47,7 +51,10 @@ export default function UTButtonProton() {
         />
         <Button onClick={handleButtonClick}>Select Files to Upload</Button>
       </div>
-      <FileModel />
+
+      {files.map((fileObj) => (
+        <DisplayingToasts key={fileObj.id} uploadFile={fileObj} />
+      ))}
       {/* <Indicator /> */}
     </div>
   );

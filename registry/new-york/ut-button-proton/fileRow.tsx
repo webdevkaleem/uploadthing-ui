@@ -31,8 +31,6 @@ export const FileRow = ({
       if (isMounted.current) {
         setProgress(progress);
       }
-
-      console.log("PROGRESS", progress);
     },
     onClientUploadComplete: (res) => {
       if (isMounted.current && res?.[0]) {
@@ -42,7 +40,6 @@ export const FileRow = ({
     onUploadError: (error) => {
       if (isMounted.current) {
         onStatusChange(fileId, "error");
-        console.log("ERROR", error);
       }
     },
   });
