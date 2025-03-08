@@ -6,11 +6,6 @@ import { createId } from "@paralleldrive/cuid2";
 // Local Imports
 
 // Body
-interface FileState {
-  bears: number;
-  increase: (by: number) => void;
-}
-
 export type FileStatus = "pending" | "uploading" | "complete" | "error";
 
 interface UploadFile {
@@ -23,13 +18,19 @@ interface UploadFile {
 
 interface FilesState {
   files: UploadFile[];
+  displayModel: boolean;
   addFiles: (newFiles: File[]) => void;
   updateFileStatus: (id: string, status: FileStatus, url?: string) => void;
   removeFile: (id: string) => void;
+  resetFiles: () => void;
+  openModel: () => void;
+  closeModel: () => void;
+  toggleModel: () => void;
 }
 
 export const useFilesStore = create<FilesState>((set) => ({
   files: [],
+  displayModel: false,
   addFiles: (newFiles) =>
     set((state) => ({
       files: [
@@ -52,4 +53,11 @@ export const useFilesStore = create<FilesState>((set) => ({
     set((state) => ({
       files: state.files.filter((item) => item.id !== id),
     })),
+  resetFiles: () =>
+    set({
+      files: [],
+    }),
+  openModel: () => set({ displayModel: true }),
+  closeModel: () => set({ displayModel: false }),
+  toggleModel: () => set((state) => ({ displayModel: !state.displayModel })),
 }));

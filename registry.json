@@ -8,7 +8,7 @@
       "type": "registry:component",
       "title": "Proton Drive Button",
       "description": "A button taken inspiration from the proton drive UI",
-      "registryDependencies": ["button", "table"],
+      "registryDependencies": ["button", "table", "badge"],
       "dependencies": ["zustand@latest", "uploadthing@latest", "uploadthing/react@latest"],
       "files": [
         {

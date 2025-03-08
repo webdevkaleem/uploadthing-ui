@@ -12,12 +12,16 @@ import FileTable from "./fileTable";
 export default function UTButtonProton() {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const addFiles = useFilesStore((state) => state.addFiles);
+  const openModel = useFilesStore((state) => state.openModel);
 
   const handleButtonClick = () => {
     fileInputRef.current?.click();
   };
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    // Open the model
+    openModel();
+
     const selectedFiles = e.target.files;
     if (selectedFiles && selectedFiles.length > 0) {
       // Convert FileList to Array and add to store
@@ -31,7 +35,7 @@ export default function UTButtonProton() {
   };
 
   return (
-    <div className="flex flex-col gap-8">
+    <div className="flex flex-col gap-8 text-sm">
       <div>
         <input
           type="file"

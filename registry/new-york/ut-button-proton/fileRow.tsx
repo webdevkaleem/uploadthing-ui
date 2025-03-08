@@ -2,16 +2,19 @@ import { useUploadThing } from "@/lib/uploadthing";
 import { useState, useRef, useEffect } from "react";
 import { FileStatus } from "./store";
 import { TableCell, TableRow } from "@/components/ui/table";
+import { Badge } from "@/components/ui/badge";
 
 interface FileUploaderProps {
   fileId: string;
   file: File;
+  status: FileStatus;
   onStatusChange: (id: string, status: FileStatus, url?: string) => void;
 }
 
 export const FileRow = ({
   fileId,
   file,
+  status,
   onStatusChange,
 }: FileUploaderProps) => {
   // Keep progress state local
@@ -22,6 +25,7 @@ export const FileRow = ({
   const hasStartedUpload = useRef(false);
 
   const { startUpload } = useUploadThing("imageUploader", {
+    uploadProgressGranularity: "fine",
     onUploadProgress: (progress) => {
       // Only update state if component is still mounted
       if (isMounted.current) {
@@ -35,9 +39,10 @@ export const FileRow = ({
         onStatusChange(fileId, "complete", res[0].url);
       }
     },
-    onUploadError: () => {
+    onUploadError: (error) => {
       if (isMounted.current) {
         onStatusChange(fileId, "error");
+        console.log("ERROR", error);
       }
     },
   });
@@ -46,7 +51,7 @@ export const FileRow = ({
     // Only start upload if we haven't already
     if (!hasStartedUpload.current) {
       hasStartedUpload.current = true;
-      startUpload([file]);
+      // startUpload([file]);
       onStatusChange(fileId, "uploading");
     }
 
@@ -58,8 +63,22 @@ export const FileRow = ({
 
   return (
     <TableRow>
-      <TableCell className="font-medium">{file.name}</TableCell>
-      <TableCell>{file.type}</TableCell>
+      <TableCell className="font-medium truncate max-w-48 text-left">
+        {file.name}
+      </TableCell>
+      <TableCell>
+        <Badge
+          variant={
+            status === "complete"
+              ? "success"
+              : status === "error"
+              ? "destructive"
+              : "default"
+          }
+        >
+          {capitalizeFirstLetter(status)}
+        </Badge>
+      </TableCell>
       <TableCell className="text-right">
         {getUploadedAmount(progress, file.size)} / {formatBytes(file.size)}
       </TableCell>
@@ -84,4 +103,8 @@ function formatBytes(bytes: number, decimals = 1) {
 function getUploadedAmount(progress: number, fileSize: number) {
   const uploadedAmount = (progress / 100) * fileSize;
   return formatBytes(uploadedAmount);
+}
+
+function capitalizeFirstLetter(string: string) {
+  return string.charAt(0).toUpperCase() + string.slice(1);
 }
