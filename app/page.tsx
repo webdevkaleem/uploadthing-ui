@@ -1,4 +1,4 @@
-import UTButtonProton from "@/registry/new-york/ut-button-proton/ut-button-proton";
+import UTButtonProton from "@/registry/new-york/ut-ui-button-proton/ut-ui-button-proton";
 import UTButtonUploadthing from "@/registry/new-york/ut-button-uploadthing/ut-button-uploadthing";
 
 // This page displays items from the custom registry.

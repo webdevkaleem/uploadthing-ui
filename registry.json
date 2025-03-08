@@ -1,10 +1,10 @@
 {
   "$schema": "https://ui.shadcn.com/schema/registry.json",
-  "name": "acme",
-  "homepage": "https://acme.com",
+  "name": "Uploadthing UI",
+  "homepage": "https://uploadthing-ui.vercel.app",
   "items": [
     {
-      "name": "ut-button-proton",
+      "name": "ut-ui-button-proton",
       "type": "registry:component",
       "title": "Proton Drive Button",
       "description": "A button taken inspiration from the proton drive UI",
@@ -12,8 +12,13 @@
       "dependencies": ["zustand@latest", "uploadthing@latest", "uploadthing/react@latest", "paralleldrive/cuid2@latest", "lucide-react"],
       "files": [
         {
-          "path": "registry/new-york/ut-button-proton/ut-button-proton.tsx",
+          "path": "registry/new-york/ut-ui-button-proton/ut-ui-button-proton.tsx",
           "type": "registry:component"
+        },
+        {
+          "path": "store/ut-ui-button-proton-store.ts",
+          "type": "registry:file",
+          "target": "store/ut-ui-button-proton-store.ts"
         }
       ]
     },
@@ -26,7 +31,7 @@
       "dependencies": ["paralleldrive/cuid2@latest", "zustand@latest", "uploadthing@latest", "uploadthing/react@latest", "lucide-react"],
       "files": [
         {
-          "path": "registry/new-york/ut-button-proton/ut-button-proton.tsx",
+          "path": "registry/new-york/ut-button-uploadthing/ut-button-uploadthing.tsx",
           "type": "registry:component"
         }
       ]
