@@ -1,0 +1,24 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "ut-button-proton",
+  "type": "registry:component",
+  "title": "Proton Drive Button",
+  "description": "A button taken inspiration from the proton drive UI",
+  "dependencies": [
+    "zustand@latest",
+    "uploadthing@latest",
+    "uploadthing/react@latest"
+  ],
+  "registryDependencies": [
+    "button",
+    "table",
+    "badge"
+  ],
+  "files": [
+    {
+      "path": "registry/new-york/ut-button-proton/ut-button-proton.tsx",
+      "content": "\"use client\";\r\n\r\n// Global Imports\r\nimport { Button } from \"@/components/ui/button\";\r\nimport { useRef } from \"react\";\r\nimport FileModel from \"./fileModel\";\r\nimport Indicator from \"./indicator\";\r\nimport { useFilesStore } from \"./store\";\r\n\r\n// Local Imports\r\n\r\n// Body\r\nexport default function UTButtonProton() {\r\n  const fileInputRef = useRef<HTMLInputElement>(null);\r\n  const { addFiles, openModel } = useFilesStore();\r\n\r\n  const handleButtonClick = () => {\r\n    fileInputRef.current?.click();\r\n  };\r\n\r\n  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {\r\n    // Open the model\r\n    openModel();\r\n\r\n    const selectedFiles = e.target.files;\r\n    if (selectedFiles && selectedFiles.length > 0) {\r\n      // Convert FileList to Array and add to store\r\n      addFiles(Array.from(selectedFiles));\r\n\r\n      // Reset the input to allow selecting the same files again\r\n      if (fileInputRef.current) {\r\n        fileInputRef.current.value = \"\";\r\n      }\r\n    }\r\n  };\r\n\r\n  return (\r\n    <div className=\"flex flex-col gap-8 text-sm\">\r\n      <div>\r\n        <input\r\n          type=\"file\"\r\n          ref={fileInputRef}\r\n          onChange={handleFileChange}\r\n          style={{ display: \"none\" }}\r\n          multiple\r\n          accept=\"image/*\"\r\n        />\r\n        <Button onClick={handleButtonClick}>Select Files to Upload</Button>\r\n      </div>\r\n      <FileModel />\r\n      {/* <Indicator /> */}\r\n    </div>\r\n  );\r\n}\r\n",
+      "type": "registry:component"
+    }
+  ]
+}

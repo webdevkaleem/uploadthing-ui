@@ -4,7 +4,6 @@
 import { Button } from "@/components/ui/button";
 import { useRef } from "react";
 import FileModel from "./fileModel";
-import Indicator from "./indicator";
 import { useFilesStore } from "./store";
 
 // Local Imports
@@ -48,7 +47,6 @@ export default function UTButtonProton() {
         <Button onClick={handleButtonClick}>Select Files to Upload</Button>
       </div>
       <FileModel />
-      {/* <Indicator /> */}
     </div>
   );
 }

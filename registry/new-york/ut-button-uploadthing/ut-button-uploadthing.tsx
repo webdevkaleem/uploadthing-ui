@@ -55,7 +55,6 @@ export default function UTButtonUploadthing() {
       {files.map((fileObj) => (
         <DisplayingToasts key={fileObj.id} uploadFile={fileObj} />
       ))}
-      {/* <Indicator /> */}
     </div>
   );
 }

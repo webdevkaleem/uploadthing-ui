@@ -1,13 +1,11 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
-import { UploadFile, useFilesStore } from "./store";
 import { useUploadThing } from "@/lib/uploadthing";
-import { toast } from "sonner";
-import { Button } from "@/components/ui/button";
-import { Progress } from "@/components/ui/progress";
-import CircularProgressBar from "./circular-progress-bar";
 import { CircleCheck, GripVertical } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
+import { toast } from "sonner";
+import CircularProgressBar from "./circular-progress-bar";
+import { UploadFile, useFilesStore } from "./store";
 
 export default function DisplayingToasts({
   uploadFile,
@@ -121,8 +119,11 @@ function ToastComponentCompleted({ uploadFile }: { uploadFile: UploadFile }) {
     <div className="py-4 px-8 truncate w-96 flex gap-4 text-xs items-center">
       <CircleCheck className="stroke-1 stroke-background fill-foreground" />
       <div className="flex flex-col">
-        <p className="truncate">File uploaded successfully</p>
-        <p>{uploadFile.file.name} uploaded!</p>
+        <p className="truncate line-clamp-1">File uploaded successfully</p>
+        <div className="flex items-center justify-between">
+          <p className="truncate max-w-52">{uploadFile.file.name}</p>
+          <p>uploaded!</p>
+        </div>
       </div>
     </div>
   );
