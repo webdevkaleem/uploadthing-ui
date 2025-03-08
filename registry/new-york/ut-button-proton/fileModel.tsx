@@ -9,7 +9,7 @@ import { useCallback } from "react";
 import { FileRow } from "./fileRow";
 import { FileStatus, useFilesStore } from "./store";
 
-import { Minus, X } from "lucide-react";
+import { X } from "lucide-react";
 
 import {
   AlertDialog,

@@ -8,8 +8,22 @@
       "type": "registry:component",
       "title": "Proton Drive Button",
       "description": "A button taken inspiration from the proton drive UI",
-      "registryDependencies": ["button", "table", "badge"],
-      "dependencies": ["zustand@latest", "uploadthing@latest", "uploadthing/react@latest"],
+      "registryDependencies": ["button", "table", "badge", "alert-dialog"],
+      "dependencies": ["zustand@latest", "uploadthing@latest", "uploadthing/react@latest", "paralleldrive/cuid2@latest", "lucide-react"],
+      "files": [
+        {
+          "path": "registry/new-york/ut-button-proton/ut-button-proton.tsx",
+          "type": "registry:component"
+        }
+      ]
+    },
+    {
+      "name": "ut-button-uploadthing",
+      "type": "registry:component",
+      "title": "Uploadthing Button",
+      "description": "A button taken inspiration from the uploadthing UI",
+      "registryDependencies": ["button", "sonner"],
+      "dependencies": ["paralleldrive/cuid2@latest", "zustand@latest", "uploadthing@latest", "uploadthing/react@latest", "lucide-react"],
       "files": [
         {
           "path": "registry/new-york/ut-button-proton/ut-button-proton.tsx",
