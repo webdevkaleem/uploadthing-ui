@@ -131,11 +131,7 @@ function ToastComponent({
   return (
     <div className="py-4 px-4 truncate w-96 flex gap-4 text-xs items-center">
       <div className="min-w-[32]">
-        <CircularProgressBar
-          sqSize={32}
-          strokeWidth={1}
-          percentage={progress}
-        />
+        <CircularProgressBar percentage={progress} />
       </div>
       <p className="truncate">Uploading {uploadFile.file.name}</p>
       <div className="h-full py-1 hover:bg-foreground hover:text-background rounded-md cursor-pointer ml-auto">
