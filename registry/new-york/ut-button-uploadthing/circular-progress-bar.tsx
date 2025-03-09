@@ -1,26 +1,23 @@
-import { FC } from "react";
+"use client";
 
+// Types
 interface Props {
   strokeWidth?: number;
-
   sqSize?: number;
-
   percentage: number;
 }
 
-const CircularProgressBar: FC<Props> = (props) => {
+// Components
+export default function CircularProgressBar(props: Props) {
+  // [1] Calculations
   const { strokeWidth = 8, sqSize = 160, percentage } = props;
-
   const radius = (sqSize - strokeWidth) / 2;
-
   const viewBox = `0 0 ${sqSize} ${sqSize}`;
-
   const dashArray = radius * Math.PI * 2;
-
   const dashOffset = dashArray - (dashArray * (percentage || 0)) / 100;
-
   const statusMessage = `${percentage}`;
 
+  // [2] JSX
   return (
     <svg width={sqSize} height={sqSize} viewBox={viewBox}>
       <circle
@@ -57,6 +54,4 @@ const CircularProgressBar: FC<Props> = (props) => {
       </text>
     </svg>
   );
-};
-
-export default CircularProgressBar;
+}

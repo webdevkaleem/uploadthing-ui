@@ -5,12 +5,13 @@ import { CircleCheck, GripVertical } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
 import CircularProgressBar from "./circular-progress-bar";
-import { UploadFile, useFilesStore } from "./store";
+import { useFilesStore } from "@/store/button-uploadthing-store";
+import { UTUIUploadFile } from "@/lib/uploadthing-ui-types";
 
 export default function DisplayingToasts({
   uploadFile,
 }: {
-  uploadFile: UploadFile;
+  uploadFile: UTUIUploadFile;
 }) {
   const { updateFileStatus } = useFilesStore();
   // Keep progress state local
@@ -82,10 +83,13 @@ export default function DisplayingToasts({
       });
     }
 
-    // Add a cleanup function
-    return () => {
-      // Any cleanup code needed
-    };
+    if (uploadFile.status === "error" && toastId) {
+      //   toast.dismiss(toastId);
+      toast.custom((t) => <ToastComponentError uploadFile={uploadFile} />, {
+        id: toastId,
+        duration: 4000,
+      });
+    }
   }, [startUpload, updateFileStatus, uploadFile, progress]);
   return <div className="hidden">{uploadFile.id}</div>;
 }
@@ -95,7 +99,7 @@ function ToastComponent({
   uploadFile,
 }: {
   progress: number;
-  uploadFile: UploadFile;
+  uploadFile: UTUIUploadFile;
 }) {
   return (
     <div className="py-4 px-8 truncate w-96 flex gap-4 text-xs items-center">
@@ -114,15 +118,33 @@ function ToastComponent({
   );
 }
 
-function ToastComponentCompleted({ uploadFile }: { uploadFile: UploadFile }) {
+function ToastComponentCompleted({
+  uploadFile,
+}: {
+  uploadFile: UTUIUploadFile;
+}) {
   return (
     <div className="py-4 px-8 truncate w-96 flex gap-4 text-xs items-center">
       <CircleCheck className="stroke-1 stroke-background fill-foreground" />
       <div className="flex flex-col">
         <p className="truncate line-clamp-1">File uploaded successfully</p>
-        <div className="flex items-center justify-between gap-1">
-          <p className="truncate max-w-52">{uploadFile.file.name}</p>
+        <div className="flex items-center justify-between">
+          <p className="truncate max-w-52">{uploadFile.file.name} &nbsp;</p>
           <p>uploaded!</p>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function ToastComponentError({ uploadFile }: { uploadFile: UTUIUploadFile }) {
+  return (
+    <div className="py-4 px-8 truncate w-96 flex gap-4 text-xs items-center">
+      <CircleCheck className="stroke-1 stroke-background fill-foreground" />
+      <div className="flex flex-col">
+        <p className="truncate line-clamp-1">File couldn't be uploaded</p>
+        <div className="flex items-center justify-between">
+          <p className="truncate max-w-52">{uploadFile.file.name}</p>
         </div>
       </div>
     </div>

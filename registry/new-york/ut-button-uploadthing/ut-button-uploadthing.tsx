@@ -4,7 +4,8 @@ import { Button } from "@/components/ui/button";
 import { createId } from "@paralleldrive/cuid2";
 import { useRef } from "react";
 import DisplayingToasts from "./displaying-toasts";
-import { FileStatus, useFilesStore } from "./store";
+import { useFilesStore } from "@/store/button-uploadthing-store";
+import { UTUIFileStatus } from "@/lib/uploadthing-ui-types";
 
 export default function UTButtonUploadthing() {
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -26,7 +27,7 @@ export default function UTButtonUploadthing() {
           file: fileObj,
           id: createId(),
           fileObj,
-          status: "pending" as FileStatus, // Use type assertion here
+          status: "pending" as UTUIFileStatus, // Use type assertion here
           createdAt: new Date(),
         }))
       );
