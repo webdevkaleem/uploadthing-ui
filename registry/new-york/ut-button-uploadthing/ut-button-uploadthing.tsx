@@ -4,21 +4,18 @@ import { Button } from "@/components/ui/button";
 import { createId } from "@paralleldrive/cuid2";
 import { useRef } from "react";
 import DisplayingToasts from "./displaying-toasts";
-import { useFilesStore } from "@/store/button-uploadthing-store";
 import { UTUIFileStatus } from "@/lib/uploadthing-ui-types";
+import { useFilesStore } from "@/store/button-uploadthing-store";
 
 export default function UTButtonUploadthing() {
   const fileInputRef = useRef<HTMLInputElement>(null);
-  const { openModel, historicFiles, files, setFiles } = useFilesStore();
+  const { setFiles, historicFiles } = useFilesStore();
 
   const handleButtonClick = () => {
     fileInputRef.current?.click();
   };
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    // Open the model
-    openModel();
-
     const selectedFiles = e.target.files;
     if (selectedFiles && selectedFiles.length > 0) {
       // Convert FileList to Array and add to store
@@ -53,7 +50,7 @@ export default function UTButtonUploadthing() {
         <Button onClick={handleButtonClick}>Select Files to Upload</Button>
       </div>
 
-      {files.map((fileObj) => (
+      {historicFiles.map((fileObj) => (
         <DisplayingToasts key={fileObj.id} uploadFile={fileObj} />
       ))}
     </div>

@@ -68,10 +68,14 @@ export const useFilesStore = create<FilesState>((set) => ({
       files: state.files.map((item) =>
         item.id === id ? { ...item, status, url } : item
       ),
+      historicFiles: state.historicFiles.map((item) =>
+        item.id === id ? { ...item, status, url } : item
+      ),
     })),
   removeFile: (id) =>
     set((state) => ({
       files: state.files.filter((item) => item.id !== id),
+      historicFiles: state.historicFiles.filter((item) => item.id !== id),
     })),
   resetFiles: () =>
     set({

@@ -7,13 +7,21 @@ import { toast } from "sonner";
 import CircularProgressBar from "./circular-progress-bar";
 import { useFilesStore } from "@/store/button-uploadthing-store";
 import { UTUIUploadFile } from "@/lib/uploadthing-ui-types";
+import { UploadThingError } from "uploadthing/server";
+import { Json } from "@uploadthing/shared";
 
 export default function DisplayingToasts({
   uploadFile,
+  onUploadProgress,
+  onClientUploadComplete,
+  onUploadError,
 }: {
   uploadFile: UTUIUploadFile;
+  onUploadProgress?: (progress: number) => void;
+  onClientUploadComplete?: (res: any) => void;
+  onUploadError?: (error: UploadThingError<Json>) => void;
 }) {
-  const { updateFileStatus } = useFilesStore();
+  const { updateFileStatus, removeFile } = useFilesStore();
   // Keep progress state local
   const [progress, setProgress] = useState(0);
   // Ref to prevent state updates after unmount
@@ -31,22 +39,27 @@ export default function DisplayingToasts({
       // Only update state if component is still mounted
       if (isMounted.current) {
         setProgress(progress);
+
+        onUploadProgress?.(progress);
       }
     },
     onClientUploadComplete: (res) => {
       if (isMounted.current && res?.[0]) {
         updateFileStatus(uploadFile.id, "complete", res[0].url);
+
+        onClientUploadComplete?.(res);
       }
     },
     onUploadError: (error) => {
       if (isMounted.current) {
         updateFileStatus(uploadFile.id, "error");
+
+        onUploadError?.(error);
       }
     },
   });
-  console.log(progress);
 
-  // Update toast whenever progress changes
+  // This runs on each render when the progress updates
   useEffect(() => {
     if (toastId && isUploading) {
       // Update the existing toast with new progress
@@ -58,7 +71,7 @@ export default function DisplayingToasts({
   }, [progress, toastId, isUploading]);
 
   useEffect(() => {
-    // Only start upload if we haven't already
+    // This runs on mount when the file isn't uploading
     if (!hasStartedUpload.current && !isUploading) {
       hasStartedUpload.current = true;
       startUpload([uploadFile.file]);
@@ -73,6 +86,8 @@ export default function DisplayingToasts({
           }
         )
       );
+
+      return;
     }
 
     if (uploadFile.status === "complete" && toastId) {
@@ -81,14 +96,20 @@ export default function DisplayingToasts({
         id: toastId,
         duration: 4000,
       });
+
+      // Removing file from state
+      removeFile(uploadFile.id);
+
+      return;
     }
 
     if (uploadFile.status === "error" && toastId) {
-      //   toast.dismiss(toastId);
       toast.custom((t) => <ToastComponentError uploadFile={uploadFile} />, {
         id: toastId,
         duration: 4000,
       });
+
+      return;
     }
   }, [startUpload, updateFileStatus, uploadFile, progress]);
   return <div className="hidden">{uploadFile.id}</div>;
@@ -102,7 +123,7 @@ function ToastComponent({
   uploadFile: UTUIUploadFile;
 }) {
   return (
-    <div className="py-4 px-8 truncate w-96 flex gap-4 text-xs items-center">
+    <div className="py-4 px-4 truncate w-96 flex gap-4 text-xs items-center">
       <div className="min-w-[32]">
         <CircularProgressBar
           sqSize={32}
@@ -124,14 +145,11 @@ function ToastComponentCompleted({
   uploadFile: UTUIUploadFile;
 }) {
   return (
-    <div className="py-4 px-8 truncate w-96 flex gap-4 text-xs items-center">
+    <div className="py-4 px-4 truncate w-96 flex gap-4 text-xs items-center">
       <CircleCheck className="stroke-1 stroke-background fill-foreground" />
       <div className="flex flex-col">
         <p className="truncate line-clamp-1">File uploaded successfully</p>
-        <div className="flex items-center justify-between">
-          <p className="truncate max-w-52">{uploadFile.file.name} &nbsp;</p>
-          <p>uploaded!</p>
-        </div>
+        <p className="truncate max-w-52">Uploaded {uploadFile.file.name}</p>
       </div>
     </div>
   );
@@ -139,7 +157,7 @@ function ToastComponentCompleted({
 
 function ToastComponentError({ uploadFile }: { uploadFile: UTUIUploadFile }) {
   return (
-    <div className="py-4 px-8 truncate w-96 flex gap-4 text-xs items-center">
+    <div className="py-4 px-4 truncate w-96 flex gap-4 text-xs items-center">
       <CircleCheck className="stroke-1 stroke-background fill-foreground" />
       <div className="flex flex-col">
         <p className="truncate line-clamp-1">File couldn't be uploaded</p>
