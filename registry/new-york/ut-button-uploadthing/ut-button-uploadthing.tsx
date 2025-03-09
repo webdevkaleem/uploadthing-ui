@@ -6,11 +6,27 @@ import { useRef } from "react";
 import DisplayingToasts from "./displaying-toasts";
 import { UTUIFileStatus } from "@/lib/uploadthing-ui-types";
 import { useFilesStore } from "@/store/button-uploadthing-store";
+import { useUploadThing } from "@/lib/uploadthing";
+import { generatePermittedFileTypes } from "uploadthing/client";
 
 export default function UTButtonUploadthing() {
+  // [1] Refs & States
   const fileInputRef = useRef<HTMLInputElement>(null);
   const { setFiles, historicFiles } = useFilesStore();
 
+  // [2] Deriving the accepted file types
+  const { routeConfig } = useUploadThing("imageUploader");
+  const acceptedFileTypes = generatePermittedFileTypes(routeConfig)
+    .fileTypes.map((fileType) => {
+      if (fileType.includes("/")) {
+        return fileType;
+      } else {
+        return `${fileType}/*`;
+      }
+    })
+    .join(",");
+
+  // [3] Handlers
   const handleButtonClick = () => {
     fileInputRef.current?.click();
   };
@@ -36,6 +52,7 @@ export default function UTButtonUploadthing() {
     }
   };
 
+  // [4] JSX
   return (
     <div className="flex flex-col gap-8 text-sm">
       <div>
@@ -45,7 +62,7 @@ export default function UTButtonUploadthing() {
           onChange={handleFileChange}
           style={{ display: "none" }}
           multiple
-          accept="image/*"
+          accept={acceptedFileTypes}
         />
         <Button onClick={handleButtonClick}>Select Files to Upload</Button>
       </div>

@@ -45,8 +45,17 @@ export default function UTUIButtonProton() {
 
   // [2] Deriving the accepted file types
   const { routeConfig } = useUploadThing("imageUploader");
-  const acceptedFileTypes =
-    generatePermittedFileTypes(routeConfig).fileTypes.join(",");
+  const acceptedFileTypes = generatePermittedFileTypes(routeConfig)
+    .fileTypes.map((fileType) => {
+      if (fileType.includes("/")) {
+        return fileType;
+      } else {
+        return `${fileType}/*`;
+      }
+    })
+    .join(",");
+
+  console.log(acceptedFileTypes);
 
   // [3] Handlers
   const handleButtonClick = () => {
@@ -111,7 +120,9 @@ function FileModel() {
   );
 
   // [2] Derived State
-  const isUploadComplete = files.every((file) => file.status === "complete");
+  const isUploadComplete = files.every(
+    (file) => file.status === "complete" || file.status === "error"
+  );
 
   // [3] JSX
   return (

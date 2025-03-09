@@ -1,7 +1,12 @@
 "use client";
 
 import { useUploadThing } from "@/lib/uploadthing";
-import { CircleCheck, GripVertical } from "lucide-react";
+import {
+  CircleAlert,
+  CircleCheck,
+  CloudAlert,
+  GripVertical,
+} from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
 import CircularProgressBar from "./circular-progress-bar";
@@ -55,6 +60,8 @@ export default function DisplayingToasts({
         updateFileStatus(uploadFile.id, "error");
 
         onUploadError?.(error);
+
+        console.error(error);
       }
     },
   });
@@ -91,7 +98,6 @@ export default function DisplayingToasts({
     }
 
     if (uploadFile.status === "complete" && toastId) {
-      //   toast.dismiss(toastId);
       toast.custom((t) => <ToastComponentCompleted uploadFile={uploadFile} />, {
         id: toastId,
         duration: 4000,
@@ -158,7 +164,7 @@ function ToastComponentCompleted({
 function ToastComponentError({ uploadFile }: { uploadFile: UTUIUploadFile }) {
   return (
     <div className="py-4 px-4 truncate w-96 flex gap-4 text-xs items-center">
-      <CircleCheck className="stroke-1 stroke-background fill-foreground" />
+      <CircleAlert className="stroke-1 stroke-background fill-foreground" />
       <div className="flex flex-col">
         <p className="truncate line-clamp-1">File couldn't be uploaded</p>
         <div className="flex items-center justify-between">
