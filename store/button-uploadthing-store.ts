@@ -22,7 +22,7 @@ interface FilesState {
   removeFile: (id: string) => void;
 }
 
-export const useFilesStore = create<FilesState>((set) => ({
+export const useUploadthingStore = create<FilesState>()((set) => ({
   files: [],
   historicFiles: [],
   setFiles: (newFiles) =>
@@ -31,8 +31,8 @@ export const useFilesStore = create<FilesState>((set) => ({
       const newHistoricFiles = Array.from(newFiles).filter(
         (file) =>
           !state.historicFiles.some(
-            (historicFile) => historicFile.id === file.id
-          )
+            (historicFile) => historicFile.id === file.id,
+          ),
       );
 
       return {
@@ -43,7 +43,7 @@ export const useFilesStore = create<FilesState>((set) => ({
   updateFileStatus: (id, status, url) =>
     set((state) => ({
       historicFiles: state.historicFiles.map((item) =>
-        item.id === id ? { ...item, status, url } : item
+        item.id === id ? { ...item, status, url } : item,
       ),
     })),
   removeFile: (id) =>

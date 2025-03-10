@@ -4,22 +4,22 @@
   "homepage": "https://uploadthing-ui.vercel.app",
   "items": [
     {
-      "name": "button-proton",
+      "name": "button-generic-drive",
       "type": "registry:component",
-      "title": "Proton Drive Button",
-      "description": "A button taken inspiration from the proton drive UI",
+      "title": "Generic Drive Button",
+      "description": "Workflow: Inside storage drive applications",
       "registryDependencies": ["button", "table", "badge", "alert-dialog"],
       "dependencies": ["zustand", "uploadthing", "@uploadthing/react", "@paralleldrive/cuid2", "lucide-react"],  
       "files": [
         {
-          "path": "registry/new-york/button-proton/button-proton.tsx",
+          "path": "registry/new-york/button-generic-drive/button-generic-drive.tsx",
           "type": "registry:component",
-          "target": "components/uploadthing-ui/button-proton.tsx"
+          "target": "components/uploadthing-ui/button-storage-drive.tsx"
         },
         {
-          "path": "store/button-proton-store.ts",
+          "path": "store/button-generic-drive-store.ts",
           "type": "registry:file",
-          "target": "store/button-proton-store.ts"
+          "target": "store/button-generic-drive-store.ts"
         }
       ]
     },
