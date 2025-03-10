@@ -53,7 +53,7 @@ export default function UTUIButtonUploadthing() {
           fileObj,
           status: "pending" as UTUIFileStatus, // Use type assertion here
           createdAt: new Date(),
-        }))
+        })),
       );
 
       // Reset the input to allow selecting the same files again
@@ -105,7 +105,7 @@ function DisplayingToasts({
   const hasStartedUpload = useRef(false);
   const [progress, setProgress] = useState(0);
   const [toastId, setToastId] = useState<string | number | undefined>(
-    undefined
+    undefined,
   );
   const { updateFileStatus, removeFile } = useFilesStore();
 
@@ -153,8 +153,8 @@ function DisplayingToasts({
           (t) => <ToastComponent progress={progress} uploadFile={uploadFile} />,
           {
             duration: Infinity,
-          }
-        )
+          },
+        ),
       );
 
       return;
@@ -200,7 +200,7 @@ function DisplayingToasts({
       // Update the progress inside the toast
       toast.custom(
         (t) => <ToastComponent progress={progress} uploadFile={uploadFile} />,
-        { id: toastId }
+        { id: toastId },
       );
     }
   }, [progress, toastId, isUploading]);
@@ -216,12 +216,12 @@ function ToastComponent({
   uploadFile: UTUIUploadFile;
 }) {
   return (
-    <div className="py-4 px-4 w-96 flex gap-4 text-xs items-center select-none">
+    <div className="flex w-96 select-none items-center gap-4 px-4 py-4 text-xs">
       <div className="min-w-10">
         <CircularProgressBar percentage={progress} />
       </div>
       <p className="truncate">Uploading {uploadFile.file.name}</p>
-      <GripVertical className="stroke-1 min-w-10 ml-auto" />
+      <GripVertical className="ml-auto min-w-10 stroke-1" />
     </div>
   );
 }
@@ -232,26 +232,26 @@ function ToastComponentCompleted({
   uploadFile: UTUIUploadFile;
 }) {
   return (
-    <div className="py-4 px-4 w-96 flex gap-4 text-xs items-center select-none">
-      <CircleCheck className="stroke-1 stroke-background min-w-6 fill-foreground" />
+    <div className="flex w-96 select-none items-center gap-4 px-4 py-4 text-xs">
+      <CircleCheck className="min-w-6 fill-foreground stroke-background stroke-1" />
       <div className="flex flex-col truncate">
         <p className="truncate">File uploaded successfully!</p>
         <p className="truncate">Uploaded {uploadFile.file.name}</p>
       </div>
-      <GripVertical className="stroke-1 min-w-10 ml-auto" />
+      <GripVertical className="ml-auto min-w-10 stroke-1" />
     </div>
   );
 }
 
 function ToastComponentError({ uploadFile }: { uploadFile: UTUIUploadFile }) {
   return (
-    <div className="py-4 px-4 truncate w-96 flex gap-4 text-xs items-center select-none">
-      <Info className="stroke-1 min-w-6 stroke-background fill-foreground" />
+    <div className="flex w-96 select-none items-center gap-4 truncate px-4 py-4 text-xs">
+      <Info className="min-w-6 fill-foreground stroke-background stroke-1" />
       <div className="flex flex-col truncate">
         <p className="truncate">File couldn't be uploaded</p>
         <p className="truncate">{uploadFile.file.name}</p>
       </div>
-      <GripVertical className="stroke-1 min-w-10 ml-auto" />
+      <GripVertical className="ml-auto min-w-10 stroke-1" />
     </div>
   );
 }
@@ -274,20 +274,20 @@ function CircularProgressBar({ percentage }: { percentage: number }) {
           cy="18"
           r="16"
           fill="none"
-          className="stroke-current text-primary stroke-2"
+          className="stroke-current stroke-2 text-primary"
         ></circle>
         <circle
           cx="18"
           cy="18"
           r="16"
           fill="none"
-          className="stroke-current text-secondary stroke-2"
+          className="stroke-current stroke-2 text-secondary"
           strokeDasharray="100"
           strokeDashoffset={percentage}
           strokeLinecap="round"
         ></circle>
       </svg>
-      <div className="absolute top-1/2 start-1/2 transform -translate-y-1/2 -translate-x-1/2">
+      <div className="absolute start-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transform">
         <span className="text-center text-xs font-semibold text-primary">
           {percentage}
         </span>

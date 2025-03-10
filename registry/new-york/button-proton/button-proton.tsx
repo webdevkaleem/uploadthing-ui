@@ -67,7 +67,7 @@ export default function UTUIButtonProton({
     .join(",");
 
   const [abortSignal, setAbortSignal] = useState<AbortSignal | undefined>(
-    undefined
+    undefined,
   );
 
   // [3] Handlers
@@ -151,12 +151,12 @@ function FileModel({
     (id: string, status: UTUIFileStatus, url?: string) => {
       updateFileStatus(id, status, url);
     },
-    [updateFileStatus]
+    [updateFileStatus],
   );
 
   // [2] Derived State
   const isUploadComplete = files.every(
-    (file) => file.status === "complete" || file.status === "error"
+    (file) => file.status === "complete" || file.status === "error",
   );
 
   // [3] Handlers
@@ -380,7 +380,7 @@ function FileRow({
   // [4] JSX
   return (
     <TableRow>
-      <TableCell className="font-medium truncate max-w-48 text-left">
+      <TableCell className="max-w-48 truncate text-left font-medium">
         {file.name}
       </TableCell>
       <TableCell>
@@ -389,8 +389,8 @@ function FileRow({
             status === "complete"
               ? "success"
               : status === "error"
-              ? "destructive"
-              : "default"
+                ? "destructive"
+                : "default"
           }
         >
           {capitalizeFirstLetter(status)}
