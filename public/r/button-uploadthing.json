@@ -1,15 +1,15 @@
 {
   "$schema": "https://ui.shadcn.com/schema/registry-item.json",
-  "name": "ut-button-uploadthing",
+  "name": "button-uploadthing",
   "type": "registry:component",
   "title": "Uploadthing Button",
   "description": "A button taken inspiration from the uploadthing UI",
   "dependencies": [
-    "zustand@^5.0.3",
-    "uploadthing@^7.5.2",
-    "@uploadthing/react@^7.3.0",
-    "@paralleldrive/cuid2^2.2.2",
-    "lucide-react@^0.471.1"
+    "zustand@5.0.3",
+    "uploadthing@7.5.2",
+    "@uploadthing/react@7.3.0",
+    "@paralleldrive/cuid2@^2.2.2",
+    "lucide-react@0.471.1"
   ],
   "registryDependencies": [
     "button",

@@ -100,7 +100,6 @@ export default function UTUIButtonProton() {
 // File Model
 //////////////////////////////////////////////////////////////////////////////////
 
-// Component
 function FileModel() {
   // [1] Refs & States & Callbacks
   const {
@@ -188,7 +187,6 @@ function FileModel() {
 // File Row
 //////////////////////////////////////////////////////////////////////////////////
 
-// Types
 interface FileUploaderProps {
   fileId: string;
   file: File;
@@ -196,7 +194,6 @@ interface FileUploaderProps {
   onStatusChange: (id: string, status: UTUIFileStatus, url?: string) => void;
 }
 
-// Component
 function FileRow({ fileId, file, status, onStatusChange }: FileUploaderProps) {
   // [1] State & Ref
   const [progress, setProgress] = useState(0);
@@ -207,19 +204,16 @@ function FileRow({ fileId, file, status, onStatusChange }: FileUploaderProps) {
   const { startUpload, isUploading } = useUploadThing("imageUploader", {
     uploadProgressGranularity: "fine",
     onUploadProgress: (progress) => {
-      // Only update state if component is still mounted (prevents memory leaks)
       if (isMounted.current) {
         setProgress(progress);
       }
     },
     onClientUploadComplete: (res) => {
-      // Only update state if component is still mounted (prevents memory leaks)
       if (isMounted.current && res?.[0]) {
         onStatusChange(fileId, "complete", res[0].url);
       }
     },
     onUploadError: () => {
-      // Only update state if component is still mounted (prevents memory leaks)
       if (isMounted.current) {
         onStatusChange(fileId, "error");
       }
