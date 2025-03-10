@@ -5,8 +5,9 @@
 "use client";
 
 // Global Imports
+import { Json, UploadThingError } from "@uploadthing/shared";
 import { X } from "lucide-react";
-import { use, useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { generatePermittedFileTypes } from "uploadthing/client";
 
 // Local Imports
@@ -37,7 +38,6 @@ import {
   getUploadedAmount,
 } from "@/lib/uploadthing-ui-utils";
 import { useFilesStore } from "@/store/button-proton-store";
-import { Json, UploadThingError } from "@uploadthing/shared";
 
 // Body
 export default function UTUIButtonProton({

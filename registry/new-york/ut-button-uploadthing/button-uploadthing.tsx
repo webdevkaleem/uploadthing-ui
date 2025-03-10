@@ -6,19 +6,18 @@
 
 // Global Imports
 import { createId } from "@paralleldrive/cuid2";
-import { generatePermittedFileTypes } from "uploadthing/client";
 import { Json } from "@uploadthing/shared";
 import { CircleCheck, GripVertical, Info } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
+import { generatePermittedFileTypes } from "uploadthing/client";
 import { UploadThingError } from "uploadthing/server";
 
 // Local Imports
-import { useFilesStore } from "@/store/button-uploadthing-store";
-import { UTUIFileStatus } from "@/lib/uploadthing-ui-types";
-import { useUploadThing } from "@/lib/uploadthing";
-import { UTUIUploadFile } from "@/lib/uploadthing-ui-types";
 import { Button } from "@/components/ui/button";
+import { useUploadThing } from "@/lib/uploadthing";
+import { UTUIFileStatus, UTUIUploadFile } from "@/lib/uploadthing-ui-types";
+import { useFilesStore } from "@/store/button-uploadthing-store";
 
 // Body
 export default function UTUIButtonUploadthing() {
