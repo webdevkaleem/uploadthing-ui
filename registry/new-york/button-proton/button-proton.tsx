@@ -222,7 +222,7 @@ function FileRow({ fileId, file, status, onStatusChange }: FileUploaderProps) {
     if (!hasStartedUpload.current || isUploading) {
       hasStartedUpload.current = true;
 
-      // startUpload([file]);
+      startUpload([file]);
       onStatusChange(fileId, "uploading");
     }
   }, [fileId, file, startUpload, onStatusChange]);
