@@ -6,17 +6,18 @@
 
 // Global Imports
 import { X } from "lucide-react";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { use, useCallback, useEffect, useRef, useState } from "react";
 import { generatePermittedFileTypes } from "uploadthing/client";
 
 // Local Imports
 import {
   AlertDialog,
-  AlertDialogCancel,
   AlertDialogContent,
   AlertDialogDescription,
+  AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
+  AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -36,14 +37,24 @@ import {
   getUploadedAmount,
 } from "@/lib/uploadthing-ui-utils";
 import { useFilesStore } from "@/store/button-proton-store";
+import { Json, UploadThingError } from "@uploadthing/shared";
 
 // Body
-export default function UTUIButtonProton() {
+export default function UTUIButtonProton({
+  onClientUploadComplete,
+  onUploadError,
+  onUploadProgress,
+}: {
+  onUploadProgress?: (progress: number) => void;
+  onClientUploadComplete?: (res: any) => void;
+  onUploadError?: (error: UploadThingError<Json>) => void;
+}) {
   // [1] Refs & States
   const fileInputRef = useRef<HTMLInputElement>(null);
-  const { addFiles, openModel } = useFilesStore();
+  const { addFiles, openModel, files, resetFiles } = useFilesStore();
+  const abortControllerRef = useRef<AbortController | null>(null);
 
-  // [2] Deriving the accepted file types
+  // [2] Derived states
   const { routeConfig } = useUploadThing("imageUploader");
   const acceptedFileTypes = generatePermittedFileTypes(routeConfig)
     .fileTypes.map((fileType) => {
@@ -55,6 +66,10 @@ export default function UTUIButtonProton() {
     })
     .join(",");
 
+  const [abortSignal, setAbortSignal] = useState<AbortSignal | undefined>(
+    undefined
+  );
+
   // [3] Handlers
   const handleButtonClick = () => {
     fileInputRef.current?.click();
@@ -62,6 +77,10 @@ export default function UTUIButtonProton() {
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     openModel();
+
+    // Create a new AbortController for this upload
+    abortControllerRef.current = new AbortController();
+    setAbortSignal(abortControllerRef.current.signal);
 
     const selectedFiles = e.target.files;
     if (selectedFiles && selectedFiles.length > 0 && fileInputRef.current) {
@@ -72,6 +91,14 @@ export default function UTUIButtonProton() {
       fileInputRef.current.value = "";
     }
   };
+
+  function resetAbortController() {
+    if (abortControllerRef.current) {
+      resetFiles();
+      abortControllerRef.current.abort();
+      setAbortSignal(abortControllerRef.current.signal);
+    }
+  }
 
   // JSX
   return (
@@ -87,7 +114,13 @@ export default function UTUIButtonProton() {
       />
       {/* Button to trigger the file selection */}
       <Button onClick={handleButtonClick}>Select Files to Upload</Button>
-      <FileModel />
+      <FileModel
+        abortSignal={abortSignal}
+        onClientUploadComplete={onClientUploadComplete}
+        onUploadError={onUploadError}
+        onUploadProgress={onUploadProgress}
+        resetAbortController={resetAbortController}
+      />
     </div>
   );
 }
@@ -96,16 +129,23 @@ export default function UTUIButtonProton() {
 // File Model
 //////////////////////////////////////////////////////////////////////////////////
 
-function FileModel() {
+function FileModel({
+  abortSignal,
+  onClientUploadComplete,
+  onUploadError,
+  onUploadProgress,
+  resetAbortController,
+}: {
+  abortSignal?: AbortSignal;
+  onUploadProgress?: (progress: number) => void;
+  onClientUploadComplete?: (res: any) => void;
+  onUploadError?: (error: UploadThingError<Json>) => void;
+  resetAbortController: () => void;
+}) {
   // [1] Refs & States & Callbacks
-  const {
-    files,
-    displayModel,
-    updateFileStatus,
-    closeModel,
-    toggleModel,
-    resetFiles,
-  } = useFilesStore();
+  const { files, displayModel, updateFileStatus, closeModel, resetFiles } =
+    useFilesStore();
+  const [stopConfirmationModel, setStopConfirmationModel] = useState(false);
 
   const handleStatusChange = useCallback(
     (id: string, status: UTUIFileStatus, url?: string) => {
@@ -119,7 +159,24 @@ function FileModel() {
     (file) => file.status === "complete" || file.status === "error"
   );
 
-  // [3] JSX
+  // [3] Handlers
+  function toggleIsStopConfirmationModel() {
+    setStopConfirmationModel((cur) => !cur);
+  }
+
+  function onStopTransfers() {
+    closeModel();
+    resetFiles();
+    closeStopConfirmationModel();
+
+    resetAbortController();
+  }
+
+  function closeStopConfirmationModel() {
+    setStopConfirmationModel(false);
+  }
+
+  // [4] JSX
   return (
     <AlertDialog open={displayModel} onOpenChange={closeModel}>
       <AlertDialogContent location="bottom-right" hideOverlay>
@@ -136,18 +193,30 @@ function FileModel() {
                 </p>
               )}
               <div className="flex gap-2">
-                <AlertDialogCancel
-                  disabled={!isUploadComplete}
-                  onClick={() => {
-                    toggleModel();
+                {files.filter((file) => {
+                  if (file.status === "error") return;
+                  if (file.status === "complete") return;
 
-                    setTimeout(() => {
-                      resetFiles();
-                    }, 500);
-                  }}
-                >
-                  <X className="stroke-1" />
-                </AlertDialogCancel>
+                  return file;
+                }).length > 0 ? (
+                  <StopUploadConfirmation
+                    filesSum={files.length}
+                    open={stopConfirmationModel}
+                    toggleOpen={toggleIsStopConfirmationModel}
+                    onStopTransfers={onStopTransfers}
+                    closeOpen={closeStopConfirmationModel}
+                  />
+                ) : (
+                  <Button
+                    variant={"outline"}
+                    onClick={() => {
+                      closeStopConfirmationModel();
+                      closeModel();
+                    }}
+                  >
+                    <X className="stroke-1" />
+                  </Button>
+                )}
               </div>
             </div>
           </AlertDialogTitle>
@@ -166,14 +235,64 @@ function FileModel() {
                     key={fileItem.id}
                     fileId={fileItem.id}
                     file={fileItem.file}
+                    abortSignal={abortSignal}
                     onStatusChange={handleStatusChange}
                     status={fileItem.status}
+                    onClientUploadComplete={onClientUploadComplete}
+                    onUploadError={onUploadError}
+                    onUploadProgress={onUploadProgress}
                   />
                 ))}
               </TableBody>
             </Table>
           </AlertDialogDescription>
         </AlertDialogHeader>
+      </AlertDialogContent>
+    </AlertDialog>
+  );
+}
+
+function StopUploadConfirmation({
+  open,
+  filesSum,
+  toggleOpen,
+  closeOpen,
+  onStopTransfers,
+}: {
+  open: boolean;
+  filesSum: number;
+  toggleOpen: () => void;
+  closeOpen: () => void;
+  onStopTransfers: () => void;
+}) {
+  return (
+    <AlertDialog open={open} onOpenChange={toggleOpen}>
+      <AlertDialogTrigger asChild>
+        <Button variant={"outline"}>
+          <X className="stroke-1" />
+        </Button>
+      </AlertDialogTrigger>
+
+      <AlertDialogContent>
+        <AlertDialogHeader>
+          <AlertDialogTitle>Stop transfers?</AlertDialogTitle>
+          <AlertDialogDescription>
+            There
+            {`${filesSum > 1 ? " are " : " is "}${filesSum} file${
+              filesSum > 1 ? "s" : ""
+            }`}{" "}
+            that still need to be transfered. Closing the transfer manager will
+            end all operations
+          </AlertDialogDescription>
+        </AlertDialogHeader>
+        <AlertDialogFooter>
+          <Button variant={"outline"} onClick={closeOpen}>
+            Continue transfers
+          </Button>
+          <Button variant={"destructive"} onClick={onStopTransfers}>
+            Stop transfers
+          </Button>
+        </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>
   );
@@ -187,14 +306,28 @@ interface FileUploaderProps {
   fileId: string;
   file: File;
   status: UTUIFileStatus;
+  abortSignal?: AbortSignal;
   onStatusChange: (id: string, status: UTUIFileStatus, url?: string) => void;
+  onUploadProgress?: (progress: number) => void;
+  onClientUploadComplete?: (res: any) => void;
+  onUploadError?: (error: UploadThingError<Json>) => void;
 }
 
-function FileRow({ fileId, file, status, onStatusChange }: FileUploaderProps) {
+function FileRow({
+  fileId,
+  file,
+  status,
+  abortSignal,
+  onStatusChange,
+  onClientUploadComplete,
+  onUploadError,
+  onUploadProgress,
+}: FileUploaderProps) {
   // [1] State & Ref
   const [progress, setProgress] = useState(0);
   const isMounted = useRef(true);
   const hasStartedUpload = useRef(false);
+  const {} = useFilesStore();
 
   // [2] Uploadthing
   const { startUpload, isUploading } = useUploadThing("imageUploader", {
@@ -202,27 +335,44 @@ function FileRow({ fileId, file, status, onStatusChange }: FileUploaderProps) {
     onUploadProgress: (progress) => {
       if (isMounted.current) {
         setProgress(progress);
+
+        // Your additional code here
+        onUploadProgress?.(progress);
       }
     },
     onClientUploadComplete: (res) => {
       if (isMounted.current && res?.[0]) {
         onStatusChange(fileId, "complete", res[0].url);
+
+        // Your additional code here
+        onClientUploadComplete?.(res);
       }
     },
-    onUploadError: () => {
+    onUploadError: (error) => {
       if (isMounted.current) {
         onStatusChange(fileId, "error");
+
+        // Your additional code here
+        onUploadError?.(error);
       }
     },
+    onUploadBegin: (files) => {
+      return files;
+    },
+    signal: abortSignal,
   });
 
   // [3] Effects
   useEffect(() => {
-    // Only start upload if we haven't already
-    if (!hasStartedUpload.current || isUploading) {
+    // Only start upload if we haven't already and not abort has happened
+    if (!hasStartedUpload.current && !isUploading) {
       hasStartedUpload.current = true;
 
-      startUpload([file]);
+      startUpload([file]).catch(() => {
+        // Handling the abort
+        onStatusChange(fileId, "error");
+      });
+
       onStatusChange(fileId, "uploading");
     }
   }, [fileId, file, startUpload, onStatusChange]);
