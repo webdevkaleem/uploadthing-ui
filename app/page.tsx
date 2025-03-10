@@ -1,5 +1,5 @@
 import UTUIButtonProton from "@/registry/new-york/button-proton/button-proton";
-import UTUIButtonUploadthing from "@/registry/new-york/ut-button-uploadthing/button-uploadthing";
+import UTUIButtonUploadthing from "@/registry/new-york/button-uploadthing/button-uploadthing";
 
 // This page displays items from the custom registry.
 // You are free to implement this with your own design as needed.

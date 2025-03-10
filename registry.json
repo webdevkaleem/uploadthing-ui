@@ -32,7 +32,7 @@
       "dependencies": ["zustand", "uploadthing", "@uploadthing/react", "@paralleldrive/cuid2", "lucide-react" ],
       "files": [
         {
-          "path": "registry/new-york/ut-button-uploadthing/button-uploadthing.tsx",
+          "path": "registry/new-york/button-uploadthing/button-uploadthing.tsx",
           "type": "registry:component",
           "target": "components/uploadthing-ui/button-uploadthing.tsx"
         },
