@@ -2,7 +2,7 @@
   "name": "registry-template",
   "version": "0.1.0",
   "private": true,
-  "packageManager": "pnpm@9.0.0", 
+  "packageManager": "pnpm@9.0.0",
   "scripts": {
     "dev": "next dev --turbopack",
     "build": "next build",
@@ -20,6 +20,7 @@
     "@t3-oss/env-nextjs": "^0.12.0",
     "@tanstack/react-query": "^5.64.1",
     "@uploadthing/react": "^7.3.0",
+    "@uploadthing/shared": "^7.1.7",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "lucide-react": "^0.471.1",
