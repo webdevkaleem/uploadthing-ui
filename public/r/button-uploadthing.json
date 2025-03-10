@@ -5,7 +5,7 @@
   "title": "Uploadthing Button",
   "description": "A button taken inspiration from the uploadthing UI",
   "dependencies": [
-    "zustand@5.0.3",
+    "zustand",
     "uploadthing@7.5.2",
     "@uploadthing/react@7.3.0",
     "@paralleldrive/cuid2@^2.2.2",

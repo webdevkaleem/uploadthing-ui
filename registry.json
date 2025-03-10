@@ -9,7 +9,7 @@
       "title": "Proton Drive Button",
       "description": "A button taken inspiration from the proton drive UI",
       "registryDependencies": ["button", "table", "badge", "alert-dialog"],
-      "dependencies": ["zustand@5.0.3", "uploadthing@7.5.2", "@uploadthing/react@7.3.0", "@paralleldrive/cuid2@2.2.2", "lucide-react@0.471.1"],  
+      "dependencies": ["zustand", "uploadthing", "@uploadthing/react", "@paralleldrive/cuid2", "lucide-react"],  
       "files": [
         {
           "path": "registry/new-york/button-proton/button-proton.tsx",
@@ -29,7 +29,7 @@
       "title": "Uploadthing Button",
       "description": "A button taken inspiration from the uploadthing UI",
       "registryDependencies": ["button", "sonner"],
-      "dependencies": ["zustand@5.0.3", "uploadthing@7.5.2", "@uploadthing/react@7.3.0", "@paralleldrive/cuid2@^2.2.2", "lucide-react@0.471.1" ],
+      "dependencies": ["zustand", "uploadthing", "@uploadthing/react", "@paralleldrive/cuid2", "lucide-react" ],
       "files": [
         {
           "path": "registry/new-york/ut-button-uploadthing/button-uploadthing.tsx",
