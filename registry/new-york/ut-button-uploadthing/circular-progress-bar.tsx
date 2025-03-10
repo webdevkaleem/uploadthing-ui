@@ -33,7 +33,7 @@ export default function CircularProgressBar({
         ></circle>
       </svg>
       <div className="absolute top-1/2 start-1/2 transform -translate-y-1/2 -translate-x-1/2">
-        <span className="text-center text-xs font-bold text-primary">
+        <span className="text-center text-xs font-semibold text-primary">
           {percentage}
         </span>
       </div>

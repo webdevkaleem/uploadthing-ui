@@ -1,19 +1,14 @@
 "use client";
 
 import { useUploadThing } from "@/lib/uploadthing";
-import {
-  CircleAlert,
-  CircleCheck,
-  CloudAlert,
-  GripVertical,
-} from "lucide-react";
+import { UTUIUploadFile } from "@/lib/uploadthing-ui-types";
+import { useFilesStore } from "@/store/button-uploadthing-store";
+import { Json } from "@uploadthing/shared";
+import { CircleCheck, GripVertical, Info } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
-import CircularProgressBar from "./circular-progress-bar";
-import { useFilesStore } from "@/store/button-uploadthing-store";
-import { UTUIUploadFile } from "@/lib/uploadthing-ui-types";
 import { UploadThingError } from "uploadthing/server";
-import { Json } from "@uploadthing/shared";
+import CircularProgressBar from "./circular-progress-bar";
 
 export default function DisplayingToasts({
   uploadFile,
@@ -60,8 +55,6 @@ export default function DisplayingToasts({
         updateFileStatus(uploadFile.id, "error");
 
         onUploadError?.(error);
-
-        console.error(error);
       }
     },
   });
@@ -130,7 +123,7 @@ function ToastComponent({
 }) {
   return (
     <div className="py-4 px-4 truncate w-96 flex gap-4 text-xs items-center">
-      <div className="min-w-[32]">
+      <div className="min-w-9">
         <CircularProgressBar percentage={progress} />
       </div>
       <p className="truncate">Uploading {uploadFile.file.name}</p>
@@ -147,11 +140,11 @@ function ToastComponentCompleted({
   uploadFile: UTUIUploadFile;
 }) {
   return (
-    <div className="py-4 px-4 truncate w-96 flex gap-4 text-xs items-center">
+    <div className="py-4 px-4 w-96 flex gap-4 text-xs items-center">
       <CircleCheck className="stroke-1 stroke-background fill-foreground" />
-      <div className="flex flex-col">
-        <p className="truncate line-clamp-1">File uploaded successfully</p>
-        <p className="truncate max-w-52">Uploaded {uploadFile.file.name}</p>
+      <div className="flex flex-col w-full truncate">
+        <p className="truncate line-clamp-1">File uploaded successfully!</p>
+        <p className="truncate">Uploaded {uploadFile.file.name}</p>
       </div>
     </div>
   );
@@ -160,7 +153,7 @@ function ToastComponentCompleted({
 function ToastComponentError({ uploadFile }: { uploadFile: UTUIUploadFile }) {
   return (
     <div className="py-4 px-4 truncate w-96 flex gap-4 text-xs items-center">
-      <CircleAlert className="stroke-1 stroke-background fill-foreground" />
+      <Info className="stroke-1 stroke-background fill-foreground" />
       <div className="flex flex-col">
         <p className="truncate line-clamp-1">File couldn't be uploaded</p>
         <div className="flex items-center justify-between">
