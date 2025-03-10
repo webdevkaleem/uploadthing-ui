@@ -5,29 +5,11 @@
 "use client";
 
 // Global Imports
-import { useRef, useCallback, useState, useEffect } from "react";
-import { generatePermittedFileTypes } from "uploadthing/client";
 import { X } from "lucide-react";
+import { useCallback, useEffect, useRef, useState } from "react";
+import { generatePermittedFileTypes } from "uploadthing/client";
 
 // Local Imports
-import { useFilesStore } from "@/store/button-proton-store";
-import { useUploadThing } from "@/lib/uploadthing";
-import { UTUIFileStatus } from "@/lib/uploadthing-ui-types";
-import {
-  capitalizeFirstLetter,
-  formatBytes,
-  getUploadedAmount,
-} from "@/lib/uploadthing-ui-utils";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import {
-  Table,
-  TableBody,
-  TableHead,
-  TableHeader,
-  TableCell,
-  TableRow,
-} from "@/components/ui/table";
 import {
   AlertDialog,
   AlertDialogCancel,
@@ -36,6 +18,24 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
+import { useUploadThing } from "@/lib/uploadthing";
+import { UTUIFileStatus } from "@/lib/uploadthing-ui-types";
+import {
+  capitalizeFirstLetter,
+  formatBytes,
+  getUploadedAmount,
+} from "@/lib/uploadthing-ui-utils";
+import { useFilesStore } from "@/store/button-proton-store";
 
 // Body
 export default function UTUIButtonProton() {
@@ -55,8 +55,6 @@ export default function UTUIButtonProton() {
     })
     .join(",");
 
-  console.log(acceptedFileTypes);
-
   // [3] Handlers
   const handleButtonClick = () => {
     fileInputRef.current?.click();
@@ -66,14 +64,12 @@ export default function UTUIButtonProton() {
     openModel();
 
     const selectedFiles = e.target.files;
-    if (selectedFiles && selectedFiles.length > 0) {
+    if (selectedFiles && selectedFiles.length > 0 && fileInputRef.current) {
       // Convert FileList to Array and add them to state
       addFiles(Array.from(selectedFiles));
 
       // Reset the input to allow selecting the same files again
-      if (fileInputRef.current) {
-        fileInputRef.current.value = "";
-      }
+      fileInputRef.current.value = "";
     }
   };
 
@@ -226,7 +222,7 @@ function FileRow({ fileId, file, status, onStatusChange }: FileUploaderProps) {
     if (!hasStartedUpload.current || isUploading) {
       hasStartedUpload.current = true;
 
-      startUpload([file]);
+      // startUpload([file]);
       onStatusChange(fileId, "uploading");
     }
   }, [fileId, file, startUpload, onStatusChange]);
