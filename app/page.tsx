@@ -1,4 +1,4 @@
-import UTUIButtonProton from "@/registry/new-york/button-proton/button-proton";
+import UTUIButtonProton from "@/registry/new-york/button-generic-drive/button-generic-drive";
 import UTUIButtonUploadthing from "@/registry/new-york/button-uploadthing/button-uploadthing";
 
 // This page displays items from the custom registry.
@@ -7,19 +7,23 @@ import UTUIButtonUploadthing from "@/registry/new-york/button-uploadthing/button
 export default function Home() {
   return (
     <div className="mx-auto flex min-h-svh max-w-3xl flex-col gap-8 px-4 py-8">
-      <header className="flex flex-col gap-1">
+      <header className="flex flex-col gap-2">
         <h1 className="text-3xl font-bold tracking-tight">
           Uploadthing UI Registry
         </h1>
         <p className="text-muted-foreground">
-          A custom registry for the Uploadthing UI Components.
+          A custom opinionated registry for the Uploadthing UI.
+        </p>
+        <p className="text-muted-foreground">
+          Made for Next JS projects with TailwindCSS, ShadcnUI, Lucide React and
+          Uploadthing (duh)
         </p>
       </header>
       <main className="flex flex-1 flex-col-reverse gap-8">
         <div className="relative flex min-h-[450px] flex-col gap-4 rounded-lg border p-4">
           <div className="flex items-center justify-between">
             <h2 className="text-sm text-muted-foreground sm:pl-3">
-              A button taken inspiration from the proton drive UI
+              Workflow: Inside storage drive applications
             </h2>
           </div>
           <div className="relative flex min-h-[400px] items-center justify-center">
@@ -29,7 +33,7 @@ export default function Home() {
         <div className="relative flex min-h-[450px] flex-col gap-4 rounded-lg border p-4">
           <div className="flex items-center justify-between">
             <h2 className="text-sm text-muted-foreground sm:pl-3">
-              A button taken inspiration from the uploadthing&apos;s admin page
+              Workflow: Inside the uploadthing&apos;s admin dashboard
             </h2>
           </div>
           <div className="relative flex min-h-[400px] items-center justify-center">

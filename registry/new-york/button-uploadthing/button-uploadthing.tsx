@@ -1,5 +1,5 @@
 //////////////////////////////////////////////////////////////////////////////////
-// UTButtonUploadthing
+// UTUIButtonUploadthing
 //////////////////////////////////////////////////////////////////////////////////
 
 "use client";
@@ -17,13 +17,13 @@ import { UploadThingError } from "uploadthing/server";
 import { Button } from "@/components/ui/button";
 import { useUploadThing } from "@/lib/uploadthing";
 import { UTUIFileStatus, UTUIUploadFile } from "@/lib/uploadthing-ui-types";
-import { useFilesStore } from "@/store/button-uploadthing-store";
+import { useUploadthingStore } from "@/store/button-uploadthing-store";
 
 // Body
 export default function UTUIButtonUploadthing() {
   // [1] Refs & States
   const fileInputRef = useRef<HTMLInputElement>(null);
-  const { setFiles, historicFiles } = useFilesStore();
+  const { setFiles, historicFiles } = useUploadthingStore();
 
   // [2] Deriving the accepted file types
   const { routeConfig } = useUploadThing("imageUploader");
@@ -107,7 +107,7 @@ function DisplayingToasts({
   const [toastId, setToastId] = useState<string | number | undefined>(
     undefined,
   );
-  const { updateFileStatus, removeFile } = useFilesStore();
+  const { updateFileStatus, removeFile } = useUploadthingStore();
 
   // [2] Uploadthing
   const { startUpload, isUploading } = useUploadThing("imageUploader", {
