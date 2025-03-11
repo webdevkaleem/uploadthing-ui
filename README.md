@@ -25,6 +25,10 @@ pnpm dlx shadcn@latest add https://uploadthing-ui.vercel.app/r/button-uploadthin
 ```
 **Usage**
 ```javascript
+// add inside layout.tsx
+<Toaster expand theme="system" gap={8} />
+```
+```javascript
 // add inside a client component
 
 <UTUIButtonUploadthing
