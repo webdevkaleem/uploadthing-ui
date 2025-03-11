@@ -26,7 +26,6 @@
           "type": "registry:component",
           "target": "components/ui/alert-dialog.tsx"
         },
-        {},
         {
           "path": "components/ui/badge.tsx",
           "type": "registry:component",

@@ -10,7 +10,8 @@
     "@uploadthing/react",
     "@uploadthing/shared",
     "paralleldrive/cuid2",
-    "lucide-react"
+    "lucide-react",
+    "@radix-ui/react-alert-dialog"
   ],
   "registryDependencies": [
     "button",
