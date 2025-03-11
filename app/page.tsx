@@ -1,3 +1,5 @@
+"use client";
+
 import UTUIButtonProton from "@/registry/new-york/button-generic-drive/button-generic-drive";
 import UTUIButtonUploadthing from "@/registry/new-york/button-uploadthing/button-uploadthing";
 
@@ -27,7 +29,27 @@ export default function Home() {
             </h2>
           </div>
           <div className="relative flex min-h-[400px] items-center justify-center">
-            <UTUIButtonProton />
+            <UTUIButtonProton
+              UTUIFunctionsProps={{
+                onBeforeUploadBegin: (files) => {
+                  // Your additional code here
+
+                  return files;
+                },
+                onUploadBegin: (fileName) => {
+                  // Your additional code here
+                },
+                onUploadProgress: (progress) => {
+                  // Your additional code here
+                },
+                onClientUploadComplete: (res) => {
+                  // Your additional code here
+                },
+                onUploadError: (error) => {
+                  // Your additional code here
+                },
+              }}
+            />
           </div>
         </div>
         <div className="relative flex min-h-[450px] flex-col gap-4 rounded-lg border p-4">
@@ -37,7 +59,27 @@ export default function Home() {
             </h2>
           </div>
           <div className="relative flex min-h-[400px] items-center justify-center">
-            <UTUIButtonUploadthing />
+            <UTUIButtonUploadthing
+              UTUIFunctionsProps={{
+                onBeforeUploadBegin: (files) => {
+                  // Your additional code here
+
+                  return files;
+                },
+                onUploadBegin: (fileName) => {
+                  // Your additional code here
+                },
+                onUploadProgress: (progress) => {
+                  // Your additional code here
+                },
+                onClientUploadComplete: (res) => {
+                  // Your additional code here
+                },
+                onUploadError: (error) => {
+                  // Your additional code here
+                },
+              }}
+            />
           </div>
         </div>
       </main>

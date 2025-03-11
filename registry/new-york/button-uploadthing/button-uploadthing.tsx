@@ -6,21 +6,27 @@
 
 // Global Imports
 import { createId } from "@paralleldrive/cuid2";
-import { Json } from "@uploadthing/shared";
 import { CircleCheck, GripVertical, Info } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
 import { generatePermittedFileTypes } from "uploadthing/client";
-import { UploadThingError } from "uploadthing/server";
 
 // Local Imports
 import { Button } from "@/components/ui/button";
 import { useUploadThing } from "@/lib/uploadthing";
-import { UTUIFileStatus, UTUIUploadFile } from "@/lib/uploadthing-ui-types";
+import {
+  UTUIFileStatus,
+  UTUIFunctionsProps,
+  UTUIUploadFile,
+} from "@/lib/uploadthing-ui-types";
 import { useUploadthingStore } from "@/store/button-uploadthing-store";
 
 // Body
-export default function UTUIButtonUploadthing() {
+export default function UTUIButtonUploadthing({
+  UTUIFunctionsProps,
+}: {
+  UTUIFunctionsProps: UTUIFunctionsProps;
+}) {
   // [1] Refs & States
   const fileInputRef = useRef<HTMLInputElement>(null);
   const { setFiles, historicFiles } = useUploadthingStore();
@@ -79,7 +85,11 @@ export default function UTUIButtonUploadthing() {
       </div>
 
       {historicFiles.map((fileObj) => (
-        <DisplayingToasts key={fileObj.id} uploadFile={fileObj} />
+        <DisplayingToasts
+          key={fileObj.id}
+          uploadFile={fileObj}
+          UTUIFunctionsProps={UTUIFunctionsProps}
+        />
       ))}
     </div>
   );
@@ -91,14 +101,10 @@ export default function UTUIButtonUploadthing() {
 
 function DisplayingToasts({
   uploadFile,
-  onUploadProgress,
-  onClientUploadComplete,
-  onUploadError,
+  UTUIFunctionsProps,
 }: {
   uploadFile: UTUIUploadFile;
-  onUploadProgress?: (progress: number) => void;
-  onClientUploadComplete?: (res: any) => void;
-  onUploadError?: (error: UploadThingError<Json>) => void;
+  UTUIFunctionsProps: UTUIFunctionsProps;
 }) {
   // [1] Refs & States
   const isMounted = useRef(true);
@@ -117,7 +123,7 @@ function DisplayingToasts({
         setProgress(progress);
 
         // Your additional code here
-        onUploadProgress?.(progress);
+        UTUIFunctionsProps.onUploadProgress?.(progress);
       }
     },
     onClientUploadComplete: (res) => {
@@ -125,7 +131,7 @@ function DisplayingToasts({
         updateFileStatus(uploadFile.id, "complete", res[0].url);
 
         // Your additional code here
-        onClientUploadComplete?.(res);
+        UTUIFunctionsProps.onClientUploadComplete?.(res);
       }
     },
     onUploadError: (error) => {
@@ -133,9 +139,11 @@ function DisplayingToasts({
         updateFileStatus(uploadFile.id, "error");
 
         // Your additional code here
-        onUploadError?.(error);
+        UTUIFunctionsProps.onUploadError?.(error);
       }
     },
+    onBeforeUploadBegin: UTUIFunctionsProps.onBeforeUploadBegin,
+    onUploadBegin: UTUIFunctionsProps.onUploadBegin,
   });
 
   // [3] Effects

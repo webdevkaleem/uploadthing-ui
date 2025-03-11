@@ -31,7 +31,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { useUploadThing } from "@/lib/uploadthing";
-import { UTUIFileStatus } from "@/lib/uploadthing-ui-types";
+import { UTUIFileStatus, UTUIFunctionsProps } from "@/lib/uploadthing-ui-types";
 import {
   capitalizeFirstLetter,
   formatBytes,
@@ -41,13 +41,9 @@ import { useGenericDriveStore } from "@/store/button-generic-drive-store";
 
 // Body
 export default function UTUIButtonProton({
-  onClientUploadComplete,
-  onUploadError,
-  onUploadProgress,
+  UTUIFunctionsProps,
 }: {
-  onUploadProgress?: (progress: number) => void;
-  onClientUploadComplete?: (res: any) => void;
-  onUploadError?: (error: UploadThingError<Json>) => void;
+  UTUIFunctionsProps: UTUIFunctionsProps;
 }) {
   // [1] Refs & States
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -116,10 +112,8 @@ export default function UTUIButtonProton({
       <Button onClick={handleButtonClick}>Select Files to Upload</Button>
       <FileModel
         abortSignal={abortSignal}
-        onClientUploadComplete={onClientUploadComplete}
-        onUploadError={onUploadError}
-        onUploadProgress={onUploadProgress}
         resetAbortController={resetAbortController}
+        UTUIFunctionsProps={UTUIFunctionsProps}
       />
     </div>
   );
@@ -131,16 +125,12 @@ export default function UTUIButtonProton({
 
 function FileModel({
   abortSignal,
-  onClientUploadComplete,
-  onUploadError,
-  onUploadProgress,
   resetAbortController,
+  UTUIFunctionsProps,
 }: {
   abortSignal?: AbortSignal;
-  onUploadProgress?: (progress: number) => void;
-  onClientUploadComplete?: (res: any) => void;
-  onUploadError?: (error: UploadThingError<Json>) => void;
   resetAbortController: () => void;
+  UTUIFunctionsProps: UTUIFunctionsProps;
 }) {
   // [1] Refs & States & Callbacks
   const { files, displayModel, updateFileStatus, closeModel, resetFiles } =
@@ -238,9 +228,7 @@ function FileModel({
                     abortSignal={abortSignal}
                     onStatusChange={handleStatusChange}
                     status={fileItem.status}
-                    onClientUploadComplete={onClientUploadComplete}
-                    onUploadError={onUploadError}
-                    onUploadProgress={onUploadProgress}
+                    UTUIFunctionsProps={UTUIFunctionsProps}
                   />
                 ))}
               </TableBody>
@@ -308,9 +296,7 @@ interface FileUploaderProps {
   status: UTUIFileStatus;
   abortSignal?: AbortSignal;
   onStatusChange: (id: string, status: UTUIFileStatus, url?: string) => void;
-  onUploadProgress?: (progress: number) => void;
-  onClientUploadComplete?: (res: any) => void;
-  onUploadError?: (error: UploadThingError<Json>) => void;
+  UTUIFunctionsProps: UTUIFunctionsProps;
 }
 
 function FileRow({
@@ -319,9 +305,7 @@ function FileRow({
   status,
   abortSignal,
   onStatusChange,
-  onClientUploadComplete,
-  onUploadError,
-  onUploadProgress,
+  UTUIFunctionsProps,
 }: FileUploaderProps) {
   // [1] State & Ref
   const [progress, setProgress] = useState(0);
@@ -332,12 +316,13 @@ function FileRow({
   // [2] Uploadthing
   const { startUpload, isUploading } = useUploadThing("imageUploader", {
     uploadProgressGranularity: "fine",
+    signal: abortSignal,
     onUploadProgress: (progress) => {
       if (isMounted.current) {
         setProgress(progress);
 
         // Your additional code here
-        onUploadProgress?.(progress);
+        UTUIFunctionsProps.onUploadProgress?.(progress);
       }
     },
     onClientUploadComplete: (res) => {
@@ -345,7 +330,7 @@ function FileRow({
         onStatusChange(fileId, "complete", res[0].url);
 
         // Your additional code here
-        onClientUploadComplete?.(res);
+        UTUIFunctionsProps.onClientUploadComplete?.(res);
       }
     },
     onUploadError: (error) => {
@@ -353,13 +338,11 @@ function FileRow({
         onStatusChange(fileId, "error");
 
         // Your additional code here
-        onUploadError?.(error);
+        UTUIFunctionsProps.onUploadError?.(error);
       }
     },
-    onUploadBegin: (files) => {
-      return files;
-    },
-    signal: abortSignal,
+    onBeforeUploadBegin: UTUIFunctionsProps.onBeforeUploadBegin,
+    onUploadBegin: UTUIFunctionsProps.onUploadBegin,
   });
 
   // [3] Effects
