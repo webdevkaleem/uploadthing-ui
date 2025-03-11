@@ -8,7 +8,7 @@
       "type": "registry:component",
       "title": "Generic Drive Button",
       "description": "Workflow: Inside storage drive applications",
-      "registryDependencies": ["button", "table", "badge", "alert-dialog"],
+      "registryDependencies": ["button", "table"],
       "dependencies": ["zustand", "uploadthing", "@uploadthing/react", "@uploadthing/shared", "paralleldrive/cuid2", "lucide-react"],  
       "files": [
         {
@@ -22,6 +22,16 @@
           "target": "store/button-generic-drive-store.ts"
         },
         {
+          "path": "components/ui/alert-dialog.tsx",
+          "type": "registry:component",
+          "target": "components/ui/alert-dialog.tsx"
+        },
+        {
+          "path": "components/ui/badge.tsx",
+          "type": "registry:component",
+          "target": "components/ui/badge.tsx"
+        },
+        {
           "path": "lib/uploadthing-ui-types.ts",
           "type": "registry:file",
           "target": "lib/uploadthing-ui-types.ts"
@@ -30,6 +40,11 @@
           "path": "lib/uploadthing-ui-utils.ts",
           "type": "registry:file",
           "target": "lib/uploadthing-ui-utils.ts"
+        },
+        {
+          "path": "lib/uploadthing.ts",
+          "type": "registry:file",
+          "target": "lib/uploadthing.ts"
         }
       ]
     },
@@ -37,7 +52,7 @@
       "name": "button-uploadthing",
       "type": "registry:component",
       "title": "Uploadthing Button",
-      "description": "A button taken inspiration from the uploadthing UI",
+      "description": "Workflow: Inside the uploadthing's admin dashboard",
       "registryDependencies": ["button", "sonner"],
       "dependencies": ["zustand", "uploadthing", "@uploadthing/react", "@uploadthing/shared", "paralleldrive/cuid2", "lucide-react"],
       "files": [
@@ -60,6 +75,11 @@
           "path": "lib/uploadthing-ui-utils.ts",
           "type": "registry:file",
           "target": "lib/uploadthing-ui-utils.ts"
+        },
+        {
+          "path": "lib/uploadthing.ts",
+          "type": "registry:file",
+          "target": "lib/uploadthing.ts"
         }
       ]
     }

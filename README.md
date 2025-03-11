@@ -2,30 +2,19 @@
 
 Custom UI components for Uploadthing built on top of the [shadcn registry]. This project leverages a modern tech stack to help you get a basic scaffold up and running quickly.
 
-## Must Have
-Create a `lib/uploadthing.ts` file and add this code in it
-```javascript
-import { OurFileRouter } from "@/app/api/uploadthing/core";
-import {
-  generateReactHelpers,
-  generateUploadButton,
-  generateUploadDropzone,
-} from "@uploadthing/react";
-
-export const UploadButton = generateUploadButton<OurFileRouter>();
-export const UploadDropzone = generateUploadDropzone<OurFileRouter>();
-export const { useUploadThing, uploadFiles, createUpload } =
-  generateReactHelpers<OurFileRouter>();
-```
+<br/>
 
 ## Showcase [1]
+Workflow: Inside the uploadthing&apos;s admin dashboard
+
 **Installation**
 ```bash
 pnpm dlx shadcn@latest add https://uploadthing-ui.vercel.app/r/button-uploadthing.json
 ```
 **Usage**
 ```javascript
-// add inside layout.tsx
+// add inside your layout.tsx
+
 <Toaster expand theme="system" gap={8} />
 ```
 ```javascript
@@ -33,9 +22,12 @@ pnpm dlx shadcn@latest add https://uploadthing-ui.vercel.app/r/button-uploadthin
 
 <UTUIButtonUploadthing
   UTUIFunctionsProps={{
+    // add the file route which you want to use
+    // ps. fileRoute isn't typesafe
     fileRoute: "imageUploader",
     onBeforeUploadBegin: (files) => {
       // Your additional code here
+      console.log(files);
 
       return files;
     },
@@ -59,7 +51,11 @@ pnpm dlx shadcn@latest add https://uploadthing-ui.vercel.app/r/button-uploadthin
 />
 ```
 
+<br/>
+
 ## Showcase [2]
+Workflow: Inside storage drive applications
+
 **Installation**
 ```bash
 pnpm dlx shadcn@latest add https://uploadthing-ui.vercel.app/r/button-generic-drive.json
@@ -70,9 +66,12 @@ pnpm dlx shadcn@latest add https://uploadthing-ui.vercel.app/r/button-generic-dr
 
 <UTUIButtonProton
   UTUIFunctionsProps={{
+    // add the file route which you want to use
+    // ps. fileRoute isn't typesafe
     fileRoute: "imageUploader",
     onBeforeUploadBegin: (files) => {
       // Your additional code here
+      console.log(files);
 
       return files;
     },

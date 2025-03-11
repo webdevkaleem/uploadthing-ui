@@ -5,7 +5,6 @@
 "use client";
 
 // Global Imports
-import { Json, UploadThingError } from "@uploadthing/shared";
 import { X } from "lucide-react";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { generatePermittedFileTypes } from "uploadthing/client";

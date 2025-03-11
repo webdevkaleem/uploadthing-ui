@@ -3,7 +3,7 @@
   "name": "button-uploadthing",
   "type": "registry:component",
   "title": "Uploadthing Button",
-  "description": "A button taken inspiration from the uploadthing UI",
+  "description": "Workflow: Inside the uploadthing's admin dashboard",
   "dependencies": [
     "zustand",
     "uploadthing",
@@ -40,6 +40,12 @@
       "content": "// Converts the size into readable format\r\nexport function formatBytes(bytes: number, decimals = 1) {\r\n  if (bytes === 0) return \"0 B\";\r\n\r\n  const k = 1024;\r\n  const dm = decimals < 0 ? 0 : decimals;\r\n  const sizes = [\"B\", \"KB\", \"MB\", \"GB\", \"TB\", \"PB\", \"EB\", \"ZB\", \"YB\"];\r\n\r\n  const i = Math.floor(Math.log(bytes) / Math.log(k));\r\n\r\n  return `${parseFloat((bytes / k ** i).toFixed(dm))} ${sizes[i]}`;\r\n}\r\n\r\n// Return the amount of file uploaded\r\nexport function getUploadedAmount(progress: number, fileSize: number) {\r\n  const uploadedAmount = (progress / 100) * fileSize;\r\n  return formatBytes(uploadedAmount);\r\n}\r\n\r\n// Capitalize the first letter\r\nexport function capitalizeFirstLetter(string: string) {\r\n  return string.charAt(0).toUpperCase() + string.slice(1);\r\n}\r\n",
       "type": "registry:file",
       "target": "lib/uploadthing-ui-utils.ts"
+    },
+    {
+      "path": "lib/uploadthing.ts",
+      "content": "import { OurFileRouter } from \"@/app/api/uploadthing/core\";\r\nimport {\r\n  generateReactHelpers,\r\n  generateUploadButton,\r\n  generateUploadDropzone,\r\n} from \"@uploadthing/react\";\r\n\r\nexport const UploadButton = generateUploadButton<OurFileRouter>();\r\nexport const UploadDropzone = generateUploadDropzone<OurFileRouter>();\r\nexport const { useUploadThing, uploadFiles, createUpload } =\r\n  generateReactHelpers<OurFileRouter>();\r\n",
+      "type": "registry:file",
+      "target": "lib/uploadthing.ts"
     }
   ]
 }

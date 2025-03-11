@@ -34,6 +34,7 @@ export default function Home() {
                 fileRoute: "imageUploader",
                 onBeforeUploadBegin: (files) => {
                   // Your additional code here
+                  console.log(files);
 
                   return files;
                 },
@@ -69,6 +70,7 @@ export default function Home() {
                 fileRoute: "imageUploader",
                 onBeforeUploadBegin: (files) => {
                   // Your additional code here
+                  console.log(files);
 
                   return files;
                 },
