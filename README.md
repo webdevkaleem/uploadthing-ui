@@ -8,7 +8,30 @@ Custom UI components for Uploadthing built on top of the [shadcn registry]. This
 pnpm dlx shadcn@latest add https://uploadthing-ui.vercel.app/r/button-uploadthing.json
 ```
 **Usage**
-```bash
+```javascript
+// add inside a client component
+
+<UTUIButtonUploadthing
+  UTUIFunctionsProps={{
+    onBeforeUploadBegin: (files) => {
+      // Your additional code here
+
+      return files;
+    },
+    onUploadBegin: (fileName) => {
+      // Your additional code here
+    },
+    onUploadProgress: (progress) => {
+      // Your additional code here
+    },
+    onClientUploadComplete: (res) => {
+      // Your additional code here
+    },
+    onUploadError: (error) => {
+      // Your additional code here
+    },
+  }}
+/>
 ```
 
 ## Showcase [2]
@@ -17,7 +40,30 @@ pnpm dlx shadcn@latest add https://uploadthing-ui.vercel.app/r/button-uploadthin
 pnpm dlx shadcn@latest add https://uploadthing-ui.vercel.app/r/button-generic-drive.json
 ```
 **Usage**
-```bash
+```javascript
+// add inside a client component
+
+<UTUIButtonProton
+  UTUIFunctionsProps={{
+    onBeforeUploadBegin: (files) => {
+      // Your additional code here
+
+      return files;
+    },
+    onUploadBegin: (fileName) => {
+      // Your additional code here
+    },
+    onUploadProgress: (progress) => {
+      // Your additional code here
+    },
+    onClientUploadComplete: (res) => {
+      // Your additional code here
+    },
+    onUploadError: (error) => {
+      // Your additional code here
+    },
+  }}
+/>
 ```
 
 ## Technologies Used
