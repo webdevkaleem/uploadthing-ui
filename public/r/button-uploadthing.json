@@ -9,6 +9,7 @@
     "uploadthing",
     "uploadthing/react",
     "uploadthing/shared",
+    "uploadthing/types",
     "paralleldrive/cuid2",
     "lucide-react"
   ],
@@ -31,7 +32,7 @@
     },
     {
       "path": "lib/uploadthing-ui-types.ts",
-      "content": "import { Json, UploadThingError } from \"@uploadthing/shared\";\r\n\r\nexport type UTUIFileStatus = \"pending\" | \"uploading\" | \"complete\" | \"error\";\r\n\r\nexport interface UTUIUploadFile {\r\n  id: string;\r\n  file: File;\r\n  status: UTUIFileStatus;\r\n  url?: string;\r\n  createdAt: Date;\r\n}\r\n\r\nexport interface UTUIFunctionsProps {\r\n  onUploadProgress?: (progress: number) => void;\r\n  onClientUploadComplete?: (res: any) => void;\r\n  onUploadError?: (error: UploadThingError<Json>) => void;\r\n  onBeforeUploadBegin?:\r\n    | ((files: File[]) => Promise<File[]> | File[])\r\n    | undefined;\r\n  onUploadBegin?: ((fileName: string) => void) | undefined;\r\n}\r\n",
+      "content": "import { Json, MaybePromise, UploadThingError } from \"@uploadthing/shared\";\r\nimport { ClientUploadedFileData } from \"uploadthing/types\";\r\n\r\nexport type UTUIFileStatus = \"pending\" | \"uploading\" | \"complete\" | \"error\";\r\n\r\nexport interface UTUIUploadFile {\r\n  id: string;\r\n  file: File;\r\n  status: UTUIFileStatus;\r\n  url?: string;\r\n  createdAt: Date;\r\n}\r\n\r\nexport interface UTUIFunctionsProps {\r\n  onUploadProgress?: (progress: number) => void;\r\n  onClientUploadComplete?:\r\n    | ((\r\n        res: ClientUploadedFileData<{\r\n          uploadedBy: string;\r\n        }>[],\r\n      ) => MaybePromise<void>)\r\n    | undefined;\r\n  onUploadError?: (error: UploadThingError<Json>) => void;\r\n  onBeforeUploadBegin?:\r\n    | ((files: File[]) => Promise<File[]> | File[])\r\n    | undefined;\r\n  onUploadBegin?: ((fileName: string) => void) | undefined;\r\n}\r\n",
       "type": "registry:file",
       "target": "lib/uploadthing-ui-types.ts"
     },

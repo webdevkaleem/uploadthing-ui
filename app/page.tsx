@@ -38,15 +38,19 @@ export default function Home() {
                 },
                 onUploadBegin: (fileName) => {
                   // Your additional code here
+                  console.log(fileName);
                 },
                 onUploadProgress: (progress) => {
                   // Your additional code here
+                  console.log(progress);
                 },
                 onClientUploadComplete: (res) => {
                   // Your additional code here
+                  console.log(res);
                 },
                 onUploadError: (error) => {
                   // Your additional code here
+                  console.log(error);
                 },
               }}
             />
@@ -68,15 +72,19 @@ export default function Home() {
                 },
                 onUploadBegin: (fileName) => {
                   // Your additional code here
+                  console.log(fileName);
                 },
                 onUploadProgress: (progress) => {
                   // Your additional code here
+                  console.log(progress);
                 },
                 onClientUploadComplete: (res) => {
                   // Your additional code here
+                  console.log(res);
                 },
                 onUploadError: (error) => {
                   // Your additional code here
+                  console.log(error);
                 },
               }}
             />
