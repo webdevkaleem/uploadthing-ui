@@ -7,9 +7,8 @@
   "dependencies": [
     "zustand",
     "uploadthing",
-    "uploadthing/react",
-    "uploadthing/shared",
-    "uploadthing/types",
+    "@uploadthing/react",
+    "@uploadthing/shared",
     "paralleldrive/cuid2",
     "lucide-react"
   ],

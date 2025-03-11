@@ -9,7 +9,7 @@
       "title": "Generic Drive Button",
       "description": "Workflow: Inside storage drive applications",
       "registryDependencies": ["button", "table", "badge", "alert-dialog"],
-      "dependencies": ["zustand", "uploadthing", "uploadthing/react", "uploadthing/shared", "uploadthing/types", "paralleldrive/cuid2", "lucide-react"],  
+      "dependencies": ["zustand", "uploadthing", "@uploadthing/react", "@uploadthing/shared", "paralleldrive/cuid2", "lucide-react"],  
       "files": [
         {
           "path": "registry/new-york/button-generic-drive/button-generic-drive.tsx",
@@ -39,7 +39,7 @@
       "title": "Uploadthing Button",
       "description": "A button taken inspiration from the uploadthing UI",
       "registryDependencies": ["button", "sonner"],
-      "dependencies": ["zustand", "uploadthing", "uploadthing/react", "uploadthing/shared", "uploadthing/types", "paralleldrive/cuid2", "lucide-react"],
+      "dependencies": ["zustand", "uploadthing", "@uploadthing/react", "@uploadthing/shared", "paralleldrive/cuid2", "lucide-react"],
       "files": [
         {
           "path": "registry/new-york/button-uploadthing/button-uploadthing.tsx",
