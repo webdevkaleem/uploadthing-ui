@@ -29,6 +29,7 @@ pnpm dlx shadcn@latest add https://uploadthing-ui.vercel.app/r/button-uploadthin
 
 <UTUIButtonUploadthing
   UTUIFunctionsProps={{
+    fileRoute: "imageUploader",
     onBeforeUploadBegin: (files) => {
       // Your additional code here
 
@@ -36,15 +37,19 @@ pnpm dlx shadcn@latest add https://uploadthing-ui.vercel.app/r/button-uploadthin
     },
     onUploadBegin: (fileName) => {
       // Your additional code here
+      console.log(fileName);
     },
     onUploadProgress: (progress) => {
       // Your additional code here
+      console.log(progress);
     },
     onClientUploadComplete: (res) => {
       // Your additional code here
+      console.log(res);
     },
     onUploadError: (error) => {
       // Your additional code here
+      console.log(error);
     },
   }}
 />
@@ -61,6 +66,7 @@ pnpm dlx shadcn@latest add https://uploadthing-ui.vercel.app/r/button-generic-dr
 
 <UTUIButtonProton
   UTUIFunctionsProps={{
+    fileRoute: "imageUploader",
     onBeforeUploadBegin: (files) => {
       // Your additional code here
 
@@ -68,15 +74,19 @@ pnpm dlx shadcn@latest add https://uploadthing-ui.vercel.app/r/button-generic-dr
     },
     onUploadBegin: (fileName) => {
       // Your additional code here
+      console.log(fileName);
     },
     onUploadProgress: (progress) => {
       // Your additional code here
+      console.log(progress);
     },
     onClientUploadComplete: (res) => {
       // Your additional code here
+      console.log(res);
     },
     onUploadError: (error) => {
       // Your additional code here
+      console.log(error);
     },
   }}
 />

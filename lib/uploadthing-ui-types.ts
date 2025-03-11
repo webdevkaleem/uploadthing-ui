@@ -1,9 +1,5 @@
 import { Json, MaybePromise, UploadThingError } from "@uploadthing/shared";
-import {
-  ClientUploadedFileData,
-  EndpointArg,
-  FileRoute,
-} from "uploadthing/types";
+import { ClientUploadedFileData, EndpointArg } from "uploadthing/types";
 
 export type UTUIFileStatus = "pending" | "uploading" | "complete" | "error";
 
@@ -16,6 +12,7 @@ export interface UTUIUploadFile {
 }
 
 export interface UTUIFunctionsProps {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   fileRoute: EndpointArg<any, any>;
   onUploadProgress?: (progress: number) => void;
   onClientUploadComplete?:
