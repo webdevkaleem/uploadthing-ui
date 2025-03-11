@@ -53,7 +53,7 @@
       "type": "registry:component",
       "title": "Uploadthing Button",
       "description": "Workflow: Inside the uploadthing's admin dashboard",
-      "registryDependencies": ["button", "sonner"],
+      "registryDependencies": ["button"],
       "dependencies": ["zustand", "uploadthing", "@uploadthing/react", "@uploadthing/shared", "paralleldrive/cuid2", "lucide-react"],
       "files": [
         {
@@ -65,6 +65,11 @@
           "path": "store/button-uploadthing-store.ts",
           "type": "registry:file",
           "target": "store/button-uploadthing-store.ts"
+        },
+        {
+          "path": "components/ui/sonner.tsx",
+          "type": "registry:component",
+          "target": "components/ui/sonner.tsx"
         },
         {
           "path": "lib/uploadthing-ui-types.ts",
