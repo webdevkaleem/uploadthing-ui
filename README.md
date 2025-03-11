@@ -95,6 +95,8 @@ pnpm dlx shadcn@latest add https://uploadthing-ui.vercel.app/r/button-generic-dr
 />
 ```
 
+<br/>
+
 ## Technologies Used
 
 - **Tailwind CSS** for rapid, responsive styling
@@ -102,7 +104,9 @@ pnpm dlx shadcn@latest add https://uploadthing-ui.vercel.app/r/button-generic-dr
 - **lucide-react** for iconography
 - **cuid2** for generating unique IDs
 
-## Installation
+<br/>
+
+## Installation of the Registry
 
 **Clone the repository:**
 ```bash
@@ -121,16 +125,24 @@ pnpm install
 pnpm run dev
 ```
 
+<br/>
+
 ## Roadmap
 - Expand component functionalities
 - Enhance documentation and examples
 - Integrate additional features and improvements
 
+<br/>
+
 ## Shadcn Registry
 Visit the [shadcn documentation](https://ui.shadcn.com/docs/registry) to view the full documentation.
 
+<br/>
+
 ## Contributing
 Contributions are welcome! Please open an issue or submit a PR to help improve the project.
+
+<br/>
 
 ### License
 [MIT](https://choosealicense.com/licenses/mit/)
