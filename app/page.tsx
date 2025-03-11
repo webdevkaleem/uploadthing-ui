@@ -31,6 +31,7 @@ export default function Home() {
           <div className="relative flex min-h-[400px] items-center justify-center">
             <UTUIButtonProton
               UTUIFunctionsProps={{
+                fileRoute: "imageUploader",
                 onBeforeUploadBegin: (files) => {
                   // Your additional code here
 
@@ -65,6 +66,7 @@ export default function Home() {
           <div className="relative flex min-h-[400px] items-center justify-center">
             <UTUIButtonUploadthing
               UTUIFunctionsProps={{
+                fileRoute: "imageUploader",
                 onBeforeUploadBegin: (files) => {
                   // Your additional code here
 

@@ -51,7 +51,7 @@ export default function UTUIButtonProton({
   const abortControllerRef = useRef<AbortController | null>(null);
 
   // [2] Derived states
-  const { routeConfig } = useUploadThing("imageUploader");
+  const { routeConfig } = useUploadThing(UTUIFunctionsProps.fileRoute);
   const acceptedFileTypes = generatePermittedFileTypes(routeConfig)
     .fileTypes.map((fileType) => {
       if (fileType.includes("/")) {
@@ -314,36 +314,39 @@ function FileRow({
   const {} = useGenericDriveStore();
 
   // [2] Uploadthing
-  const { startUpload, isUploading } = useUploadThing("imageUploader", {
-    uploadProgressGranularity: "fine",
-    signal: abortSignal,
-    onUploadProgress: (progress) => {
-      if (isMounted.current) {
-        setProgress(progress);
+  const { startUpload, isUploading } = useUploadThing(
+    UTUIFunctionsProps.fileRoute,
+    {
+      uploadProgressGranularity: "fine",
+      signal: abortSignal,
+      onUploadProgress: (progress) => {
+        if (isMounted.current) {
+          setProgress(progress);
 
-        // Your additional code here
-        UTUIFunctionsProps.onUploadProgress?.(progress);
-      }
-    },
-    onClientUploadComplete: (res) => {
-      if (isMounted.current && res?.[0]) {
-        onStatusChange(fileId, "complete", res[0].url);
+          // Your additional code here
+          UTUIFunctionsProps.onUploadProgress?.(progress);
+        }
+      },
+      onClientUploadComplete: (res) => {
+        if (isMounted.current && res?.[0]) {
+          onStatusChange(fileId, "complete", res[0].url);
 
-        // Your additional code here
-        UTUIFunctionsProps.onClientUploadComplete?.(res);
-      }
-    },
-    onUploadError: (error) => {
-      if (isMounted.current) {
-        onStatusChange(fileId, "error");
+          // Your additional code here
+          UTUIFunctionsProps.onClientUploadComplete?.(res);
+        }
+      },
+      onUploadError: (error) => {
+        if (isMounted.current) {
+          onStatusChange(fileId, "error");
 
-        // Your additional code here
-        UTUIFunctionsProps.onUploadError?.(error);
-      }
+          // Your additional code here
+          UTUIFunctionsProps.onUploadError?.(error);
+        }
+      },
+      onBeforeUploadBegin: UTUIFunctionsProps.onBeforeUploadBegin,
+      onUploadBegin: UTUIFunctionsProps.onUploadBegin,
     },
-    onBeforeUploadBegin: UTUIFunctionsProps.onBeforeUploadBegin,
-    onUploadBegin: UTUIFunctionsProps.onUploadBegin,
-  });
+  );
 
   // [3] Effects
   useEffect(() => {

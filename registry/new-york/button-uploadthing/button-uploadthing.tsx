@@ -32,7 +32,7 @@ export default function UTUIButtonUploadthing({
   const { setFiles, historicFiles } = useUploadthingStore();
 
   // [2] Deriving the accepted file types
-  const { routeConfig } = useUploadThing("imageUploader");
+  const { routeConfig } = useUploadThing(UTUIFunctionsProps.fileRoute);
   const acceptedFileTypes = generatePermittedFileTypes(routeConfig)
     .fileTypes.map((fileType) => {
       if (fileType.includes("/")) {
@@ -116,35 +116,38 @@ function DisplayingToasts({
   const { updateFileStatus, removeFile } = useUploadthingStore();
 
   // [2] Uploadthing
-  const { startUpload, isUploading } = useUploadThing("imageUploader", {
-    uploadProgressGranularity: "fine",
-    onUploadProgress: (progress) => {
-      if (isMounted.current) {
-        setProgress(progress);
+  const { startUpload, isUploading } = useUploadThing(
+    UTUIFunctionsProps.fileRoute,
+    {
+      uploadProgressGranularity: "fine",
+      onUploadProgress: (progress) => {
+        if (isMounted.current) {
+          setProgress(progress);
 
-        // Your additional code here
-        UTUIFunctionsProps.onUploadProgress?.(progress);
-      }
-    },
-    onClientUploadComplete: (res) => {
-      if (isMounted.current && res?.[0]) {
-        updateFileStatus(uploadFile.id, "complete", res[0].url);
+          // Your additional code here
+          UTUIFunctionsProps.onUploadProgress?.(progress);
+        }
+      },
+      onClientUploadComplete: (res) => {
+        if (isMounted.current && res?.[0]) {
+          updateFileStatus(uploadFile.id, "complete", res[0].url);
 
-        // Your additional code here
-        UTUIFunctionsProps.onClientUploadComplete?.(res);
-      }
-    },
-    onUploadError: (error) => {
-      if (isMounted.current) {
-        updateFileStatus(uploadFile.id, "error");
+          // Your additional code here
+          UTUIFunctionsProps.onClientUploadComplete?.(res);
+        }
+      },
+      onUploadError: (error) => {
+        if (isMounted.current) {
+          updateFileStatus(uploadFile.id, "error");
 
-        // Your additional code here
-        UTUIFunctionsProps.onUploadError?.(error);
-      }
+          // Your additional code here
+          UTUIFunctionsProps.onUploadError?.(error);
+        }
+      },
+      onBeforeUploadBegin: UTUIFunctionsProps.onBeforeUploadBegin,
+      onUploadBegin: UTUIFunctionsProps.onUploadBegin,
     },
-    onBeforeUploadBegin: UTUIFunctionsProps.onBeforeUploadBegin,
-    onUploadBegin: UTUIFunctionsProps.onUploadBegin,
-  });
+  );
 
   // [3] Effects
   // When a file isn't uploading
