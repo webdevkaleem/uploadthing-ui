@@ -2,6 +2,22 @@
 
 Custom UI components for Uploadthing built on top of the [shadcn registry]. This project leverages a modern tech stack to help you get a basic scaffold up and running quickly.
 
+## Must Have
+Create a `lib/uploadthing.ts` file and add this code in it
+```javascript
+import { OurFileRouter } from "@/app/api/uploadthing/core";
+import {
+  generateReactHelpers,
+  generateUploadButton,
+  generateUploadDropzone,
+} from "@uploadthing/react";
+
+export const UploadButton = generateUploadButton<OurFileRouter>();
+export const UploadDropzone = generateUploadDropzone<OurFileRouter>();
+export const { useUploadThing, uploadFiles, createUpload } =
+  generateReactHelpers<OurFileRouter>();
+```
+
 ## Showcase [1]
 **Installation**
 ```bash
