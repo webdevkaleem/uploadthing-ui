@@ -1,20 +1,61 @@
-# registry-template
+# Uploadthing UI Components
 
-You can use the `shadcn` CLI to run your own component registry. Running your own
-component registry allows you to distribute your custom components, hooks, pages, and
-other files to any React project.
+Custom UI components for Uploadthing built on top of the [shadcn registry]. This project leverages a modern tech stack to help you get a basic scaffold up and running quickly.
 
-## Getting Started
+## Showcase [1]
+**Installation**
+```bash
+pnpm dlx shadcn@latest add https://uploadthing-ui.vercel.app/r/button-uploadthing.json
+```
+**Usage**
+```bash
+```
 
-This is a template for creating a custom registry using Next.js.
+## Showcase [2]
+**Installation**
+```bash
+pnpm dlx shadcn@latest add https://uploadthing-ui.vercel.app/r/button-generic-drive.json
+```
+**Usage**
+```bash
+```
 
-- The template uses a `registry.json` file to define components and their files.
-- The `shadcn build` command is used to build the registry.
-- The registry items are served as static files under `public/r/[name].json`.
-- The template also includes a route handler for serving registry items.
-- Every registry item are compatible with the `shadcn` CLI.
-- We have also added v0 integration using the `Open in v0` api.
+## Technologies Used
 
-## Documentation
+- **Tailwind CSS** for rapid, responsive styling
+- **shadcn components** for a beautiful, consistent UI
+- **lucide-react** for iconography
+- **cuid2** for generating unique IDs
 
+## Installation
+
+**Clone the repository:**
+```bash
+git clone https://github.com/webdevkaleem/uploadthing-ui.git
+```
+**Create a .env file in the root directory and add the following variables**
+```bash
+UPLOADTHING_TOKEN=""
+```
+**Install dependencies**
+```bash
+pnpm install
+```
+**Start the development server**
+```bash
+pnpm run dev
+```
+
+## Roadmap
+- Expand component functionalities
+- Enhance documentation and examples
+- Integrate additional features and improvements
+
+## Shadcn Registry
 Visit the [shadcn documentation](https://ui.shadcn.com/docs/registry) to view the full documentation.
+
+## Contributing
+Contributions are welcome! Please open an issue or submit a PR to help improve the project.
+
+### License
+[MIT](https://choosealicense.com/licenses/mit/)
