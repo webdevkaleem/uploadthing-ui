@@ -9,7 +9,7 @@
       "title": "Generic Drive Button",
       "description": "Workflow: Inside storage drive applications",
       "registryDependencies": ["button", "table"],
-      "dependencies": ["zustand", "uploadthing", "@uploadthing/react", "@uploadthing/shared", "paralleldrive/cuid2", "lucide-react"],  
+      "dependencies": ["zustand", "uploadthing", "@uploadthing/react", "@uploadthing/shared", "paralleldrive/cuid2", "lucide-react", "@radix-ui/react-alert-dialog"],  
       "files": [
         {
           "path": "registry/new-york/button-generic-drive/button-generic-drive.tsx",
@@ -26,6 +26,7 @@
           "type": "registry:component",
           "target": "components/ui/alert-dialog.tsx"
         },
+        {},
         {
           "path": "components/ui/badge.tsx",
           "type": "registry:component",
