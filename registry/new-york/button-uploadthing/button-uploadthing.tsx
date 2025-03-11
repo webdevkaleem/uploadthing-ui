@@ -81,7 +81,9 @@ export default function UTUIButtonUploadthing({
           multiple
           accept={acceptedFileTypes}
         />
-        <Button onClick={handleButtonClick}>Select Files to Upload</Button>
+        <Button className="w-fit" onClick={handleButtonClick}>
+          Select Files to Upload
+        </Button>
       </div>
 
       {historicFiles.map((fileObj) => (

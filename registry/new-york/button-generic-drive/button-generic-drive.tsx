@@ -108,7 +108,9 @@ export default function UTUIButtonProton({
         accept={acceptedFileTypes}
       />
       {/* Button to trigger the file selection */}
-      <Button onClick={handleButtonClick}>Select Files to Upload</Button>
+      <Button className="w-fit" onClick={handleButtonClick}>
+        Select Files to Upload
+      </Button>
       <FileModel
         abortSignal={abortSignal}
         resetAbortController={resetAbortController}
