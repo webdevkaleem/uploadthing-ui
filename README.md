@@ -100,9 +100,9 @@ pnpm dlx shadcn@latest add https://uploadthing-ui.vercel.app/r/button-generic-dr
 ## Technologies Used
 
 - **Tailwind CSS** for rapid, responsive styling
-- **shadcn components** for a beautiful, consistent UI
-- **lucide-react** for iconography
-- **cuid2** for generating unique IDs
+- **Shadcn components** for a beautiful, consistent UI
+- **Lucide-react** for iconography
+- **Cuid2** for generating unique IDs
 
 <br/>
 
