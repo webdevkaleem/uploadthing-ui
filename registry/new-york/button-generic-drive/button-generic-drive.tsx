@@ -167,6 +167,12 @@ function FileModel({
     setStopConfirmationModel(false);
   }
 
+  function closeModelAfterUpload() {
+    closeStopConfirmationModel();
+    closeModel();
+    resetFiles();
+  }
+
   // [4] JSX
   return (
     <AlertDialog open={displayModel} onOpenChange={closeModel}>
@@ -198,13 +204,7 @@ function FileModel({
                     closeOpen={closeStopConfirmationModel}
                   />
                 ) : (
-                  <Button
-                    variant={"outline"}
-                    onClick={() => {
-                      closeStopConfirmationModel();
-                      closeModel();
-                    }}
-                  >
+                  <Button variant={"outline"} onClick={closeModelAfterUpload}>
                     <X className="stroke-1" />
                   </Button>
                 )}
