@@ -45,9 +45,6 @@ Workflow: Inside the uploadthing&apos;s admin dashboard
 ```bash
 pnpm dlx shadcn@latest add https://uploadthing-ui.vercel.app/r/button-uploadthing.json
 ```
-**Usage**
-
-<br/>
 
 Add inside your `layout.tsx`
 ```javascript
@@ -99,9 +96,6 @@ Workflow: Inside storage drive applications
 ```bash
 pnpm dlx shadcn@latest add https://uploadthing-ui.vercel.app/r/button-generic-drive.json
 ```
-**Usage**
-
-<br/>
 
 Add inside of a `client` component
 ```javascript
