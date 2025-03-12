@@ -46,13 +46,15 @@ Workflow: Inside the uploadthing&apos;s admin dashboard
 pnpm dlx shadcn@latest add https://uploadthing-ui.vercel.app/r/button-uploadthing.json
 ```
 **Usage**
+Add inside your `layout.tsx`
 ```javascript
-// add inside your layout.tsx
+import { Toaster } from "@/components/ui/sonner";
 
 <Toaster expand theme="system" gap={8} />
 ```
+Add inside of a `client` component
 ```javascript
-// add inside a client component
+import { UTUIButtonUploadthing } from "@/components/uploadthing-ui/button-uploadthing.tsx";
 
 <UTUIButtonUploadthing
   UTUIFunctionsProps={{
@@ -95,8 +97,10 @@ Workflow: Inside storage drive applications
 pnpm dlx shadcn@latest add https://uploadthing-ui.vercel.app/r/button-generic-drive.json
 ```
 **Usage**
+Add inside of a `client` component
 ```javascript
-// add inside a client component
+
+import { UTUIButtonProton } from "@/components/uploadthing-ui/button-generic-drive.tsx";
 
 <UTUIButtonProton
   UTUIFunctionsProps={{
