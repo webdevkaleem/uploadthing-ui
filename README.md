@@ -46,6 +46,9 @@ Workflow: Inside the uploadthing&apos;s admin dashboard
 pnpm dlx shadcn@latest add https://uploadthing-ui.vercel.app/r/button-uploadthing.json
 ```
 **Usage**
+
+<br/>
+
 Add inside your `layout.tsx`
 ```javascript
 import { Toaster } from "@/components/ui/sonner";
@@ -97,6 +100,9 @@ Workflow: Inside storage drive applications
 pnpm dlx shadcn@latest add https://uploadthing-ui.vercel.app/r/button-generic-drive.json
 ```
 **Usage**
+
+<br/>
+
 Add inside of a `client` component
 ```javascript
 
