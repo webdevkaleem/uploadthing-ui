@@ -39,7 +39,7 @@ import {
 import { useGenericDriveStore } from "@/store/button-generic-drive-store";
 
 // Body
-export default function UTUIButtonProton({
+export default function UTUIButtonGenericDrive({
   UTUIFunctionsProps,
 }: {
   UTUIFunctionsProps: UTUIFunctionsProps;

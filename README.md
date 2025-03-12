@@ -100,9 +100,9 @@ pnpm dlx shadcn@latest add https://uploadthing-ui.vercel.app/r/button-generic-dr
 Add inside of a `client` component
 ```javascript
 
-import { UTUIButtonProton } from "@/components/uploadthing-ui/button-generic-drive.tsx";
+import { UTUIButtonGenericDrive } from "@/components/uploadthing-ui/button-generic-drive.tsx";
 
-<UTUIButtonProton
+<UTUIButtonGenericDrive
   UTUIFunctionsProps={{
     // add the file route which you want to use
     // ps. fileRoute isn't typesafe

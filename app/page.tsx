@@ -1,6 +1,6 @@
 "use client";
 
-import UTUIButtonProton from "@/registry/new-york/button-generic-drive/button-generic-drive";
+import UTUIButtonGenericDrive from "@/registry/new-york/button-generic-drive/button-generic-drive";
 import UTUIButtonUploadthing from "@/registry/new-york/button-uploadthing/button-uploadthing";
 
 // This page displays items from the custom registry.
@@ -29,7 +29,7 @@ export default function Home() {
             </h2>
           </div>
           <div className="relative flex min-h-[400px] items-center justify-center">
-            <UTUIButtonProton
+            <UTUIButtonGenericDrive
               UTUIFunctionsProps={{
                 fileRoute: "imageUploader",
                 onBeforeUploadBegin: (files) => {
