@@ -14,7 +14,7 @@
         {
           "path": "registry/new-york/button-generic-drive/button-generic-drive.tsx",
           "type": "registry:component",
-          "target": "components/uploadthing-ui/button-storage-drive.tsx"
+          "target": "components/uploadthing-ui/button-generic-drive.tsx"
         },
         {
           "path": "store/button-generic-drive-store.ts",
