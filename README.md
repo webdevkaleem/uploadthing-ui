@@ -2,6 +2,8 @@
 
 Custom UI components for Uploadthing built on top of the [Shadcn Registry](https://ui.shadcn.com/docs/registry). This project is for [Next JS](https://nextjs.org/)/[React](https://react.dev/) only. It's an opinionated way of handling uploadthing's client side state.
 
+<br/>
+
 ## Technologies Used
 
 - [**Tailwind CSS**](https://tailwindcss.com/) for rapid, responsive styling
@@ -9,6 +11,30 @@ Custom UI components for Uploadthing built on top of the [Shadcn Registry](https
 - [**Zustand**](https://zustand.docs.pmnd.rs/getting-started/introduction) for state management
 - [**Lucide-react**](https://lucide.dev/) for iconography
 - [**Cuid2**](https://github.com/paralleldrive/cuid2) for generating unique IDs
+
+<br/>
+
+## Project Structure
+This project structure will be used upon installation of the components. This is just for reference
+```
+│
+├───api
+│   └───uploadthing
+│   |    └───core.ts  
+│   |    └───route.ts  
+└───components
+│   └───uploadthing-ui
+│   |    └─── ...
+└───lib
+│   └───uploadthing-ui-types.ts 
+│   └───uploadthing-ui-utils.ts 
+│   └───uploadthing.ts 
+└───store 
+│   └─── ...
+│
+
+```
+
 
 <br/>
 
