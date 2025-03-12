@@ -54,7 +54,7 @@ import { Toaster } from "@/components/ui/sonner";
 ```
 Add inside of a `client` component
 ```javascript
-import { UTUIButtonUploadthing } from "@/components/uploadthing-ui/button-uploadthing.tsx";
+import { UTUIButtonUploadthing } from "@/components/uploadthing-ui/button-uploadthing";
 
 <UTUIButtonUploadthing
   UTUIFunctionsProps={{
@@ -100,7 +100,7 @@ pnpm dlx shadcn@latest add https://uploadthing-ui.vercel.app/r/button-generic-dr
 Add inside of a `client` component
 ```javascript
 
-import { UTUIButtonGenericDrive } from "@/components/uploadthing-ui/button-generic-drive.tsx";
+import { UTUIButtonGenericDrive } from "@/components/uploadthing-ui/button-generic-drive";
 
 <UTUIButtonGenericDrive
   UTUIFunctionsProps={{
