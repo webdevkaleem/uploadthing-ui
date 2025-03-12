@@ -10,7 +10,9 @@
     "@uploadthing/react",
     "@uploadthing/shared",
     "paralleldrive/cuid2",
-    "lucide-react"
+    "lucide-react",
+    "sonner",
+    "next-themes"
   ],
   "registryDependencies": [
     "button"

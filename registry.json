@@ -54,7 +54,7 @@
       "title": "Uploadthing Button",
       "description": "Workflow: Inside the uploadthing's admin dashboard",
       "registryDependencies": ["button"],
-      "dependencies": ["zustand", "uploadthing", "@uploadthing/react", "@uploadthing/shared", "paralleldrive/cuid2", "lucide-react"],
+      "dependencies": ["zustand", "uploadthing", "@uploadthing/react", "@uploadthing/shared", "paralleldrive/cuid2", "lucide-react", "sonner", "next-themes"],
       "files": [
         {
           "path": "registry/new-york/button-uploadthing/button-uploadthing.tsx",
