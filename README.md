@@ -1,6 +1,14 @@
 # Uploadthing UI Components
 
-Custom UI components for Uploadthing built on top of the [shadcn registry]. This project leverages a modern tech stack to help you get a basic scaffold up and running quickly.
+Custom UI components for Uploadthing built on top of the [Shadcn Registry](https://ui.shadcn.com/docs/registry). This project is for [Next JS](https://nextjs.org/)/[React](https://react.dev/) only. It's an opinionated way of handling uploadthing's client side state.
+
+## Technologies Used
+
+- [**Tailwind CSS**](https://tailwindcss.com/) for rapid, responsive styling
+- [**Shadcn**](https://ui.shadcn.com/) for a beautiful, consistent UI
+- [**Zustand**](https://zustand.docs.pmnd.rs/getting-started/introduction) for state management
+- [**Lucide-react**](https://lucide.dev/) for iconography
+- [**Cuid2**](https://github.com/paralleldrive/cuid2) for generating unique IDs
 
 <br/>
 
@@ -94,15 +102,6 @@ pnpm dlx shadcn@latest add https://uploadthing-ui.vercel.app/r/button-generic-dr
   }}
 />
 ```
-
-<br/>
-
-## Technologies Used
-
-- **Tailwind CSS** for rapid, responsive styling
-- **Shadcn components** for a beautiful, consistent UI
-- **Lucide-react** for iconography
-- **Cuid2** for generating unique IDs
 
 <br/>
 
