@@ -35,8 +35,15 @@ This project structure will be used upon installation of the components. This is
 
 ```
 
-
 <br/>
+
+## Usage
+**Create a .env file in the root directory and add the following variables**
+```bash
+UPLOADTHING_TOKEN=""
+```
+
+<br>
 
 ## Showcase [1]
 Workflow: Inside the uploadthing&apos;s admin dashboard
