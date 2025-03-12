@@ -1,4 +1,4 @@
-# Uploadthing UI Components
+# Uploadthing UI
 
 Custom UI components for Uploadthing built on top of the [Shadcn Registry](https://ui.shadcn.com/docs/registry). This project is for [Next JS](https://nextjs.org/)/[React](https://react.dev/) only. It's an opinionated way of handling uploadthing's client side state.
 
