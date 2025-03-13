@@ -16,7 +16,8 @@
         "@uploadthing/shared",
         "paralleldrive/cuid2",
         "lucide-react",
-        "@radix-ui/react-alert-dialog"
+        "@radix-ui/react-alert-dialog",
+        "vaul"
       ],
       "files": [
         {
@@ -38,6 +39,16 @@
           "path": "components/ui/badge.tsx",
           "type": "registry:component",
           "target": "components/ui/badge.tsx"
+        },
+        {
+          "path": "components/ui/drawer.tsx",
+          "type": "registry:component",
+          "target": "components/ui/drawer.tsx"
+        },
+        {
+          "path": "hooks/use-media-query.tsx",
+          "type": "registry:hook",
+          "target": "hooks/use-media-query.tsx"
         },
         {
           "path": "lib/uploadthing-ui-types.ts",
