@@ -16,7 +16,8 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Uploadthing UI",
   description:
-    "Custom uploadthing ui components built with shadcn and deployed using shadcn cli",
+    "Custom UI components for Uploadthing built on top of the Shadcn Registry. This project is for Next JS / React only. It's an opinionated way of handling uploadthing's client side state.",
+  icons: [{ rel: "icon", url: "favicon.ico" }],
 };
 
 export default function RootLayout({
