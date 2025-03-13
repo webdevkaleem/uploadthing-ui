@@ -103,6 +103,8 @@ import UTUIButtonUploadthing from "@/components/uploadthing-ui/button-uploadthin
 <br/>
 
 ## Showcase [2]
+| Note: Isn't fully mobile responsive right now
+
 Workflow: Inside storage drive applications
 
 **Installation**
