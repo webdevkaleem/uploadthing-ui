@@ -229,7 +229,7 @@ function ToastComponent({
   uploadFile: UTUIUploadFile;
 }) {
   return (
-    <div className="flex w-96 select-none items-center gap-4 rounded-md border px-4 py-4 text-xs shadow-lg">
+    <div className="flex w-full select-none items-center gap-4 rounded-md border px-4 py-4 text-xs shadow-lg sm:w-96">
       <div className="min-w-10">
         <CircularProgressBar percentage={progress} />
       </div>
@@ -245,7 +245,7 @@ function ToastComponentCompleted({
   uploadFile: UTUIUploadFile;
 }) {
   return (
-    <div className="flex w-96 select-none items-center gap-4 rounded-md border px-4 py-4 text-xs shadow-lg">
+    <div className="flex w-full select-none items-center gap-4 rounded-md border px-4 py-4 text-xs shadow-lg sm:w-96">
       <CircleCheck className="min-w-6 fill-foreground stroke-background stroke-1" />
       <div className="flex flex-col truncate">
         <p className="truncate">File uploaded successfully!</p>
@@ -258,7 +258,7 @@ function ToastComponentCompleted({
 
 function ToastComponentError({ uploadFile }: { uploadFile: UTUIUploadFile }) {
   return (
-    <div className="flex w-96 select-none items-center gap-4 truncate rounded-md border px-4 py-4 text-xs shadow-lg">
+    <div className="flex w-full select-none items-center gap-4 truncate rounded-md border px-4 py-4 text-xs shadow-lg sm:w-96">
       <Info className="min-w-6 fill-foreground stroke-background stroke-1" />
       <div className="flex flex-col truncate">
         <p className="truncate">File couldn't be uploaded</p>

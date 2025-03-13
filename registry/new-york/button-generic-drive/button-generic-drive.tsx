@@ -274,7 +274,7 @@ function StopUploadConfirmation({
             end all operations
           </AlertDialogDescription>
         </AlertDialogHeader>
-        <AlertDialogFooter>
+        <AlertDialogFooter className="gap-2">
           <Button variant={"outline"} onClick={closeOpen}>
             Continue transfers
           </Button>

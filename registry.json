@@ -9,7 +9,15 @@
       "title": "Generic Drive Button",
       "description": "Workflow: Inside storage drive applications",
       "registryDependencies": ["button", "table"],
-      "dependencies": ["zustand", "uploadthing", "@uploadthing/react", "@uploadthing/shared", "paralleldrive/cuid2", "lucide-react", "@radix-ui/react-alert-dialog"],  
+      "dependencies": [
+        "zustand",
+        "uploadthing",
+        "@uploadthing/react",
+        "@uploadthing/shared",
+        "paralleldrive/cuid2",
+        "lucide-react",
+        "@radix-ui/react-alert-dialog"
+      ],
       "files": [
         {
           "path": "registry/new-york/button-generic-drive/button-generic-drive.tsx",
@@ -54,7 +62,27 @@
       "title": "Uploadthing Button",
       "description": "Workflow: Inside the uploadthing's admin dashboard",
       "registryDependencies": ["button"],
-      "dependencies": ["zustand", "uploadthing", "@uploadthing/react", "@uploadthing/shared", "paralleldrive/cuid2", "lucide-react", "sonner", "next-themes"],
+      "dependencies": [
+        "zustand",
+        "uploadthing",
+        "@uploadthing/react",
+        "@uploadthing/shared",
+        "paralleldrive/cuid2",
+        "lucide-react",
+        "sonner",
+        "next-themes"
+      ],
+      "tailwind": {
+        "config": {
+          "theme": {
+            "extend": {
+              "screens": {
+                "sm": "600px"
+              }
+            }
+          }
+        }
+      },
       "files": [
         {
           "path": "registry/new-york/button-uploadthing/button-uploadthing.tsx",

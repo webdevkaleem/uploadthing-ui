@@ -38,10 +38,14 @@ This project structure will be used upon installation of the components. This is
 <br/>
 
 ## Usage
-**Create a .env file in the root directory and add the following variables**
+Create a .env file in the root directory and add the following variables
 ```bash
 UPLOADTHING_TOKEN=""
 ```
+Steps to follow from uploadthing's documentation
+- [Create your first file router](https://docs.uploadthing.com/getting-started/appdir#creating-your-first-file-route)
+- [Create a Next.js API route using your file router](https://docs.uploadthing.com/getting-started/appdir#create-a-next-js-api-route-using-the-file-router)
+- The [UploadThing Components](https://docs.uploadthing.com/getting-started/appdir#create-the-upload-thing-components) are generated automatically (with the required changes) when installing from this registry
 
 <br>
 
@@ -56,17 +60,19 @@ pnpm dlx shadcn@latest add https://uploadthing-ui.vercel.app/r/button-uploadthin
 Add inside your `layout.tsx`
 ```javascript
 import { Toaster } from "@/components/ui/sonner";
-
+```
+```javascript
 <Toaster expand theme="system" gap={8} />
 ```
 Add inside of a `client` component
 ```javascript
 import UTUIButtonUploadthing from "@/components/uploadthing-ui/button-uploadthing";
-
+```
+```javascript
+// add the fileRoute which you want to use
+// ps. fileRoute isn't typesafe
 <UTUIButtonUploadthing
   UTUIFunctionsProps={{
-    // add the file route which you want to use
-    // ps. fileRoute isn't typesafe
     fileRoute: "imageUploader",
     onBeforeUploadBegin: (files) => {
       // Your additional code here
@@ -106,13 +112,13 @@ pnpm dlx shadcn@latest add https://uploadthing-ui.vercel.app/r/button-generic-dr
 
 Add inside of a `client` component
 ```javascript
-
 import UTUIButtonGenericDrive from "@/components/uploadthing-ui/button-generic-drive";
-
+```
+```javascript
+// add the fileRoute which you want to use
+// ps. fileRoute isn't typesafe
 <UTUIButtonGenericDrive
   UTUIFunctionsProps={{
-    // add the file route which you want to use
-    // ps. fileRoute isn't typesafe
     fileRoute: "imageUploader",
     onBeforeUploadBegin: (files) => {
       // Your additional code here

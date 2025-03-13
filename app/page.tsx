@@ -2,6 +2,7 @@
 
 import UTUIButtonGenericDrive from "@/registry/new-york/button-generic-drive/button-generic-drive";
 import UTUIButtonUploadthing from "@/registry/new-york/button-uploadthing/button-uploadthing";
+import Link from "next/link";
 
 // This page displays items from the custom registry.
 // You are free to implement this with your own design as needed.
@@ -14,11 +15,23 @@ export default function Home() {
           Uploadthing UI Registry
         </h1>
         <p className="text-muted-foreground">
-          A custom opinionated registry for the Uploadthing UI.
-        </p>
-        <p className="text-muted-foreground">
-          Made for Next JS projects with TailwindCSS, ShadcnUI, Lucide React and
-          Uploadthing (duh)
+          Custom UI components for Uploadthing built on top of the{" "}
+          <Link
+            className="underline"
+            href={"https://ui.shadcn.com/docs/registry"}
+          >
+            Shadcn Registry
+          </Link>
+          . This project is for{" "}
+          <Link className="underline" href={"https://nextjs.org"}>
+            Next JS
+          </Link>{" "}
+          /{" "}
+          <Link className="underline" href={"https://react.dev"}>
+            React
+          </Link>{" "}
+          only. It&apos;s an opinionated way of handling uploadthing&apos;s
+          client side state.
         </p>
       </header>
       <main className="flex flex-1 flex-col-reverse gap-8">
