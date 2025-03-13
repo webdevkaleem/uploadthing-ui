@@ -22,6 +22,15 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
+  Drawer,
+  DrawerContent,
+  DrawerDescription,
+  DrawerFooter,
+  DrawerHeader,
+  DrawerTitle,
+  DrawerTrigger,
+} from "@/components/ui/drawer";
+import {
   Table,
   TableBody,
   TableCell,
@@ -29,6 +38,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { useMediaQuery } from "@/hooks/use-media-query";
 import { useUploadThing } from "@/lib/uploadthing";
 import { UTUIFileStatus, UTUIFunctionsProps } from "@/lib/uploadthing-ui-types";
 import {
@@ -41,8 +51,10 @@ import { useGenericDriveStore } from "@/store/button-generic-drive-store";
 // Body
 export default function UTUIButtonGenericDrive({
   UTUIFunctionsProps,
+  isDesktopMinWidth,
 }: {
   UTUIFunctionsProps: UTUIFunctionsProps;
+  isDesktopMinWidth?: string;
 }) {
   // [1] Refs & States
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -115,6 +127,7 @@ export default function UTUIButtonGenericDrive({
         abortSignal={abortSignal}
         resetAbortController={resetAbortController}
         UTUIFunctionsProps={UTUIFunctionsProps}
+        isDesktopMinWidth={isDesktopMinWidth}
       />
     </div>
   );
@@ -128,15 +141,25 @@ function FileModel({
   abortSignal,
   resetAbortController,
   UTUIFunctionsProps,
+  isDesktopMinWidth,
 }: {
   abortSignal?: AbortSignal;
   resetAbortController: () => void;
   UTUIFunctionsProps: UTUIFunctionsProps;
+  isDesktopMinWidth?: string;
 }) {
   // [1] Refs & States & Callbacks
-  const { files, displayModel, updateFileStatus, closeModel, resetFiles } =
-    useGenericDriveStore();
+  const {
+    files,
+    displayModel,
+    updateFileStatus,
+    closeModel: closeModelStore,
+    resetFiles,
+  } = useGenericDriveStore();
   const [stopConfirmationModel, setStopConfirmationModel] = useState(false);
+  const isDesktop = useMediaQuery(
+    `(min-width: ${isDesktopMinWidth ? isDesktopMinWidth : "768px"})`,
+  );
 
   const handleStatusChange = useCallback(
     (id: string, status: UTUIFileStatus, url?: string) => {
@@ -151,12 +174,20 @@ function FileModel({
   );
 
   // [3] Handlers
+  function closeModel() {
+    if (isUploadComplete) {
+      closeModelStore();
+    } else {
+      toggleIsStopConfirmationModel();
+    }
+  }
+
   function toggleIsStopConfirmationModel() {
     setStopConfirmationModel((cur) => !cur);
   }
 
   function onStopTransfers() {
-    closeModel();
+    closeModelStore();
     resetFiles();
     closeStopConfirmationModel();
 
@@ -173,12 +204,77 @@ function FileModel({
     resetFiles();
   }
 
-  // [4] JSX
+  // [4] JSX (Desktop)
+  if (isDesktop) {
+    return (
+      <AlertDialog open={displayModel} onOpenChange={closeModel}>
+        <AlertDialogContent location="bottom-right" hideOverlay>
+          <AlertDialogHeader>
+            <AlertDialogTitle asChild>
+              <div className="flex items-center justify-between">
+                {isUploadComplete ? (
+                  <p>
+                    {files.length} file{files.length > 1 ? "s" : ""} uploaded
+                  </p>
+                ) : (
+                  <p>
+                    {files.length} file{files.length > 1 ? "s" : ""} uploading
+                  </p>
+                )}
+                <div className="flex gap-2">
+                  {!isUploadComplete ? (
+                    <StopUploadConfirmation
+                      filesSum={files.length}
+                      open={stopConfirmationModel}
+                      toggleOpen={toggleIsStopConfirmationModel}
+                      onStopTransfers={onStopTransfers}
+                      closeOpen={closeStopConfirmationModel}
+                      isDesktopMinWidth={isDesktopMinWidth}
+                    />
+                  ) : (
+                    <Button variant={"outline"} onClick={closeModelAfterUpload}>
+                      <X className="stroke-1" />
+                    </Button>
+                  )}
+                </div>
+              </div>
+            </AlertDialogTitle>
+            <AlertDialogDescription asChild>
+              <Table>
+                <TableHeader>
+                  <TableRow>
+                    <TableHead>Name</TableHead>
+                    <TableHead>Status</TableHead>
+                    <TableHead className="text-right">Uploading</TableHead>
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  {files.map((fileItem) => (
+                    <FileRow
+                      key={fileItem.id}
+                      fileId={fileItem.id}
+                      file={fileItem.file}
+                      abortSignal={abortSignal}
+                      onStatusChange={handleStatusChange}
+                      status={fileItem.status}
+                      UTUIFunctionsProps={UTUIFunctionsProps}
+                    />
+                  ))}
+                </TableBody>
+              </Table>
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+        </AlertDialogContent>
+      </AlertDialog>
+    );
+  }
+
+  // [4] JSX (Mobile)
   return (
-    <AlertDialog open={displayModel} onOpenChange={closeModel}>
-      <AlertDialogContent location="bottom-right" hideOverlay>
-        <AlertDialogHeader>
-          <AlertDialogTitle asChild>
+    <Drawer open={displayModel} onOpenChange={closeModel}>
+      <DrawerContent>
+        <DrawerHeader className="text-left">
+          <DrawerTitle asChild>
             <div className="flex items-center justify-between">
               {isUploadComplete ? (
                 <p>
@@ -190,18 +286,14 @@ function FileModel({
                 </p>
               )}
               <div className="flex gap-2">
-                {files.filter((file) => {
-                  if (file.status === "error") return;
-                  if (file.status === "complete") return;
-
-                  return file;
-                }).length > 0 ? (
+                {!isUploadComplete ? (
                   <StopUploadConfirmation
                     filesSum={files.length}
                     open={stopConfirmationModel}
                     toggleOpen={toggleIsStopConfirmationModel}
                     onStopTransfers={onStopTransfers}
                     closeOpen={closeStopConfirmationModel}
+                    isDesktopMinWidth={isDesktopMinWidth}
                   />
                 ) : (
                   <Button variant={"outline"} onClick={closeModelAfterUpload}>
@@ -210,8 +302,8 @@ function FileModel({
                 )}
               </div>
             </div>
-          </AlertDialogTitle>
-          <AlertDialogDescription asChild>
+          </DrawerTitle>
+          <DrawerDescription asChild>
             <Table>
               <TableHeader>
                 <TableRow>
@@ -234,56 +326,98 @@ function FileModel({
                 ))}
               </TableBody>
             </Table>
-          </AlertDialogDescription>
-        </AlertDialogHeader>
-      </AlertDialogContent>
-    </AlertDialog>
+          </DrawerDescription>
+        </DrawerHeader>
+      </DrawerContent>
+    </Drawer>
   );
 }
 
 function StopUploadConfirmation({
   open,
   filesSum,
+  isDesktopMinWidth,
   toggleOpen,
   closeOpen,
   onStopTransfers,
 }: {
   open: boolean;
   filesSum: number;
+  isDesktopMinWidth?: string;
   toggleOpen: () => void;
   closeOpen: () => void;
   onStopTransfers: () => void;
 }) {
+  const isDesktop = useMediaQuery(
+    `(min-width: ${isDesktopMinWidth ? isDesktopMinWidth : "768px"})`,
+  );
+
+  // [1] JSX (Desktop)
+  if (isDesktop) {
+    return (
+      <AlertDialog open={open} onOpenChange={toggleOpen}>
+        <AlertDialogTrigger asChild>
+          <Button variant={"outline"}>
+            <X className="stroke-1" />
+          </Button>
+        </AlertDialogTrigger>
+
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Stop transfers?</AlertDialogTitle>
+            <AlertDialogDescription>
+              There
+              {`${filesSum > 1 ? " are " : " is "}${filesSum} file${
+                filesSum > 1 ? "s" : ""
+              }`}{" "}
+              that still need to be transfered. Closing the transfer manager
+              will end all operations
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter className="gap-2">
+            <Button variant={"outline"} onClick={closeOpen}>
+              Continue transfers
+            </Button>
+            <Button variant={"destructive"} onClick={onStopTransfers}>
+              Stop transfers
+            </Button>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
+    );
+  }
+
+  // [2] JSX (Mobile)
   return (
-    <AlertDialog open={open} onOpenChange={toggleOpen}>
-      <AlertDialogTrigger asChild>
+    <Drawer open={open} onOpenChange={toggleOpen}>
+      <DrawerTrigger asChild>
         <Button variant={"outline"}>
           <X className="stroke-1" />
         </Button>
-      </AlertDialogTrigger>
+      </DrawerTrigger>
 
-      <AlertDialogContent>
-        <AlertDialogHeader>
-          <AlertDialogTitle>Stop transfers?</AlertDialogTitle>
-          <AlertDialogDescription>
+      <DrawerContent showOverlay={false}>
+        <DrawerHeader className="text-left">
+          <DrawerTitle>Stop transfers?</DrawerTitle>
+          <DrawerDescription>
             There
             {`${filesSum > 1 ? " are " : " is "}${filesSum} file${
               filesSum > 1 ? "s" : ""
             }`}{" "}
             that still need to be transfered. Closing the transfer manager will
             end all operations
-          </AlertDialogDescription>
-        </AlertDialogHeader>
-        <AlertDialogFooter className="gap-2">
+          </DrawerDescription>
+        </DrawerHeader>
+        <DrawerFooter>
           <Button variant={"outline"} onClick={closeOpen}>
             Continue transfers
           </Button>
           <Button variant={"destructive"} onClick={onStopTransfers}>
             Stop transfers
           </Button>
-        </AlertDialogFooter>
-      </AlertDialogContent>
-    </AlertDialog>
+        </DrawerFooter>
+      </DrawerContent>
+    </Drawer>
   );
 }
 
