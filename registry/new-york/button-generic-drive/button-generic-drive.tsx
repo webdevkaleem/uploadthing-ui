@@ -155,6 +155,7 @@ function FileModel({
     updateFileStatus,
     closeModel: closeModelStore,
     resetFiles,
+    openModel,
   } = useGenericDriveStore();
   const [stopConfirmationModel, setStopConfirmationModel] = useState(false);
   const isDesktop = useMediaQuery(
@@ -177,19 +178,17 @@ function FileModel({
   function closeModel() {
     if (isUploadComplete) {
       closeModelStore();
+      closeStopConfirmationModel();
+      resetFiles();
     } else {
-      toggleIsStopConfirmationModel();
+      openStopConfirmationModel();
     }
-  }
-
-  function toggleIsStopConfirmationModel() {
-    setStopConfirmationModel((cur) => !cur);
   }
 
   function onStopTransfers() {
     closeModelStore();
-    resetFiles();
     closeStopConfirmationModel();
+    resetFiles();
 
     resetAbortController();
   }
@@ -198,17 +197,20 @@ function FileModel({
     setStopConfirmationModel(false);
   }
 
-  function closeModelAfterUpload() {
-    closeStopConfirmationModel();
-    closeModel();
-    resetFiles();
+  function openStopConfirmationModel() {
+    setStopConfirmationModel(true);
+  }
+
+  function toggleIsStopConfirmationModel() {
+    setStopConfirmationModel((cur) => !cur);
+    openModel();
   }
 
   // [4] JSX (Desktop)
   if (isDesktop) {
     return (
       <AlertDialog open={displayModel} onOpenChange={closeModel}>
-        <AlertDialogContent location="bottom-right" hideOverlay>
+        <AlertDialogContent location="bottom-right" showOverlay={false}>
           <AlertDialogHeader>
             <AlertDialogTitle asChild>
               <div className="flex items-center justify-between">
@@ -232,7 +234,7 @@ function FileModel({
                       isDesktopMinWidth={isDesktopMinWidth}
                     />
                   ) : (
-                    <Button variant={"outline"} onClick={closeModelAfterUpload}>
+                    <Button variant={"outline"} onClick={closeModel}>
                       <X className="stroke-1" />
                     </Button>
                   )}
@@ -296,7 +298,7 @@ function FileModel({
                     isDesktopMinWidth={isDesktopMinWidth}
                   />
                 ) : (
-                  <Button variant={"outline"} onClick={closeModelAfterUpload}>
+                  <Button variant={"outline"} onClick={closeModel}>
                     <X className="stroke-1" />
                   </Button>
                 )}
@@ -464,7 +466,7 @@ function FileRow({
       },
       onClientUploadComplete: (res) => {
         if (isMounted.current && res?.[0]) {
-          onStatusChange(fileId, "complete", res[0].url);
+          onStatusChange(fileId, "complete", res[0].ufsUrl);
 
           // Your additional code here
           UTUIFunctionsProps.onClientUploadComplete?.(res);
