@@ -4,7 +4,9 @@ Custom UI components for Uploadthing built on top of the [Shadcn Registry](https
 
 <img src="./public/uploadthing-ui-hero.png">
 
-| Documentation: https://docs.uploadthing-ui.vercel.app
+| Documentation: https://docs-uploadthing-ui.vercel.app
+
+| Registry: https://uploadthing-ui.vercel.app
 
 ## Installation of the Registry
 
