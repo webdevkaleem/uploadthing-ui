@@ -58,7 +58,7 @@ export default function UTUIButtonGenericDrive({
 }) {
   // [1] Refs & States
   const fileInputRef = useRef<HTMLInputElement>(null);
-  const { addFiles, openModel, files, resetFiles } = useGenericDriveStore();
+  const { addFiles, openModel, resetFiles } = useGenericDriveStore();
   const abortControllerRef = useRef<AbortController | null>(null);
 
   // [2] Derived states
@@ -498,7 +498,7 @@ function FileRow({
 
       onStatusChange(fileId, "uploading");
     }
-  }, [fileId, file, startUpload, onStatusChange]);
+  }, [fileId, file, startUpload, onStatusChange, isUploading]);
 
   // [4] JSX
   return (
