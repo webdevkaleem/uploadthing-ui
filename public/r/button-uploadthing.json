@@ -10,12 +10,11 @@
     "@uploadthing/react",
     "@uploadthing/shared",
     "paralleldrive/cuid2",
-    "lucide-react",
-    "sonner",
-    "next-themes"
+    "lucide-react"
   ],
   "registryDependencies": [
-    "button"
+    "button",
+    "sonner"
   ],
   "files": [
     {
@@ -31,12 +30,6 @@
       "target": "store/button-uploadthing-store.ts"
     },
     {
-      "path": "components/ui/sonner.tsx",
-      "content": "\"use client\";\r\n\r\nimport { useTheme } from \"next-themes\";\r\nimport { Toaster as Sonner } from \"sonner\";\r\n\r\ntype ToasterProps = React.ComponentProps<typeof Sonner>;\r\n\r\nconst Toaster = ({ ...props }: ToasterProps) => {\r\n  const { theme = \"system\" } = useTheme();\r\n\r\n  return (\r\n    <Sonner\r\n      theme={theme as ToasterProps[\"theme\"]}\r\n      className=\"toaster group\"\r\n      toastOptions={{\r\n        classNames: {\r\n          toast:\r\n            \"group toast group-[.toaster]:bg-background rounded-md group-[.toaster]:text-foreground group-[.toaster]:border-border group-[.toaster]:shadow-lg\",\r\n          description: \"group-[.toast]:text-muted-foreground\",\r\n          actionButton:\r\n            \"group-[.toast]:bg-primary group-[.toast]:text-primary-foreground\",\r\n          cancelButton:\r\n            \"group-[.toast]:bg-muted group-[.toast]:text-muted-foreground\",\r\n        },\r\n      }}\r\n      {...props}\r\n    />\r\n  );\r\n};\r\n\r\nexport { Toaster };\r\n",
-      "type": "registry:component",
-      "target": "components/ui/sonner.tsx"
-    },
-    {
       "path": "lib/uploadthing-ui-types.ts",
       "content": "import { Json, MaybePromise, UploadThingError } from \"@uploadthing/shared\";\r\nimport { ClientUploadedFileData, EndpointArg } from \"uploadthing/types\";\r\n\r\nexport type UTUIFileStatus = \"pending\" | \"uploading\" | \"complete\" | \"error\";\r\n\r\nexport interface UTUIUploadFile {\r\n  id: string;\r\n  file: File;\r\n  status: UTUIFileStatus;\r\n  url?: string;\r\n  createdAt: Date;\r\n}\r\n\r\nexport interface UTUIFunctionsProps {\r\n  // eslint-disable-next-line @typescript-eslint/no-explicit-any\r\n  fileRoute: EndpointArg<any, any>;\r\n  onUploadProgress?: (progress: number) => void;\r\n  onClientUploadComplete?:\r\n    | ((\r\n        res: ClientUploadedFileData<{\r\n          uploadedBy: string;\r\n        }>[],\r\n      ) => MaybePromise<void>)\r\n    | undefined;\r\n  onUploadError?: (error: UploadThingError<Json>) => void;\r\n  onBeforeUploadBegin?:\r\n    | ((files: File[]) => Promise<File[]> | File[])\r\n    | undefined;\r\n  onUploadBegin?: ((fileName: string) => void) | undefined;\r\n}\r\n",
       "type": "registry:file",
@@ -47,23 +40,6 @@
       "content": "// Converts the size into readable format\r\nexport function formatBytes(bytes: number, decimals = 1) {\r\n  if (bytes === 0) return \"0 B\";\r\n\r\n  const k = 1024;\r\n  const dm = decimals < 0 ? 0 : decimals;\r\n  const sizes = [\"B\", \"KB\", \"MB\", \"GB\", \"TB\", \"PB\", \"EB\", \"ZB\", \"YB\"];\r\n\r\n  const i = Math.floor(Math.log(bytes) / Math.log(k));\r\n\r\n  return `${parseFloat((bytes / k ** i).toFixed(dm))} ${sizes[i]}`;\r\n}\r\n\r\n// Return the amount of file uploaded\r\nexport function getUploadedAmount(progress: number, fileSize: number) {\r\n  const uploadedAmount = (progress / 100) * fileSize;\r\n  return formatBytes(uploadedAmount);\r\n}\r\n\r\n// Capitalize the first letter\r\nexport function capitalizeFirstLetter(string: string) {\r\n  return string.charAt(0).toUpperCase() + string.slice(1);\r\n}\r\n",
       "type": "registry:file",
       "target": "lib/uploadthing-ui-utils.ts"
-    },
-    {
-      "path": "lib/uploadthing.ts",
-      "content": "import { OurFileRouter } from \"@/app/api/uploadthing/core\";\r\nimport {\r\n  generateReactHelpers,\r\n  generateUploadButton,\r\n  generateUploadDropzone,\r\n} from \"@uploadthing/react\";\r\n\r\nexport const UploadButton = generateUploadButton<OurFileRouter>();\r\nexport const UploadDropzone = generateUploadDropzone<OurFileRouter>();\r\nexport const { useUploadThing, uploadFiles, createUpload } =\r\n  generateReactHelpers<OurFileRouter>();\r\n",
-      "type": "registry:file",
-      "target": "lib/uploadthing.ts"
     }
-  ],
-  "tailwind": {
-    "config": {
-      "theme": {
-        "extend": {
-          "screens": {
-            "sm": "600px"
-          }
-        }
-      }
-    }
-  }
+  ]
 }
