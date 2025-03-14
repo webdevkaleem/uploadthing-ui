@@ -216,7 +216,8 @@ function DisplayingToasts({
         { id: toastId },
       );
     }
-  }, [progress, toastId, isUploading, uploadFile]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [progress, toastId, isUploading]);
 
   return <div className="hidden">{uploadFile.id}</div>;
 }
