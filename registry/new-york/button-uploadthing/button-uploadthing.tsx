@@ -230,7 +230,7 @@ function ToastComponent({
 }) {
   return (
     <div className="flex h-16 w-full select-none items-center gap-4 rounded-md border px-4 text-xs shadow-lg sm:w-96">
-      <div className="min-w-10">
+      <div className="min-w-11">
         <CircularProgressBar percentage={progress} />
       </div>
       <p className="truncate">Uploading {uploadFile.file.name}</p>
