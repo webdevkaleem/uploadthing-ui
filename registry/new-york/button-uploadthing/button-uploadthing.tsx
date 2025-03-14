@@ -204,7 +204,8 @@ function DisplayingToasts({
 
       return;
     }
-  }, [uploadFile, toastId, removeFile]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [uploadFile, toastId, toast, removeFile]);
 
   // When a file starts its uploading process
   useEffect(() => {
