@@ -31,11 +31,11 @@ const AlertDialogContent = React.forwardRef<
   React.ElementRef<typeof AlertDialogPrimitive.Content>,
   React.ComponentPropsWithoutRef<typeof AlertDialogPrimitive.Content> & {
     location?: "default" | "bottom-right";
-    hideOverlay?: boolean;
+    showOverlay?: boolean;
   }
->(({ className, location = "default", hideOverlay = false, ...props }, ref) => (
+>(({ className, location = "default", showOverlay = false, ...props }, ref) => (
   <AlertDialogPortal>
-    {hideOverlay ? null : <AlertDialogOverlay />}
+    {showOverlay && <AlertDialogOverlay />}
     <AlertDialogPrimitive.Content
       ref={ref}
       className={cn(

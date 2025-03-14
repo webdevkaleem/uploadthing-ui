@@ -8,16 +8,20 @@
       "type": "registry:component",
       "title": "Generic Drive Button",
       "description": "Workflow: Inside storage drive applications",
-      "registryDependencies": ["button", "table"],
+      "registryDependencies": [
+        "button",
+        "alert-dialog",
+        "badge",
+        "drawer",
+        "table"
+      ],
       "dependencies": [
         "zustand",
         "uploadthing",
         "@uploadthing/react",
         "@uploadthing/shared",
         "paralleldrive/cuid2",
-        "lucide-react",
-        "@radix-ui/react-alert-dialog",
-        "vaul"
+        "lucide-react"
       ],
       "files": [
         {
@@ -31,26 +35,6 @@
           "target": "store/button-generic-drive-store.ts"
         },
         {
-          "path": "components/ui/alert-dialog.tsx",
-          "type": "registry:component",
-          "target": "components/ui/alert-dialog.tsx"
-        },
-        {
-          "path": "components/ui/badge.tsx",
-          "type": "registry:component",
-          "target": "components/ui/badge.tsx"
-        },
-        {
-          "path": "components/ui/drawer.tsx",
-          "type": "registry:component",
-          "target": "components/ui/drawer.tsx"
-        },
-        {
-          "path": "hooks/use-media-query.tsx",
-          "type": "registry:hook",
-          "target": "hooks/use-media-query.tsx"
-        },
-        {
           "path": "lib/uploadthing-ui-types.ts",
           "type": "registry:file",
           "target": "lib/uploadthing-ui-types.ts"
@@ -59,11 +43,6 @@
           "path": "lib/uploadthing-ui-utils.ts",
           "type": "registry:file",
           "target": "lib/uploadthing-ui-utils.ts"
-        },
-        {
-          "path": "lib/uploadthing.ts",
-          "type": "registry:file",
-          "target": "lib/uploadthing.ts"
         }
       ]
     },
@@ -72,28 +51,15 @@
       "type": "registry:component",
       "title": "Uploadthing Button",
       "description": "Workflow: Inside the uploadthing's admin dashboard",
-      "registryDependencies": ["button"],
+      "registryDependencies": ["button", "sonner"],
       "dependencies": [
         "zustand",
         "uploadthing",
         "@uploadthing/react",
         "@uploadthing/shared",
         "paralleldrive/cuid2",
-        "lucide-react",
-        "sonner",
-        "next-themes"
+        "lucide-react"
       ],
-      "tailwind": {
-        "config": {
-          "theme": {
-            "extend": {
-              "screens": {
-                "sm": "600px"
-              }
-            }
-          }
-        }
-      },
       "files": [
         {
           "path": "registry/new-york/button-uploadthing/button-uploadthing.tsx",
@@ -106,11 +72,6 @@
           "target": "store/button-uploadthing-store.ts"
         },
         {
-          "path": "components/ui/sonner.tsx",
-          "type": "registry:component",
-          "target": "components/ui/sonner.tsx"
-        },
-        {
           "path": "lib/uploadthing-ui-types.ts",
           "type": "registry:file",
           "target": "lib/uploadthing-ui-types.ts"
@@ -119,11 +80,6 @@
           "path": "lib/uploadthing-ui-utils.ts",
           "type": "registry:file",
           "target": "lib/uploadthing-ui-utils.ts"
-        },
-        {
-          "path": "lib/uploadthing.ts",
-          "type": "registry:file",
-          "target": "lib/uploadthing.ts"
         }
       ]
     }
