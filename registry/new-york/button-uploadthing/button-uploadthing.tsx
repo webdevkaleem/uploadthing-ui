@@ -163,7 +163,7 @@ function DisplayingToasts({
       // Adding a toast for the upload
       setToastId(
         toast.custom(
-          (t) => <ToastComponent progress={progress} uploadFile={uploadFile} />,
+          () => <ToastComponent progress={progress} uploadFile={uploadFile} />,
           {
             duration: Infinity,
           },
@@ -177,7 +177,6 @@ function DisplayingToasts({
     progress,
     isUploading,
     hasStartedUpload,
-    toast,
     startUpload,
     updateFileStatus,
     setToastId,
@@ -186,7 +185,7 @@ function DisplayingToasts({
   // When a file changes its status during the uploading process
   useEffect(() => {
     if (uploadFile.status === "complete" && toastId) {
-      toast.custom((t) => <ToastComponentCompleted uploadFile={uploadFile} />, {
+      toast.custom(() => <ToastComponentCompleted uploadFile={uploadFile} />, {
         id: toastId,
         duration: 4000,
       });
@@ -198,13 +197,14 @@ function DisplayingToasts({
     }
 
     if (uploadFile.status === "error" && toastId) {
-      toast.custom((t) => <ToastComponentError uploadFile={uploadFile} />, {
+      toast.custom(() => <ToastComponentError uploadFile={uploadFile} />, {
         id: toastId,
         duration: 4000,
       });
 
       return;
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [uploadFile, toastId, toast, removeFile]);
 
   // When a file starts its uploading process
@@ -212,10 +212,11 @@ function DisplayingToasts({
     if (toastId && isUploading) {
       // Update the progress inside the toast
       toast.custom(
-        (t) => <ToastComponent progress={progress} uploadFile={uploadFile} />,
+        () => <ToastComponent progress={progress} uploadFile={uploadFile} />,
         { id: toastId },
       );
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [progress, toastId, isUploading]);
 
   return <div className="hidden">{uploadFile.id}</div>;
@@ -261,7 +262,7 @@ function ToastComponentError({ uploadFile }: { uploadFile: UTUIUploadFile }) {
     <div className="flex h-16 w-full select-none items-center gap-4 truncate rounded-md border px-4 text-xs shadow-lg sm:w-96">
       <Info className="min-w-6 fill-foreground stroke-background stroke-1" />
       <div className="flex flex-col truncate">
-        <p className="truncate">File couldn't be uploaded</p>
+        <p className="truncate">File couldn&apos;t be uploaded</p>
         <p className="truncate">{uploadFile.file.name}</p>
       </div>
       <GripVertical className="ml-auto min-w-10 stroke-1" />
