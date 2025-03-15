@@ -274,7 +274,7 @@ function FileContainer({
 
       {uploadFile.status === "complete" && (
         <div className="ml-auto flex min-w-20 items-center justify-center text-chart-2">
-          <Check className="stroke-1" />
+          <Check className="w-4 stroke-1" />
         </div>
       )}
       {uploadFile.status === "pending" ||
@@ -283,7 +283,7 @@ function FileContainer({
             className="ml-auto flex min-w-20 cursor-pointer items-center justify-center hover:text-destructive"
             onClick={resetAbortController}
           >
-            <Trash className="stroke-1" />
+            <Trash className="w-4 stroke-1" />
           </div>
         ))}
     </div>
