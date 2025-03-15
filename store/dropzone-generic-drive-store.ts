@@ -6,15 +6,18 @@ import { create } from "zustand";
 // Local Imports
 
 // Body
-
+// [1] Types
 interface FilesState {
-  historicFiles: UTUIUploadFile[];
+  historicFiles: UTUIUploadFile[] & { abort?: boolean };
   setFiles: (newFiles: UTUIUploadFile[]) => void;
   updateFileStatus: (id: string, status: UTUIFileStatus, url?: string) => void;
   removeFile: (id: string) => void;
+  resetFiles: () => void;
+  abortAllFiles: () => void;
 }
 
-export const useUploadthingStore = create<FilesState>()((set) => ({
+// [2] Store
+export const useDropzoneGenericDriveStore = create<FilesState>()((set) => ({
   historicFiles: [],
   setFiles: (newFiles) =>
     set((state) => {
@@ -27,6 +30,7 @@ export const useUploadthingStore = create<FilesState>()((set) => ({
       );
 
       return {
+        files: newFiles,
         historicFiles: [...state.historicFiles, ...newHistoricFiles],
       };
     }),
@@ -39,5 +43,16 @@ export const useUploadthingStore = create<FilesState>()((set) => ({
   removeFile: (id) =>
     set((state) => ({
       historicFiles: state.historicFiles.filter((item) => item.id !== id),
+    })),
+  resetFiles: () =>
+    set({
+      historicFiles: [],
+    }),
+  abortAllFiles: () =>
+    set((state) => ({
+      historicFiles: state.historicFiles.map((item) => ({
+        ...item,
+        abort: true,
+      })),
     })),
 }));
