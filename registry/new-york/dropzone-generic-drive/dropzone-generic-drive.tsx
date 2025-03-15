@@ -103,9 +103,9 @@ export default function UTUIDropzoneGenericDrive({
         {...getRootProps()}
       >
         <Upload className="w-4 stroke-1" />
-        <p className="text-center text-muted-foreground">
+        <div className="text-center text-muted-foreground">
           <span className="font-semibold">Drop</span> your files here
-        </p>
+        </div>
       </div>
 
       <Information
