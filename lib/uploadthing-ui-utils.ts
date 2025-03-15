@@ -1,7 +1,6 @@
 // Converts the size into readable format
 export function formatBytes(bytes: number, decimals = 1) {
   if (bytes === 0) return "0 B";
-  if (bytes < 0) return "Invalid size";
 
   const k = 1024;
   const dm = decimals < 0 ? 0 : decimals;
