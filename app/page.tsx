@@ -5,6 +5,8 @@ import UTUIButtonUploadthing from "@/registry/new-york/button-uploadthing/button
 import UTUIDropzoneGenericDrive from "@/registry/new-york/dropzone-generic-drive/dropzone-generic-drive";
 import Link from "next/link";
 import { removeFile } from "./actions";
+import PreviewComponentsWrapper from "@/components/preview-components-wrapper";
+import { Badge } from "@/components/ui/badge";
 
 // This page displays items from the custom registry.
 // You are free to implement this with your own design as needed.
@@ -37,126 +39,128 @@ export default function Home() {
         </p>
       </header>
       <main className="flex flex-1 flex-col gap-8">
-        <div className="relative flex min-h-[450px] flex-col gap-4 rounded-lg border p-4">
-          <div className="flex items-center justify-between">
-            <h2 className="text-sm text-muted-foreground sm:pl-3">
-              Workflow: Inside storage drive applications
-            </h2>
-          </div>
-          <div className="relative flex min-h-[400px] items-center justify-center">
-            <UTUIDropzoneGenericDrive
-              UTUIFunctionsProps={{
-                fileRoute: "imageUploader",
-                onBeforeUploadBegin: (files) => {
-                  // Your additional code here
-                  console.log(files);
-
-                  return files;
-                },
-                onUploadBegin: (fileName) => {
-                  // Your additional code here
-                  console.log(fileName);
-                },
-                onUploadProgress: (progress) => {
-                  // Your additional code here
-                  console.log(progress);
-                },
-                onClientUploadComplete: (res) => {
-                  // Your additional code here
-                  console.log(res);
-
-                  if (!res[0]) return;
-
-                  removeFile(res[0].key);
-                },
-                onUploadError: (error) => {
-                  // Your additional code here
-                  console.log(error);
-                },
-              }}
-            />
-          </div>
+        {/* [1] UTUIDropzoneGenericDrive */}
+        <div className="flex flex-wrap items-center gap-2">
+          <Badge>UTUIDropzoneGenericDrive</Badge>
+          <h2 className="text-sm text-muted-foreground">
+            Inside storage drive applications
+          </h2>
         </div>
-        <div className="relative flex min-h-[450px] flex-col gap-4 rounded-lg border p-4">
-          <div className="flex items-center justify-between">
-            <h2 className="text-sm text-muted-foreground sm:pl-3">
-              Workflow: Inside storage drive applications
-            </h2>
-          </div>
-          <div className="relative flex min-h-[400px] items-center justify-center">
-            <UTUIButtonGenericDrive
-              UTUIFunctionsProps={{
-                fileRoute: "imageUploader",
-                onBeforeUploadBegin: (files) => {
-                  // Your additional code here
-                  console.log(files);
+        <PreviewComponentsWrapper>
+          <UTUIDropzoneGenericDrive
+            UTUIFunctionsProps={{
+              fileRoute: "imageUploader",
+              onBeforeUploadBegin: (files) => {
+                // Your additional code here
+                console.log(files);
 
-                  return files;
-                },
-                onUploadBegin: (fileName) => {
-                  // Your additional code here
-                  console.log(fileName);
-                },
-                onUploadProgress: (progress) => {
-                  // Your additional code here
-                  console.log(progress);
-                },
-                onClientUploadComplete: (res) => {
-                  // Your additional code here
-                  console.log(res);
+                return files;
+              },
+              onUploadBegin: (fileName) => {
+                // Your additional code here
+                console.log(fileName);
+              },
+              onUploadProgress: (progress) => {
+                // Your additional code here
+                console.log(progress);
+              },
+              onClientUploadComplete: (res) => {
+                // Your additional code here
+                console.log(res);
 
-                  if (!res[0]) return;
+                if (!res[0]) return;
 
-                  removeFile(res[0].key);
-                },
-                onUploadError: (error) => {
-                  // Your additional code here
-                  console.log(error);
-                },
-              }}
-            />
-          </div>
+                removeFile(res[0].key);
+              },
+              onUploadError: (error) => {
+                // Your additional code here
+                console.log(error);
+              },
+            }}
+          />
+        </PreviewComponentsWrapper>
+
+        {/* [2] UTUIButtonGenericDrive */}
+        <div className="flex flex-wrap items-center gap-2">
+          <Badge>UTUIButtonGenericDrive</Badge>
+          <h2 className="text-sm text-muted-foreground">
+            Inside storage drive applications
+          </h2>
         </div>
-        <div className="relative flex min-h-[450px] flex-col gap-4 rounded-lg border p-4">
-          <div className="flex items-center justify-between">
-            <h2 className="text-sm text-muted-foreground sm:pl-3">
-              Workflow: Inside the uploadthing&apos;s admin dashboard
-            </h2>
-          </div>
-          <div className="relative flex min-h-[400px] items-center justify-center">
-            <UTUIButtonUploadthing
-              UTUIFunctionsProps={{
-                fileRoute: "imageUploader",
-                onBeforeUploadBegin: (files) => {
-                  // Your additional code here
-                  console.log(files);
+        <PreviewComponentsWrapper>
+          <UTUIButtonGenericDrive
+            UTUIFunctionsProps={{
+              fileRoute: "imageUploader",
+              onBeforeUploadBegin: (files) => {
+                // Your additional code here
+                console.log(files);
 
-                  return files;
-                },
-                onUploadBegin: (fileName) => {
-                  // Your additional code here
-                  console.log(fileName);
-                },
-                onUploadProgress: (progress) => {
-                  // Your additional code here
-                  console.log(progress);
-                },
-                onClientUploadComplete: (res) => {
-                  // Your additional code here
-                  console.log(res);
+                return files;
+              },
+              onUploadBegin: (fileName) => {
+                // Your additional code here
+                console.log(fileName);
+              },
+              onUploadProgress: (progress) => {
+                // Your additional code here
+                console.log(progress);
+              },
+              onClientUploadComplete: (res) => {
+                // Your additional code here
+                console.log(res);
 
-                  if (!res[0]) return;
+                if (!res[0]) return;
 
-                  removeFile(res[0].key);
-                },
-                onUploadError: (error) => {
-                  // Your additional code here
-                  console.log(error);
-                },
-              }}
-            />
-          </div>
+                removeFile(res[0].key);
+              },
+              onUploadError: (error) => {
+                // Your additional code here
+                console.log(error);
+              },
+            }}
+          />
+
+          {/* [3] UTUIButtonUploadthing */}
+        </PreviewComponentsWrapper>
+        <div className="flex flex-wrap items-center gap-2">
+          <Badge>UTUIButtonUploadthing</Badge>
+          <h2 className="text-sm text-muted-foreground">
+            Inside the uploadthing&apos;s admin dashboard
+          </h2>
         </div>
+        <PreviewComponentsWrapper>
+          <UTUIButtonUploadthing
+            UTUIFunctionsProps={{
+              fileRoute: "imageUploader",
+              onBeforeUploadBegin: (files) => {
+                // Your additional code here
+                console.log(files);
+
+                return files;
+              },
+              onUploadBegin: (fileName) => {
+                // Your additional code here
+                console.log(fileName);
+              },
+              onUploadProgress: (progress) => {
+                // Your additional code here
+                console.log(progress);
+              },
+              onClientUploadComplete: (res) => {
+                // Your additional code here
+                console.log(res);
+
+                if (!res[0]) return;
+
+                removeFile(res[0].key);
+              },
+              onUploadError: (error) => {
+                // Your additional code here
+                console.log(error);
+              },
+            }}
+          />
+        </PreviewComponentsWrapper>
       </main>
     </div>
   );
