@@ -12,15 +12,7 @@ import {
   generateClientDropzoneAccept,
   generatePermittedFileTypes,
 } from "@uploadthing/shared";
-import {
-  Check,
-  Dot,
-  FileUpIcon,
-  Info,
-  Loader2,
-  Trash,
-  Upload,
-} from "lucide-react";
+import { Check, FileUpIcon, Info, Loader2, Trash, Upload } from "lucide-react";
 import { useCallback, useEffect, useRef, useState } from "react";
 
 // Local Imports
@@ -82,6 +74,7 @@ export default function UTUIDropzoneGenericDrive({
     str: generatePermittedFileTypes(routeConfig).fileTypes[0],
     obj: routeConfig,
   });
+
   const allFilesUploaded = historicFiles.every(
     (file) => file.status === "complete" || file.status === "error",
   );
@@ -106,13 +99,13 @@ export default function UTUIDropzoneGenericDrive({
       <input {...getInputProps()} />
       {/* Limit the file dropzone area */}
       <div
-        className="flex h-10 w-full cursor-pointer items-center justify-center gap-4 rounded-md border"
+        className="flex w-full cursor-pointer flex-wrap items-center justify-center gap-4 rounded-md border px-4 py-2 text-xs"
         {...getRootProps()}
       >
-        <Upload className="w-5 stroke-1" />
-        <span className="text-muted-foreground">Drop your files here</span>
-        <span>|</span>
-        <span className="font-semibold">Browse files</span>
+        <Upload className="w-4 stroke-1" />
+        <p className="text-center text-muted-foreground">
+          <span className="font-semibold">Drop</span> your files here
+        </p>
       </div>
 
       <Information
@@ -280,8 +273,8 @@ function FileContainer({
       </div>
 
       {uploadFile.status === "complete" && (
-        <div className="ml-auto min-w-10 text-chart-2">
-          <Check className="w-5 stroke-1" />
+        <div className="ml-auto flex min-w-20 items-center justify-center text-chart-2">
+          <Check className="w-4 stroke-1" />
         </div>
       )}
       {uploadFile.status === "pending" ||
@@ -290,7 +283,7 @@ function FileContainer({
             className="ml-auto flex min-w-20 cursor-pointer items-center justify-center hover:text-destructive"
             onClick={resetAbortController}
           >
-            <Trash className="w-5 stroke-1" />
+            <Trash className="w-4 stroke-1" />
           </div>
         ))}
     </div>
@@ -304,9 +297,9 @@ function FileContainer({
 function Title() {
   // [1] JSX
   return (
-    <p className="font-semibold">
-      Upload file <span className="text-destructive">*</span>
-    </p>
+    <div className="font-semibold">
+      Upload files <span className="text-destructive">*</span>
+    </div>
   );
 }
 
@@ -327,14 +320,11 @@ function Information({
 }) {
   // [1] JSX
   return (
-    <div className="flex items-center text-xs text-muted-foreground">
-      <span>Up to {maxFileSize}</span>
-      <Dot />
-      <span>Allowed files: {fileTypes}</span>
-      <Dot />
-      <span>Max {maxFileCount}</span>
-      <Dot />
-      <span>Min {minFileCount}</span>
+    <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-2 text-xs text-muted-foreground">
+      <span className="underline">Up to {maxFileSize}</span>
+      <span className="underline">Allowed files: {fileTypes}</span>
+      <span className="underline">Max files: {maxFileCount}</span>
+      <span className="underline">Min files: {minFileCount}</span>
     </div>
   );
 }

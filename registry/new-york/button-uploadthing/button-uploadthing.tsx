@@ -19,7 +19,9 @@ import {
   UTUIFunctionsProps,
   UTUIUploadFile,
 } from "@/lib/uploadthing-ui-types";
+import { checkFileObjectKey } from "@/lib/uploadthing-ui-utils";
 import { useUploadthingStore } from "@/store/button-uploadthing-store";
+import { FileSize } from "@uploadthing/shared";
 
 // Body
 export default function UTUIButtonUploadthing({
@@ -43,7 +45,25 @@ export default function UTUIButtonUploadthing({
     })
     .join(",");
 
-  // [3] Handlers
+  const fileRouteOptions = checkFileObjectKey({
+    str: generatePermittedFileTypes(routeConfig).fileTypes[0],
+    obj: routeConfig,
+  });
+
+  // [3] Conditionals checks
+  // If the file route options are not found, display an error message
+  if (!fileRouteOptions)
+    return (
+      <div className="flex flex-col gap-4 text-sm">
+        Please add a correct file route
+      </div>
+    );
+
+  const maxFileCount = fileRouteOptions.maxFileCount;
+  const minFileCount = fileRouteOptions.minFileCount;
+  const maxFileSize = fileRouteOptions.maxFileSize;
+
+  // [4] Handlers
   const handleButtonClick = () => {
     fileInputRef.current?.click();
   };
@@ -69,9 +89,9 @@ export default function UTUIButtonUploadthing({
     }
   };
 
-  // [4] JSX
+  // [5] JSX
   return (
-    <div className="flex flex-col gap-8 text-sm">
+    <div className="flex flex-col items-center gap-4 text-sm">
       <div>
         <input
           type="file"
@@ -86,6 +106,13 @@ export default function UTUIButtonUploadthing({
         </Button>
       </div>
 
+      <Information
+        fileTypes={acceptedFileTypes}
+        maxFileCount={maxFileCount}
+        minFileCount={minFileCount}
+        maxFileSize={maxFileSize}
+      />
+
       {historicFiles.map((fileObj) => (
         <DisplayingToasts
           key={fileObj.id}
@@ -93,6 +120,32 @@ export default function UTUIButtonUploadthing({
           UTUIFunctionsProps={UTUIFunctionsProps}
         />
       ))}
+    </div>
+  );
+}
+
+//////////////////////////////////////////////////////////////////////////////////
+// Information
+//////////////////////////////////////////////////////////////////////////////////
+
+function Information({
+  fileTypes,
+  maxFileCount,
+  minFileCount,
+  maxFileSize,
+}: {
+  fileTypes: string;
+  maxFileCount: number;
+  minFileCount: number;
+  maxFileSize: FileSize;
+}) {
+  // [1] JSX
+  return (
+    <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-2 text-xs text-muted-foreground">
+      <span className="underline">Up to {maxFileSize}</span>
+      <span className="underline">Allowed files: {fileTypes}</span>
+      <span className="underline">Max files: {maxFileCount}</span>
+      <span className="underline">Min files: {minFileCount}</span>
     </div>
   );
 }
