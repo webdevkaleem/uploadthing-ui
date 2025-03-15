@@ -44,16 +44,19 @@ export default function UTUIDropzoneGenericDrive({
   // [1] State and Refs
   const { historicFiles, setFiles, abortAllFiles, resetFiles } =
     useDropzoneGenericDriveStore();
-  const onDrop = useCallback((acceptedFiles: File[]) => {
-    setFiles(
-      acceptedFiles.map((fileObj) => ({
-        id: createId(),
-        file: fileObj,
-        status: "pending" as UTUIFileStatus,
-        createdAt: new Date(),
-      })),
-    );
-  }, []);
+  const onDrop = useCallback(
+    (acceptedFiles: File[]) => {
+      setFiles(
+        acceptedFiles.map((fileObj) => ({
+          id: createId(),
+          file: fileObj,
+          status: "pending" as UTUIFileStatus,
+          createdAt: new Date(),
+        })),
+      );
+    },
+    [setFiles],
+  );
 
   // [2] Uploadthing
   const { routeConfig } = useUploadThing(UTUIFunctionsProps.fileRoute);
@@ -219,13 +222,13 @@ function FileContainer({
   );
 
   // [3] Handlers
-  function resetAbortController() {
-    if (abortControllerRef.current) {
+  const resetAbortController = useCallback(() => {
+    if (abortControllerRef.current && abortControllerRef.current.signal) {
       removeFile(uploadFile.id);
       abortControllerRef.current.abort();
       setAbortSignal(abortControllerRef.current.signal);
     }
-  }
+  }, [abortControllerRef, removeFile, setAbortSignal, uploadFile]);
 
   // [4] Effects
   // When a file isn't uploading
@@ -267,11 +270,13 @@ function FileContainer({
       </div>
 
       <div className="flex flex-col gap-1 truncate">
-        <p className="truncate">{uploadFile.file.name}</p>
-        <p className="text-xs text-muted-foreground">
+        <span className="truncate">{uploadFile.file.name}</span>
+        <span className="h-fit truncate text-xs text-muted-foreground">
           {formatBytes(uploadFile.file.size)} ({progress}%)
-        </p>
-        <p className="truncate text-xs text-destructive">{errorMessage}</p>
+        </span>
+        <span className="truncate text-xs text-destructive">
+          {errorMessage}
+        </span>
       </div>
 
       {uploadFile.status === "complete" && (
