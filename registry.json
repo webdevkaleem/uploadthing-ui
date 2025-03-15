@@ -4,6 +4,43 @@
   "homepage": "https://uploadthing-ui.vercel.app",
   "items": [
     {
+      "name": "dropzone-generic-drive",
+      "type": "registry:component",
+      "title": "Generic Drive Dropzone",
+      "description": "Workflow: Inside storage drive applications",
+      "registryDependencies": ["button", "separator"],
+      "dependencies": [
+        "zustand",
+        "uploadthing",
+        "@uploadthing/react",
+        "@uploadthing/shared",
+        "paralleldrive/cuid2",
+        "lucide-react"
+      ],
+      "files": [
+        {
+          "path": "registry/new-york/dropzone-generic-drive/dropzone-generic-drive.tsx",
+          "type": "registry:component",
+          "target": "components/uploadthing-ui/dropzone-generic-drive.tsx"
+        },
+        {
+          "path": "store/dropzone-generic-drive-store.ts",
+          "type": "registry:file",
+          "target": "store/dropzone-generic-drive-store.ts"
+        },
+        {
+          "path": "lib/uploadthing-ui-types.ts",
+          "type": "registry:file",
+          "target": "lib/uploadthing-ui-types.ts"
+        },
+        {
+          "path": "lib/uploadthing-ui-utils.ts",
+          "type": "registry:file",
+          "target": "lib/uploadthing-ui-utils.ts"
+        }
+      ]
+    },
+    {
       "name": "button-generic-drive",
       "type": "registry:component",
       "title": "Generic Drive Button",

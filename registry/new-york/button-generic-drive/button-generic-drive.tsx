@@ -364,7 +364,7 @@ function StopUploadConfirmation({
           </Button>
         </AlertDialogTrigger>
 
-        <AlertDialogContent>
+        <AlertDialogContent showOverlay>
           <AlertDialogHeader>
             <AlertDialogTitle>Stop transfers?</AlertDialogTitle>
             <AlertDialogDescription>

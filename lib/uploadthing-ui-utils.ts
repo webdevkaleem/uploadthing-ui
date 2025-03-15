@@ -1,3 +1,5 @@
+import { ExpandedRouteConfig, FileRouterInputKey } from "@uploadthing/shared";
+
 // Converts the size into readable format
 export function formatBytes(bytes: number, decimals = 1) {
   if (bytes === 0) return "0 B";
@@ -21,4 +23,21 @@ export function getUploadedAmount(progress: number, fileSize: number) {
 // Capitalize the first letter
 export function capitalizeFirstLetter(string: string) {
   return string.charAt(0).toUpperCase() + string.slice(1);
+}
+
+// Return the objects value
+export function checkFileObjectKey({
+  str,
+  obj,
+}: {
+  str: FileRouterInputKey | undefined;
+  obj: ExpandedRouteConfig | undefined;
+}) {
+  if (!str || !obj) return null;
+
+  if (obj && typeof obj === "object" && obj.hasOwnProperty(str)) {
+    return obj[str];
+  } else {
+    return null;
+  }
 }
