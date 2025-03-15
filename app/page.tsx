@@ -3,6 +3,7 @@
 import UTUIButtonGenericDrive from "@/registry/new-york/button-generic-drive/button-generic-drive";
 import UTUIButtonUploadthing from "@/registry/new-york/button-uploadthing/button-uploadthing";
 import Link from "next/link";
+import { removeFile } from "./actions";
 
 // This page displays items from the custom registry.
 // You are free to implement this with your own design as needed.
@@ -62,6 +63,10 @@ export default function Home() {
                 onClientUploadComplete: (res) => {
                   // Your additional code here
                   console.log(res);
+
+                  if (!res[0]) return;
+
+                  removeFile(res[0].key);
                 },
                 onUploadError: (error) => {
                   // Your additional code here
@@ -98,6 +103,10 @@ export default function Home() {
                 onClientUploadComplete: (res) => {
                   // Your additional code here
                   console.log(res);
+
+                  if (!res[0]) return;
+
+                  removeFile(res[0].key);
                 },
                 onUploadError: (error) => {
                   // Your additional code here
