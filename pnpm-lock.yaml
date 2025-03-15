@@ -65,6 +65,9 @@ importers:
       react-dom:
         specifier: ^19.0.0
         version: 19.0.0(react@19.0.0)
+      registry-template:
+        specifier: 'link:'
+        version: 'link:'
       shadcn:
         specifier: 2.4.0-canary.12
         version: 2.4.0-canary.12(@types/node@20.17.12)(typescript@5.7.3)
