@@ -448,7 +448,6 @@ function FileRow({
   const [progress, setProgress] = useState(0);
   const isMounted = useRef(true);
   const hasStartedUpload = useRef(false);
-  const {} = useGenericDriveStore();
 
   // [2] Uploadthing
   const { startUpload, isUploading } = useUploadThing(
