@@ -84,7 +84,7 @@ export default function UTUIDropzoneGenericDrive({
   if (!fileRouteOptions)
     return (
       <div className="flex flex-col gap-4 text-sm">
-        Please add a correct file route
+        <Loader2 className="animate-spin stroke-1" />
       </div>
     );
 
@@ -94,7 +94,7 @@ export default function UTUIDropzoneGenericDrive({
 
   // [5] JSX
   return (
-    <div className="flex w-2/3 flex-col gap-4 text-sm">
+    <div className="flex w-full flex-col gap-4 text-sm">
       <Title />
       <input {...getInputProps()} />
       {/* Limit the file dropzone area */}

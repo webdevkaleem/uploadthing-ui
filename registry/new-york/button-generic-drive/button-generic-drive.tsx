@@ -5,7 +5,7 @@
 "use client";
 
 // Global Imports
-import { X } from "lucide-react";
+import { Loader2, X } from "lucide-react";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { generatePermittedFileTypes } from "uploadthing/client";
 
@@ -89,7 +89,7 @@ export default function UTUIButtonGenericDrive({
   if (!fileRouteOptions)
     return (
       <div className="flex flex-col gap-4 text-sm">
-        Please add a correct file route
+        <Loader2 className="animate-spin stroke-1" />
       </div>
     );
 
