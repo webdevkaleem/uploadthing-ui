@@ -6,7 +6,7 @@
 
 // Global Imports
 import { createId } from "@paralleldrive/cuid2";
-import { CircleCheck, GripVertical, Info } from "lucide-react";
+import { CircleCheck, GripVertical, Info, Loader2 } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
 import { generatePermittedFileTypes } from "uploadthing/client";
@@ -55,7 +55,7 @@ export default function UTUIButtonUploadthing({
   if (!fileRouteOptions)
     return (
       <div className="flex flex-col gap-4 text-sm">
-        Please add a correct file route
+        <Loader2 className="animate-spin stroke-1" />
       </div>
     );
 
