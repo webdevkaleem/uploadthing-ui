@@ -1,6 +1,5 @@
 "use client";
 
-import UTUIButtonGenericDrive from "@/registry/new-york/button-generic-drive/button-generic-drive";
 import UTUIButtonUploadthing from "@/registry/new-york/button-uploadthing/button-uploadthing";
 import UTUIDropzoneGenericDrive from "@/registry/new-york/dropzone-generic-drive/dropzone-generic-drive";
 import Link from "next/link";
@@ -50,78 +49,16 @@ export default function Home() {
           <UTUIDropzoneGenericDrive
             UTUIFunctionsProps={{
               fileRoute: "imageUploader",
-              onBeforeUploadBegin: (files) => {
-                // Your additional code here
-                console.log(files);
-
-                return files;
-              },
-              onUploadBegin: (fileName) => {
-                // Your additional code here
-                console.log(fileName);
-              },
-              onUploadProgress: (progress) => {
-                // Your additional code here
-                console.log(progress);
-              },
               onClientUploadComplete: (res) => {
-                // Your additional code here
-                console.log(res);
-
                 if (!res[0]) return;
 
                 removeFile(res[0].key);
-              },
-              onUploadError: (error) => {
-                // Your additional code here
-                console.log(error);
               },
             }}
           />
         </PreviewComponentsWrapper>
 
-        {/* [2] UTUIButtonGenericDrive */}
-        <div className="flex flex-wrap items-center gap-2">
-          <Badge>UTUIButtonGenericDrive</Badge>
-          <h2 className="text-sm text-muted-foreground">
-            Inside storage drive applications
-          </h2>
-        </div>
-        <PreviewComponentsWrapper>
-          <UTUIButtonGenericDrive
-            UTUIFunctionsProps={{
-              fileRoute: "imageUploader",
-              onBeforeUploadBegin: (files) => {
-                // Your additional code here
-                console.log(files);
-
-                return files;
-              },
-              onUploadBegin: (fileName) => {
-                // Your additional code here
-                console.log(fileName);
-              },
-              onUploadProgress: (progress) => {
-                // Your additional code here
-                console.log(progress);
-              },
-              onClientUploadComplete: (res) => {
-                // Your additional code here
-                console.log(res);
-
-                if (!res[0]) return;
-
-                removeFile(res[0].key);
-              },
-              onUploadError: (error) => {
-                // Your additional code here
-                console.log(error);
-              },
-            }}
-          />
-
-          {/* [3] UTUIButtonUploadthing */}
-        </PreviewComponentsWrapper>
+        {/* [2] UTUIButtonUploadthing */}
         <div className="flex flex-wrap items-center gap-2">
           <Badge>UTUIButtonUploadthing</Badge>
           <h2 className="text-sm text-muted-foreground">
@@ -132,31 +69,10 @@ export default function Home() {
           <UTUIButtonUploadthing
             UTUIFunctionsProps={{
               fileRoute: "imageUploader",
-              onBeforeUploadBegin: (files) => {
-                // Your additional code here
-                console.log(files);
-
-                return files;
-              },
-              onUploadBegin: (fileName) => {
-                // Your additional code here
-                console.log(fileName);
-              },
-              onUploadProgress: (progress) => {
-                // Your additional code here
-                console.log(progress);
-              },
               onClientUploadComplete: (res) => {
-                // Your additional code here
-                console.log(res);
-
                 if (!res[0]) return;
 
                 removeFile(res[0].key);
-              },
-              onUploadError: (error) => {
-                // Your additional code here
-                console.log(error);
               },
             }}
           />

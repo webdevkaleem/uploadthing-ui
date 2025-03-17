@@ -27,4 +27,5 @@ export interface UTUIFunctionsProps {
     | ((files: File[]) => Promise<File[]> | File[])
     | undefined;
   onUploadBegin?: ((fileName: string) => void) | undefined;
+  onUploadAborted?: ((file: File) => void) | undefined;
 }
