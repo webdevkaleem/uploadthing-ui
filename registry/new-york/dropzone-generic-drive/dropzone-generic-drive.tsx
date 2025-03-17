@@ -11,6 +11,7 @@ import {
   FileSize,
   generateClientDropzoneAccept,
   generatePermittedFileTypes,
+  UploadThingError,
 } from "@uploadthing/shared";
 import { Check, FileUpIcon, Info, Loader2, Trash, Upload } from "lucide-react";
 import { useCallback, useEffect, useRef, useState } from "react";
@@ -129,12 +130,14 @@ export default function UTUIDropzoneGenericDrive({
 
       {historicFiles.length > 0 && <Separator />}
 
+      {/* Only cleans all the files from the state */}
       {allFilesUploaded && historicFiles.length > 0 && (
         <div className="flex w-full items-center justify-end">
-          <Button onClick={resetFiles}>Reset All</Button>
+          <Button onClick={resetFiles}>Clear All</Button>
         </div>
       )}
 
+      {/* Cleans all the files from the state and aborts them */}
       {!allFilesUploaded && historicFiles.length > 0 && (
         <div className="flex w-full items-center justify-end">
           <Button variant={"destructive"} onClick={abortAllFiles}>
@@ -162,11 +165,10 @@ function FileContainer({
   const hasStartedUpload = useRef(false);
   const [progress, setProgress] = useState(0);
   const { updateFileStatus, removeFile } = useDropzoneGenericDriveStore();
-  const abortControllerRef = useRef<AbortController | null>(null);
-  const [errorMessage, setErrorMessage] = useState<string | undefined>(
-    undefined,
+  const abortControllerRef = useRef<AbortController | null>(
+    new AbortController(),
   );
-  const [abortSignal, setAbortSignal] = useState<AbortSignal | undefined>(
+  const [errorMessage, setErrorMessage] = useState<string | undefined>(
     undefined,
   );
 
@@ -174,7 +176,7 @@ function FileContainer({
   const { startUpload, isUploading } = useUploadThing(
     UTUIFunctionsProps.fileRoute,
     {
-      signal: abortSignal,
+      signal: abortControllerRef.current?.signal,
       uploadProgressGranularity: "fine",
       onUploadProgress: (progress) => {
         if (isMounted.current) {
@@ -202,10 +204,6 @@ function FileContainer({
         }
       },
       onBeforeUploadBegin: (files) => {
-        // Create a new AbortController for this upload
-        abortControllerRef.current = new AbortController();
-        setAbortSignal(abortControllerRef.current.signal);
-
         UTUIFunctionsProps.onBeforeUploadBegin?.(files);
 
         return files;
@@ -215,13 +213,15 @@ function FileContainer({
   );
 
   // [3] Handlers
-  const resetAbortController = useCallback(() => {
+  const resetAbortController = () => {
     if (abortControllerRef.current && abortControllerRef.current.signal) {
       removeFile(uploadFile.id);
       abortControllerRef.current.abort();
-      setAbortSignal(abortControllerRef.current.signal);
+
+      // Your additional code here
+      UTUIFunctionsProps.onUploadAborted?.(uploadFile.file);
     }
-  }, [abortControllerRef, removeFile, setAbortSignal, uploadFile]);
+  };
 
   // [4] Effects
   // When a file isn't uploading
@@ -229,7 +229,9 @@ function FileContainer({
     if (!hasStartedUpload.current && !isUploading) {
       hasStartedUpload.current = true;
 
-      startUpload([uploadFile.file]);
+      startUpload([uploadFile.file]).catch((error: UploadThingError) => {
+        return error;
+      });
       updateFileStatus(uploadFile.id, "uploading");
     }
   }, [
@@ -250,8 +252,8 @@ function FileContainer({
 
   // [5] JSX
   return (
-    <div className="flex h-20 w-full items-center gap-4 rounded-md border">
-      <div className="flex h-full min-w-20 items-center justify-center bg-accent">
+    <div className="flex h-40 w-full flex-col rounded-md border sm:h-20 sm:flex-row sm:items-center">
+      <div className="hidden h-full min-w-20 items-center justify-center bg-accent sm:flex">
         {uploadFile.status === "pending" ||
         uploadFile.status === "uploading" ? (
           <Loader2 className="animate-spin stroke-1" />
@@ -262,7 +264,7 @@ function FileContainer({
         )}
       </div>
 
-      <div className="flex flex-col gap-1 truncate">
+      <div className="flex h-20 flex-col justify-center gap-1 truncate px-4">
         <span className="truncate">{uploadFile.file.name}</span>
         <span className="h-fit truncate text-xs text-muted-foreground">
           {formatBytes(uploadFile.file.size)} ({progress}%)
@@ -272,20 +274,48 @@ function FileContainer({
         </span>
       </div>
 
-      {uploadFile.status === "complete" && (
-        <div className="ml-auto flex min-w-20 items-center justify-center text-chart-2">
-          <Check className="w-4 stroke-1" />
+      {uploadFile.status === "complete" && !errorMessage && (
+        <div className="flex h-20 w-full sm:ml-auto sm:w-fit">
+          <div className="flex h-full w-1/2 items-center justify-center bg-accent sm:hidden">
+            <FileUpIcon className="stroke-1" />
+          </div>
+          <div className="flex w-1/2 items-center justify-center gap-2 text-chart-2 sm:min-w-20 sm:gap-0">
+            <span className="text-xs sm:hidden">Complete</span>
+            <Check className="w-4 stroke-1" />
+          </div>
         </div>
       )}
+
       {uploadFile.status === "pending" ||
-        (uploadFile.status === "uploading" && (
-          <div
-            className="ml-auto flex min-w-20 cursor-pointer items-center justify-center hover:text-destructive"
-            onClick={resetAbortController}
-          >
-            <Trash className="w-4 stroke-1" />
+        (uploadFile.status === "uploading" && !errorMessage && (
+          <div className="flex h-20 w-full sm:ml-auto sm:w-fit">
+            <div className="flex h-full w-1/2 items-center justify-center bg-accent sm:hidden">
+              <Loader2 className="animate-spin stroke-1" />
+            </div>
+            <div
+              className="flex w-1/2 cursor-pointer items-center justify-center gap-2 text-destructive sm:min-w-20 sm:gap-0"
+              onClick={resetAbortController}
+            >
+              <span className="text-xs sm:hidden">Cancel</span>
+              <Trash className="w-4 stroke-1" />
+            </div>
           </div>
         ))}
+
+      {uploadFile.status === "error" && errorMessage && (
+        <div className="flex h-20 w-full sm:ml-auto sm:w-fit">
+          <div className="flex h-full w-1/2 items-center justify-center bg-accent sm:hidden">
+            <Info className="stroke-1" />
+          </div>
+          <div
+            className="flex w-1/2 cursor-pointer items-center justify-center gap-2 text-destructive sm:min-w-20 sm:gap-0"
+            onClick={resetAbortController}
+          >
+            <span className="text-xs sm:hidden">Cancel</span>
+            <Trash className="w-4 stroke-1" />
+          </div>
+        </div>
+      )}
     </div>
   );
 }

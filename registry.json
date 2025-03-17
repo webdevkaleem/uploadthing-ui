@@ -41,49 +41,6 @@
       ]
     },
     {
-      "name": "button-generic-drive",
-      "type": "registry:component",
-      "title": "Generic Drive Button",
-      "description": "Workflow: Inside storage drive applications",
-      "registryDependencies": [
-        "button",
-        "alert-dialog",
-        "badge",
-        "drawer",
-        "table"
-      ],
-      "dependencies": [
-        "zustand",
-        "uploadthing",
-        "@uploadthing/react",
-        "@uploadthing/shared",
-        "paralleldrive/cuid2",
-        "lucide-react"
-      ],
-      "files": [
-        {
-          "path": "registry/new-york/button-generic-drive/button-generic-drive.tsx",
-          "type": "registry:component",
-          "target": "components/uploadthing-ui/button-generic-drive.tsx"
-        },
-        {
-          "path": "store/button-generic-drive-store.ts",
-          "type": "registry:file",
-          "target": "store/button-generic-drive-store.ts"
-        },
-        {
-          "path": "lib/uploadthing-ui-types.ts",
-          "type": "registry:file",
-          "target": "lib/uploadthing-ui-types.ts"
-        },
-        {
-          "path": "lib/uploadthing-ui-utils.ts",
-          "type": "registry:file",
-          "target": "lib/uploadthing-ui-utils.ts"
-        }
-      ]
-    },
-    {
       "name": "button-uploadthing",
       "type": "registry:component",
       "title": "Uploadthing Button",

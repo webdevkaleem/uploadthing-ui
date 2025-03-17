@@ -50,9 +50,12 @@ export const useDropzoneGenericDriveStore = create<FilesState>()((set) => ({
     }),
   abortAllFiles: () =>
     set((state) => ({
-      historicFiles: state.historicFiles.map((item) => ({
-        ...item,
-        abort: true,
-      })),
+      historicFiles: state.historicFiles.map((item) => {
+        if (item.status === "complete" || item.status === "error") {
+          return { ...item, abort: false };
+        } else {
+          return { ...item, abort: true };
+        }
+      }),
     })),
 }));
