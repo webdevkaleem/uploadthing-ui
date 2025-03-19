@@ -13,7 +13,13 @@ export default function UTUIClientButtonUploadthing() {
           onClientUploadComplete: (res) => {
             if (!res[0]) return;
 
-            removeFile(res[0].key);
+            try {
+              removeFile(res[0].key);
+            } catch (error) {
+              console.log(
+                `Failed to remove file upon onUploadComplete | ${error instanceof Error ? error.message : error}`,
+              );
+            }
           },
         }}
       />
