@@ -2,8 +2,6 @@ import { NextResponse } from "next/server";
 import path from "path";
 import { promises as fs } from "fs";
 import { registryItemSchema } from "shadcn/registry";
-import { redis } from "@/server/db/redis";
-import { redisNameToSlug } from "@/lib/utils";
 
 // This route shows an example for serving a component using a route handler.
 export async function GET(
@@ -46,10 +44,6 @@ export async function GET(
         return { ...file, content };
       }),
     );
-
-    // REDIS: Incr Component View
-    const slug = redisNameToSlug(registryItem.name);
-    await redis.incr(["component-views", slug].join(":"));
 
     // Return the component with the files.
     return NextResponse.json({ ...registryItem, files: filesWithContent });
