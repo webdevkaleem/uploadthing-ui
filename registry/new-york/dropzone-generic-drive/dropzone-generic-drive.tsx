@@ -226,7 +226,11 @@ function FileContainer({
   // [4] Effects
   // When a file isn't uploading
   useEffect(() => {
-    if (!hasStartedUpload.current && !isUploading) {
+    if (
+      !hasStartedUpload.current &&
+      !isUploading &&
+      uploadFile.status === "pending"
+    ) {
       hasStartedUpload.current = true;
 
       startUpload([uploadFile.file]).catch((error: UploadThingError) => {

@@ -207,7 +207,11 @@ function DisplayingToasts({
   // [3] Effects
   // When a file isn't uploading
   useEffect(() => {
-    if (!hasStartedUpload.current && !isUploading) {
+    if (
+      !hasStartedUpload.current &&
+      !isUploading &&
+      uploadFile.status === "pending"
+    ) {
       hasStartedUpload.current = true;
 
       startUpload([uploadFile.file]);
@@ -351,7 +355,6 @@ function CircularProgressBar({ percentage }: { percentage: number }) {
           className="stroke-current stroke-2 text-secondary"
           strokeDasharray="100"
           strokeDashoffset={percentage}
-          strokeLinecap="round"
         ></circle>
       </svg>
       <div className="absolute start-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transform">
