@@ -19,6 +19,8 @@ git clone https://github.com/webdevkaleem/uploadthing-ui.git
 **Create a .env file in the root directory and add the following variables**
 ```bash
 UPLOADTHING_TOKEN=""
+UPSTASH_REDIS_REST_URL=""
+UPSTASH_REDIS_REST_TOKEN=""
 ```
 **Install dependencies**
 ```bash
