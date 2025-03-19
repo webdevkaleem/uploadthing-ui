@@ -3,7 +3,9 @@ import { redis } from "@/server/db/redis";
 import { redisNameToSlug } from "@/lib/utils";
 
 export async function middleware(request: NextRequest) {
-  const slug = redisNameToSlug(request.nextUrl.pathname.split("/")[2]);
+  const slug = redisNameToSlug(
+    request.nextUrl.pathname.split("/")[2].split(".")[0],
+  );
   // REDIS: Incr Component View
   if (slug.length > 0) await redis.incr(["component-views", slug].join(":"));
 
@@ -12,5 +14,5 @@ export async function middleware(request: NextRequest) {
 
 // Running just for /registry/:path* requests
 export const config = {
-  matcher: "/registry/:path*",
+  matcher: "/r/:path*",
 };
