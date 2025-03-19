@@ -1,16 +1,14 @@
-"use client";
-
-import UTUIButtonUploadthing from "@/registry/new-york/button-uploadthing/button-uploadthing";
-import UTUIDropzoneGenericDrive from "@/registry/new-york/dropzone-generic-drive/dropzone-generic-drive";
-import Link from "next/link";
-import { removeFile } from "./actions";
-import PreviewComponentsWrapper from "@/components/preview-components-wrapper";
 import { Badge } from "@/components/ui/badge";
+import UTUIClientButtonUploadthing from "@/components/uploadthing-ui-client/button-uploadthing";
+import UTUIClientDropzoneGenericDrive from "@/components/uploadthing-ui-client/dropzone-generic-drive";
+import { redis } from "@/server/db/redis";
+import { Download } from "lucide-react";
+import Link from "next/link";
 
 // This page displays items from the custom registry.
 // You are free to implement this with your own design as needed.
 
-export default function Home() {
+export default async function Home() {
   return (
     <div className="mx-auto flex min-h-svh max-w-3xl flex-col gap-8 px-4 py-8">
       <header className="flex flex-col gap-2">
@@ -45,19 +43,10 @@ export default function Home() {
             Inside storage drive applications
           </h2>
         </div>
-        <PreviewComponentsWrapper>
-          <UTUIDropzoneGenericDrive
-            UTUIFunctionsProps={{
-              fileRoute: "imageUploader",
-              onClientUploadComplete: (res) => {
-                if (!res[0]) return;
-
-                removeFile(res[0].key);
-              },
-            }}
-          />
-        </PreviewComponentsWrapper>
-
+        <div className="relative">
+          <DisplayDownloads componentName="dropzone-generic-drive" />
+          <UTUIClientDropzoneGenericDrive />
+        </div>
         {/* [2] UTUIButtonUploadthing */}
         <div className="flex flex-wrap items-center gap-2">
           <Badge>UTUIButtonUploadthing</Badge>
@@ -65,19 +54,23 @@ export default function Home() {
             Inside the uploadthing&apos;s admin dashboard
           </h2>
         </div>
-        <PreviewComponentsWrapper>
-          <UTUIButtonUploadthing
-            UTUIFunctionsProps={{
-              fileRoute: "imageUploader",
-              onClientUploadComplete: (res) => {
-                if (!res[0]) return;
-
-                removeFile(res[0].key);
-              },
-            }}
-          />
-        </PreviewComponentsWrapper>
+        <div className="relative">
+          <DisplayDownloads componentName="button-uploadthing" />
+          <UTUIClientButtonUploadthing />
+        </div>
       </main>
     </div>
+  );
+}
+
+async function DisplayDownloads({ componentName }: { componentName: string }) {
+  const views =
+    (await redis.get<number>(["component-views", componentName].join(":"))) ??
+    0;
+  return (
+    <Badge className="absolute right-5 top-5 gap-2">
+      <Download className="w-4" />
+      <span>{views}</span>
+    </Badge>
   );
 }
