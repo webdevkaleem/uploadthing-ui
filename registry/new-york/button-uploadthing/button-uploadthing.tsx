@@ -240,29 +240,29 @@ function DisplayingToasts({
   ]);
 
   // When a file changes its status during the uploading process
-  // useEffect(() => {
-  //   if (uploadFile.status === "complete" && toastId) {
-  //     toast.custom(() => <ToastComponentCompleted uploadFile={uploadFile} />, {
-  //       id: toastId,
-  //       duration: 4000,
-  //     });
+  useEffect(() => {
+    if (uploadFile.status === "complete" && toastId) {
+      toast.custom(() => <ToastComponentCompleted uploadFile={uploadFile} />, {
+        id: toastId,
+        duration: 4000,
+      });
 
-  //     // Removing file from state
-  //     removeFile(uploadFile.id);
+      // Removing file from state
+      removeFile(uploadFile.id);
 
-  //     return;
-  //   }
+      return;
+    }
 
-  //   if (uploadFile.status === "error" && toastId) {
-  //     toast.custom(() => <ToastComponentError uploadFile={uploadFile} />, {
-  //       id: toastId,
-  //       duration: 4000,
-  //     });
+    if (uploadFile.status === "error" && toastId) {
+      toast.custom(() => <ToastComponentError uploadFile={uploadFile} />, {
+        id: toastId,
+        duration: 4000,
+      });
 
-  //     return;
-  //   }
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [uploadFile, toastId, toast, removeFile]);
+      return;
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [uploadFile, toastId, toast, removeFile]);
 
   // When a file starts its uploading process
   useEffect(() => {
