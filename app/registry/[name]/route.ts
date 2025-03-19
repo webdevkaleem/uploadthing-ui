@@ -2,11 +2,13 @@ import { NextResponse } from "next/server";
 import path from "path";
 import { promises as fs } from "fs";
 import { registryItemSchema } from "shadcn/registry";
+import { redis } from "@/server/db/redis";
+import { redisNameToSlug } from "@/lib/utils";
 
 // This route shows an example for serving a component using a route handler.
 export async function GET(
   request: Request,
-  { params }: { params: Promise<{ name: string }> }
+  { params }: { params: Promise<{ name: string }> },
 ) {
   try {
     const { name } = await params;
@@ -21,7 +23,7 @@ export async function GET(
     if (!component) {
       return NextResponse.json(
         { error: "Component not found" },
-        { status: 404 }
+        { status: 404 },
       );
     }
 
@@ -32,7 +34,7 @@ export async function GET(
     if (!registryItem.files?.length) {
       return NextResponse.json(
         { error: "Component has no files" },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -42,8 +44,12 @@ export async function GET(
         const filePath = path.join(process.cwd(), file.path);
         const content = await fs.readFile(filePath, "utf8");
         return { ...file, content };
-      })
+      }),
     );
+
+    // REDIS: Incr Component View
+    const slug = redisNameToSlug(registryItem.name);
+    await redis.incr(["component-views", slug].join(":"));
 
     // Return the component with the files.
     return NextResponse.json({ ...registryItem, files: filesWithContent });
@@ -51,7 +57,7 @@ export async function GET(
     console.error("Error processing component request:", error);
     return NextResponse.json(
       { error: "Something went wrong" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }
