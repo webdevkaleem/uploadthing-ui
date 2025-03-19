@@ -64,9 +64,17 @@ export default async function Home() {
 }
 
 async function DisplayDownloads({ componentName }: { componentName: string }) {
-  const views =
-    (await redis.get<number>(["component-views", componentName].join(":"))) ??
-    0;
+  let views = 0;
+
+  try {
+    views =
+      (await redis.get<number>(["component-views", componentName].join(":"))) ??
+      0;
+  } catch (error) {
+    console.log(
+      `Failed to fetch the component views | ${error instanceof Error ? error.message : error}`,
+    );
+  }
   return (
     <Badge className="absolute right-5 top-5 gap-2">
       <Download className="w-4" />
